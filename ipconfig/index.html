@@ -36,9 +36,12 @@
         
         
         <div class="row">
-          <div id="ipList" class="col-md-10 col-md-offset-1">
+          <div class="col-md-10 col-md-offset-1">
             <font color="DodgerBlue">
-              <h1><strong>공인(외부) 아이피 주소 : <%=ip%></strong></h1><br>
+              <h1><strong>공인(외부) 아이피 주소 : <span id="publicIp"></span></strong></h1><br>
+            </font>
+            <font color="orchid">
+              <h1><strong>내부 아이피 주소 : <span id="localIp"></span></strong></h1><br>
             </font>
           </div>
         </div>
@@ -202,9 +205,17 @@
       getIPs(function(ip){
         //local IPs
         if (ip.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/)){
-          var elem = $("<font>", {"color":"orchid"}).append($("<h1>").append($("<strong>").text("내부 아이피 주소 : "+ip)));
-          $("#ipList").append(elem);
+          $("#publicIp").text(ip);
         }
+      });
+      
+      
+      $(function() {
+        $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
+          function(json) {
+            $("#localIp").text(json.ip);
+          }
+        );
       });
     </script>
   </body>
