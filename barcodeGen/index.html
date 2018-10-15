@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>바코드, QR코드 생성기</title>
+    <meta name="description" content="온라인으로 바코드 / QR코드 이미지를 생성하는 사이트">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="바코드, QR코드 생성기">
+    <meta property="og:description" content="온라인으로 바코드 / QR코드 이미지를 생성하는 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/barcodeGen/">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+    <link rel="stylesheet" type='text/css' href="/tools/js/rangeslider/css/rangeslider.css">
+    <style>
+      #userInput{
+        height:35px;
+      }
+      
+      #barcodeBox{
+        overflow:hidden;
+      }
+      
+      #barcode{
+          overflow:auto;
+          vertical-align: middle;
+      }
+      
+      #invalid{
+          display: none;
+          color:#DE0000;
+          margin-top:10px;
+          font-size:14pt;
+          vertical-align: middle;
+      }
+      
+      #barcodeType{
+        height:35px;
+      }
+      
+      .barcode-container{
+        height:200px;
+        line-height: 200px;
+        text-align: center;
+        vertical-align: middle;
+        margin-left: 25px;
+        margin-right: 25px;
+      }
+      
+      .description-text{
+        height:42px;
+      }
+      
+      .description-text p{
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+      
+      .value-text{
+        height:42px;
+        text-align: right;
+      }
+      
+      .value-text p{
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+      
+      .center-text{
+        text-align: center;
+      }
+      
+      .search-bar{
+        margin-bottom: 20px;
+      }
+      
+      .slider-container{
+        margin-top: 17px;
+      }
+      
+      .input-container{
+        margin-top: 5px;
+      }
+      
+      .barcode-select{
+        border-color: #ccc;
+      }
+      
+      #qrcode{
+        overflow:hidden;
+      }
+      #qrcode canvas{
+        overflow:auto;
+        vertical-align: middle;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>바코드 / QR코드 생성기</b></h1>
+              별도의 프로그램 설치 없이 온라인에서 바코드를 생성하는 사이트<br>
+              지원 바코드 : CODE128, EAN, EAN8, UPC, CODE39, ITF14, ITF, MSI, MSI10, MSI11, MSI1010, MSI1110, Pharmacode, QRCode<br>
+              분리 문자인 FNC1을 사용하는 바코드는 \F로 입력 가능합니다.<br>
+              예) 01088012345600161713052510ABC123\F21123456789<br>
+            </div>
+            <hr/>
+          </div>
+        </div>
+      </div>
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
+              <li role="presentation" class="active"><a href="#barcodeTab" aria-controls="barcodeTab" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">바코드</span></a></li>
+              <li role="presentation" class="next"><a href="#qrcodeTab" aria-controls="qrcodeTab" role="tab" data-toggle="tab"><span class="text">QR코드</span></a></li>
+            </ul>
+          </div>
+        </div>
+    
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="barcodeTab">
+      
+            <div class="barcode-container">
+              <div id="barcodeBox" class="row col-md-10 col-md-offset-1">
+                <img id="barcode" alt="바코드 이미지" style="display:none;"/>
+                <span id="invalid">유효하지 않는 데이터입니다.</span>
+              </div>
+            </div>
+            <div class="container">
+              <div class="row search-bar">
+                <div class="col-md-10 col-md-offset-1">
+                  <div class="input-group margin-bottom-sm">
+                    <span class="input-group-addon"><i class="fa fa-barcode fa-fw"></i></span>
+                    <input class="form-control" id="userInput" type="text" value="Example 1234" placeholder="Barcode" autofocus>
+                    <span class="input-group-btn">
+                      <select class="btn barcode-select" id="barcodeType" title="CODE128">
+                        <option value="CODE128">CODE128 auto</option>
+                        <option value="CODE128A">CODE128 A</option>
+                        <option value="CODE128B">CODE128 B</option>
+                        <option value="CODE128C">CODE128 C</option>
+                        <option value="EAN">EAN</option>
+                        <option value="EAN8">EAN8</option>
+                        <option value="UPC">UPC</option>
+                        <option value="CODE39">CODE39</option>
+                        <option value="ITF14">ITF14</option>
+                        <option value="ITF">ITF</option>
+                        <option value="MSI">MSI</option>
+                        <option value="MSI10">MSI10</option>
+                        <option value="MSI11">MSI11</option>
+                        <option value="MSI1010">MSI1010</option>
+                        <option value="MSI1110">MSI1110</option>
+                        <option value="pharmacode">Pharmacode</option>
+                      </select>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <!-- Bar width -->
+              <div class="row">
+                <div class="col-md-2 col-xs-12 col-md-offset-1 description-text"><p>Bar Width</p></div>
+                <div class="col-md-7 col-xs-11 slider-container"><input id="bar-width" type="range" min="1" max="4" step="1" value="2"/></div>
+                <div class="col-md-1 col-xs-1 value-text"><p><span id="bar-width-display">2</span></p></div>
+              </div>
+              <!-- Height -->
+              <div class="row">
+                <div class="col-md-2 col-xs-12 col-md-offset-1 description-text"><p>Height</p></div>
+                <div class="col-md-7 col-xs-11 slider-container"><input id="bar-height" type="range" min="10" max="150" step="5" value="100"/></div>
+                <div class="col-md-1 col-xs-1 value-text"><p><span id="bar-height-display">10</span></p></div>
+              </div>
+              <!-- Margin -->
+              <div class="row">
+                <div class="col-md-2 col-xs-12 col-md-offset-1 description-text"><p>Margin</p></div>
+                <div class="col-md-7 col-xs-11 slider-container"><input id="bar-margin" type="range" min="0" max="25" step="1" value="10"/></div>
+                <div class="col-md-1 col-xs-1 value-text"><p><span id="bar-margin-display">10</span></p></div>
+              </div>
+              <!-- Background (color) -->
+              <div class="row">
+                <div class="col-md-2 col-xs-12 col-md-offset-1 description-text"><p>Background</p></div>
+                <div class="col-md-7 col-xs-11 input-container"><input id="background-color" class="form-control color" value="#FFFFFF"/></div>
+                <div class="col-md-1 col-xs-1 value-text"></div>
+              </div>
+              <!-- Line color -->
+              <div class="row">
+                <div class="col-md-2 col-xs-12 col-md-offset-1 description-text"><p>Line Color</p></div>
+                <div class="col-md-7 col-xs-11 input-container"><input id="line-color" class="form-control color" value="#000000"/></div>
+                <div class="col-md-1 col-xs-1 value-text"></div>
+              </div>
+              <!-- Show text -->
+              <div class="row checkbox-options">
+                <div class="col-md-2 col-md-offset-1 col-xs-12 col-xs-offset-0 description-text"><p>Show text</p></div>
+                <div class="col-md-7 col-xs-12 center-text">
+                  <div class="btn-group btn-group-md" role="toolbar">
+                    <button type="button" class="btn btn-default btn-primary display-text" value="true">Show</button>
+                    <button type="button" class="btn btn-default display-text" value="false">Hide</button>
+                  </div>
+                </div>
+                <div class="col-md-1 col-xs-0"></div>
+              </div>
+              <div id="font-options">
+                <!-- Text align -->
+                <div class="row checkbox-options">
+                  <div class="col-md-2 col-md-offset-1 col-xs-12 col-xs-offset-0 description-text"><p>Text Align</p></div>
+                  <div class="col-md-7 center-text">
+                    <div class="btn-group btn-group-md" role="toolbar">
+                      <button type="button" class="btn btn-default text-align" value="left">Left</button>
+                      <button type="button" class="btn btn-default btn-primary text-align" value="center">Center</button>
+                      <button type="button" class="btn btn-default text-align" value="right">Right</button>
+                    </div>
+                  </div>
+                  <div class="col-md-1"></div>
+                </div>
+                <!-- Font -->
+                <div class="row">
+                  <div class="col-md-2 col-md-offset-1 col-xs-12 col-xs-offset-0 description-text"><p>Font</p></div>
+                  <div class="col-md-7 center-text">
+                    <select class="form-control" id="font" style="font-family: monospace">
+                      <option value="monospace" style="font-family: monospace" selected="selected">Monospace</option>
+                      <option value="sans-serif" style="font-family: sans-serif">Sans-serif</option>
+                      <option value="serif" style="font-family: serif">Serif</option>
+                      <option value="fantasy" style="font-family: fantasy">Fantasy</option>
+                      <option value="cursive" style="font-family: cursive">Cursive</option>
+                    </select>
+                  </div>
+                  <div class="col-md-1"></div>
+                </div>
+                <!-- Font options -->
+                <div class="row checkbox-options">
+                  <div class="col-md-2 col-md-offset-1 col-xs-12 col-xs-offset-0 description-text"><p>Font Options</p></div>
+                  <div class="col-md-7 center-text">
+                    <div class="btn-group btn-group-md" role="toolbar">
+                      <button type="button" class="btn btn-default font-option" value="bold" style="font-weight: bold">Bold</button>
+                      <button type="button" class="btn btn-default font-option" value="italic" style="font-style: italic">Italic</button>
+                    </div>
+                  </div>
+                  <div class="col-md-1"></div>
+                </div>
+                <!-- Font size -->
+                <div class="row">
+                  <div class="col-md-2 col-md-offset-1 col-xs-12 col-xs-offset-0 description-text"><p>Font Size</p></div>
+                  <div class="col-md-7 col-xs-11 slider-container"><input id="bar-fontSize" type="range" min="8" max="36" step="1" value="20"/></div>
+                  <div class="col-md-1 col-xs-1 value-text"><p><span id="bar-fontSize-display">20</span></p></div>
+                </div>
+                <!-- Text margin -->
+                <div class="row">
+                  <div class="col-md-2 col-md-offset-1 col-xs-12 col-xs-offset-0 description-text"><p>Text Margin</p></div>
+                  <div class="col-md-7 col-xs-11 slider-container"><input id="bar-text-margin" type="range" min="0" max="40" step="1" value="2"/></div>
+                  <div class="col-md-1 col-xs-1 value-text"><p><span id="bar-text-margin-display">2</span></p></div>
+                </div>
+              </div>
+              <hr/>
+            </div>
+            
+          </div>
+          <div role="qrcodeTab" class="tab-pane fade in" id="qrcodeTab">
+            
+            <div class="barcode-container">
+              <div id="qrcode" class="row col-md-10 col-md-offset-1"></div>
+            </div>
+            
+            <div class="container">
+              <div class="row search-bar">
+                <div class="col-md-10 col-md-offset-1">
+                  <div class="input-group margin-bottom-sm">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
+                    <input class="form-control" id="qr-text" type="text" value="http://app-weppl.rhcloud.com/barcodeGen" placeholder="URL" autofocus>
+                    <!--<span class="input-group-btn">-->
+                    <!--  <button class="btn btn-default" type="button" id="qr-btn">생성</button>-->
+                    <!--</span>-->
+                  </div>
+                </div>
+              </div>
+              <!-- Width -->
+              <div class="row">
+                <div class="col-md-2 col-xs-12 col-md-offset-1 description-text"><p>Size</p></div>
+                <div class="col-md-7 col-xs-11 slider-container"><input id="qr-size" type="range" min="50" max="150" step="1" value="150"/></div>
+                <div class="col-md-1 col-xs-1 value-text"><p><span id="qr-size-display">150</span></p></div>
+              </div>
+              <!-- Background (color) -->
+              <div class="row">
+                <div class="col-md-2 col-xs-12 col-md-offset-1 description-text"><p>Background</p></div>
+                <div class="col-md-7 col-xs-11 input-container"><input id="qr-background-color" class="form-control color" value="#FFFFFF"/></div>
+                <div class="col-md-1 col-xs-1 value-text"></div>
+              </div>
+              <!-- Code (color) -->
+              <div class="row">
+                <div class="col-md-2 col-xs-12 col-md-offset-1 description-text"><p>Color</p></div>
+                <div class="col-md-7 col-xs-11 input-container"><input id="qr-code-color" class="form-control color" value="#000000"/></div>
+                <div class="col-md-1 col-xs-1 value-text"></div>
+              </div>
+              <hr/>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/barcodeGen/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/barcodeGen/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main> <!-- main -->
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script src="/tools/js/JsBarcode.all.min.js"></script>
+    <script src="/tools/js/rangeslider/js/rangeslider.min.js"></script>
+    <script src="/tools/js/jqColorPicker.min.js"></script>
+    <script src="/tools/js/jquery.qrcode.min.js"></script>
+    <script>
+     /*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
+      if (!String.fromCodePoint) {
+        (function() {
+          var defineProperty = (function() {
+            // IE 8 only supports `Object.defineProperty` on DOM elements
+            try {
+              var object = {};
+              var $defineProperty = Object.defineProperty;
+              var result = $defineProperty(object, object, object) && $defineProperty;
+            } catch(error) {}
+            return result;
+          }());
+          var stringFromCharCode = String.fromCharCode;
+          var floor = Math.floor;
+          var fromCodePoint = function() {
+            var MAX_SIZE = 0x4000;
+            var codeUnits = [];
+            var highSurrogate;
+            var lowSurrogate;
+            var index = -1;
+            var length = arguments.length;
+            if (!length) {
+              return '';
+            }
+            var result = '';
+            while (++index < length) {
+              var codePoint = Number(arguments[index]);
+              if (
+                !isFinite(codePoint) ||       // `NaN`, `+Infinity`, or `-Infinity`
+                codePoint < 0 ||              // not a valid Unicode code point
+                codePoint > 0x10FFFF ||       // not a valid Unicode code point
+                floor(codePoint) != codePoint // not an integer
+              ) {
+                throw RangeError('Invalid code point: ' + codePoint);
+              }
+              if (codePoint <= 0xFFFF) { // BMP code point
+                codeUnits.push(codePoint);
+              } else { // Astral code point; split in surrogate halves
+                // http://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
+                codePoint -= 0x10000;
+                highSurrogate = (codePoint >> 10) + 0xD800;
+                lowSurrogate = (codePoint % 0x400) + 0xDC00;
+                codeUnits.push(highSurrogate, lowSurrogate);
+              }
+              if (index + 1 == length || codeUnits.length > MAX_SIZE) {
+                result += stringFromCharCode.apply(null, codeUnits);
+                codeUnits.length = 0;
+              }
+            }
+            return result;
+          };
+          if (defineProperty) {
+            defineProperty(String, 'fromCodePoint', {
+              'value': fromCodePoint,
+              'configurable': true,
+              'writable': true
+            });
+          } else {
+            String.fromCodePoint = fromCodePoint;
+          }
+        }());
+      }
+      
+      var defaultValues = {
+          CODE128 : "Example 1234",
+          CODE128A : "EXAMPLE",
+          CODE128B : "Example text",
+          CODE128C : "12345678",
+          EAN : "1234567890128",
+          EAN8 : "12345670",
+          UPC : "123456789999",
+          CODE39 : "EXAMPLE TEXT",
+          ITF14 : "10012345000017",
+          ITF : "123456",
+          MSI : "123456",
+          MSI10 : "123456",
+          MSI11 : "123456",
+          MSI1010 : "123456",
+          MSI1110 : "123456",
+          pharmacode : "1234"
+      };
+      
+      $(document).ready(function(){
+        
+        // 모바일에서 기본 사이즈 변경
+        if(findBootstrapEnvironment()=="xs"){
+          $("#bar-width").val("1");
+          $("#qr-size").val("100");
+        }
+        
+        $("#userInput").on('input',newBarcode);
+        $("#barcodeType").change(function(){
+            $("#userInput").val( defaultValues[$(this).val()] );
+    
+            newBarcode();
+        });
+    
+        $(".text-align").click(function(){
+          $(".text-align").removeClass("btn-primary");
+          $(this).addClass("btn-primary");
+    
+          newBarcode();
+        });
+    
+        $(".font-option").click(function(){
+          if($(this).hasClass("btn-primary")){
+            $(this).removeClass("btn-primary");
+          }
+          else{
+            $(this).addClass("btn-primary");
+          }
+    
+          newBarcode();
+        });
+    
+        $(".display-text").click(function(){
+          $(".display-text").removeClass("btn-primary");
+          $(this).addClass("btn-primary");
+    
+          if($(this).val() == "true"){
+            $("#font-options").slideDown("fast");
+          }
+          else{
+            $("#font-options").slideUp("fast");
+          }
+    
+          newBarcode();
+        });
+    
+        $("#font").change(function(){
+          $(this).css({"font-family": $(this).val()});
+          newBarcode();
+        });
+    
+        $('input[type="range"]').rangeslider({
+            polyfill: false,
+            rangeClass: 'rangeslider',
+            fillClass: 'rangeslider__fill',
+            handleClass: 'rangeslider__handle',
+            onSlide: function(){
+              newBarcode(); 
+              newQrCode();
+            },
+            onSlideEnd: function(){
+              newBarcode(); 
+              newQrCode();
+            }
+        });
+    
+        $('.color').colorPicker({
+          renderCallback: function(){
+            newBarcode(); 
+            newQrCode();
+          }
+        });
+    
+        newBarcode();
+        
+        
+        $("#qr-text").on("input", newQrCode);
+        newQrCode();
+        
+        
+        // 모바일 동적 탭
+        $(document).on('show.bs.tab', '.nav-tabs-responsive [data-toggle="tab"]', function(e) {
+          var $target = $(e.target);
+          var $tabs = $target.closest('.nav-tabs-responsive');
+          var $current = $target.closest('li');
+          var $parent = $current.closest('li.dropdown');
+      		$current = $parent.length > 0 ? $parent : $current;
+          var $next = $current.next();
+          var $prev = $current.prev();
+          var updateDropdownMenu = function($el, position){
+            $el
+            	.find('.dropdown-menu')
+              .removeClass('pull-xs-left pull-xs-center pull-xs-right')
+            	.addClass( 'pull-xs-' + position );
+          };
+      
+          $tabs.find('>li').removeClass('next prev');
+          $prev.addClass('prev');
+          $next.addClass('next');
+          
+          updateDropdownMenu( $prev, 'left' );
+          updateDropdownMenu( $current, 'center' );
+          updateDropdownMenu( $next, 'right' );
+        });
+        
+      });
+      
+      var newBarcode = function() {
+        //Convert to boolean
+        var text = $("#userInput").val();
+        text = text.replace(/\\F/gi, String.fromCodePoint(29));
+        $("#barcode").JsBarcode(
+            text,
+            {
+              "format": $("#barcodeType").val(),
+              "background": $("#background-color").val(),
+              "lineColor": $("#line-color").val(),
+              "fontSize": parseInt($("#bar-fontSize").val()),
+              "height": parseInt($("#bar-height").val()),
+              "width": $("#bar-width").val(),
+              "margin": parseInt($("#bar-margin").val()),
+              "textMargin": parseInt($("#bar-text-margin").val()),
+              "displayValue": $(".display-text.btn-primary").val() == "true",
+              "font": $("#font").val(),
+              "fontOptions": $(".font-option.btn-primary").map(function(){return this.value;}).get().join(" "),
+              "textAlign": $(".text-align.btn-primary").val(),
+              "valid":
+                function(valid){
+                  if(valid){
+                    $("#barcode").show();
+                    $("#invalid").hide();
+                  }
+                  else{
+                    $("#barcode").hide();
+                    $("#invalid").show();
+                  }
+                }
+            });
+    
+        $("#bar-width-display").text($("#bar-width").val());
+        $("#bar-height-display").text($("#bar-height").val());
+        $("#bar-fontSize-display").text($("#bar-fontSize").val());
+        $("#bar-margin-display").text($("#bar-margin").val());
+        $("#bar-text-margin-display").text($("#bar-text-margin").val());
+        
+      };
+      
+      
+      var newQrCode = function(){
+        $('#qrcode').children().remove();
+        $('#qrcode').qrcode({
+          width: $("#qr-size").val(),
+          height: parseInt($("#qr-size").val()),
+          text: $("#qr-text").val(),
+          background      : $("#qr-background-color").val(),
+          foreground      : $("#qr-code-color").val()
+        });
+        
+        // 모바일에서 다운 가능하게 img 태그로 변경
+        var src = document.querySelector('#qrcode canvas').toDataURL();
+        $("#qrcode").html("<img src=''/>");
+        $("#qrcode img").attr("src", src);
+        
+        $("#qr-size-display").text($("#qr-size").val());
+      };
+          
+      
+    </script>
+  </body>
+</html>
