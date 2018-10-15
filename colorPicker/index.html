@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>HTML 색상표</title>
+    <meta name="description" content="온라인 RGB 색상표, HSL, HSV, CSS 칼라코드 모음">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="HTML 색상표">
+    <meta property="og:description" content="온라인 RGB 색상표, HSL, HSV, CSS 칼라코드 모음">
+    <meta property="og:url" content="https://wepplication.github.io/tools/colorPicker/">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>HTML 색상표</b></h1>
+              온라인 RGB 색상표, HSL, HSV, CSS 칼라코드 모음<br>
+              모바일에서도 사용 가능합니다.<br>
+              코드 입력 및 칼라 팔레트 선택으로 조회 가능합니다.
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+          <label for="color-picker" class="col-sm-1 control-label">Name</label>
+          <div class="col-md-10">
+            <input type="text" id="name-color"/>
+          </div>
+        </div>
+        <div class="row">
+          <label for="color-picker" class="col-sm-1 control-label">RGB</label>
+          <div class="col-md-10">
+            <input type="text" id="rgb-color"/>
+          </div>
+        </div>
+        <div class="row">
+          <label for="color-picker" class="col-sm-1 control-label">HSL</label>
+          <div class="col-md-10">
+            <input type="text" id="hsl-color"/>
+          </div>
+        </div>
+        <div class="row">
+          <label for="color-picker" class="col-sm-1 control-label">HSV</label>
+          <div class="col-md-10">
+            <input type="text" id="hsv-color"/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <label for="color-picker" class="col-sm-1 control-label">Hex</label>
+          <div class="col-md-10">
+            <div style="box-sizing: border-box;">
+              <input type="text" id='color-picker' value="" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/charCounter/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/charCounter/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script src="/tools/js/iris/iris.min.js"></script>
+    <script>
+      function init(){
+        renderColorPicker("#000000");
+        $('#color-picker').val("#bada55");
+        $('#color-picker').trigger("change");
+      }
+      
+      $(document).ready(function(){
+        
+        init();
+        $("#name-color").on("change", function(){
+          renderColorPicker(name2CodeObj[$(this).val().toLowerCase()]);
+        });
+        $("#rgb-color").on("change", function(){
+          renderColorPicker($(this).val());
+        });
+        $("#hsl-color").on("blur", function(){
+          renderColorPicker($(this).val());
+        });
+        $("#hsv-color").on("blur", function(){
+          renderColorPicker($(this).val());
+        });
+      });
+      
+      function renderColorPicker(color){
+        var width = $("#color-picker").parent().width();
+        $('#color-picker').iris({
+          color: color,
+          width: width,
+          hide: false,
+          palettes: true,
+          change: function(event, ui) {
+            var rgb = ui.color.toRgb();
+            var rgbStr = rgb.r+","+rgb.g+","+rgb.b;
+            rgbStr = "rgb("+rgbStr+")";
+            var hsl = ui.color.toHsl();
+            var hslStr = hsl.h+","+hsl.s+"%,"+hsl.l+"%";
+            hslStr = "hsl("+hslStr+")";
+            var hsv = ui.color.toHsv();
+            var hsvStr = hsv.h+","+hsv.s+"%,"+hsv.v+"%";
+            hsvStr = "hsl("+hsvStr+")";
+            $("#rgb-color").val(rgbStr);
+            $("#hsl-color").val(hslStr);
+            $("#hsv-color").val(hsvStr);
+            var name = code2NameObj[ui.color.toString()];
+            $("#name-color").val(name);
+            
+            $("#name-color").css('background-color', ui.color.toString());
+            // 글씨 보색 표현
+            var hexCode = ui.color.toString().replace("#", "");
+            var complementaryColor = ("0xffffff"-("0x"+hexCode)).toString(16);
+            $("#name-color").css("color", "#"+padding_left(complementaryColor, "0",6));
+          }
+        });
+      }
+      
+      $(window).resize(function () {
+        waitForFinalEvent(function(){
+          var color = $('#color-picker').val();
+          renderColorPicker(color);
+        }, 500, "windowResize");
+      });
+      
+      function padding_left(s, c, n) {
+        if (! s || ! c || s.length >= n) {
+          return s;
+        }
+        var max = (n - s.length)/c.length;
+        for (var i = 0; i < max; i++) {
+          s = c + s;
+        }
+        return s;
+      }
+      
+      var name2CodeObj = {
+        "aliceblue":"#f0f8ff",
+        "antiquewhite":"#faebd7",
+        "aqua":"#00ffff",
+        "aquamarine":"#7fffd4",
+        "azure":"#f0ffff",
+        "beige":"#f5f5dc",
+        "bisque":"#ffe4c4",
+        "black":"#000000",
+        "blanchedalmond":"#ffebcd",
+        "blue":"#0000ff",
+        "blueviolet":"#8a2be2",
+        "brown":"#a52a2a",
+        "burlywood":"#deb887",
+        "cadetblue":"#5f9ea0",
+        "chartreuse":"#7fff00",
+        "chocolate":"#d2691e",
+        "coral":"#ff7f50",
+        "cornflowerblue":"#6495ed",
+        "cornsilk":"#fff8dc",
+        "crimson":"#dc143c",
+        "cyan":"#00ffff",
+        "darkblue":"#00008b",
+        "darkcyan":"#008b8b",
+        "darkgoldenrod":"#b8860b",
+        "darkgray":"#a9a9a9",
+        "darkgrey":"#a9a9a9",
+        "darkgreen":"#006400",
+        "darkkhaki":"#bdb76b",
+        "darkmagenta":"#8b008b",
+        "darkolivegreen":"#556b2f",
+        "darkorange":"#ff8c00",
+        "darkorchid":"#9932cc",
+        "darkred":"#8b0000",
+        "darksalmon":"#e9967a",
+        "darkseagreen":"#8fbc8f",
+        "darkslateblue":"#483d8b",
+        "darkslategray":"#2f4f4f",
+        "darkslategrey":"#2f4f4f",
+        "darkturquoise":"#00ced1",
+        "darkviolet":"#9400d3",
+        "deeppink":"#ff1493",
+        "deepskyblue":"#00bfff",
+        "dimgray":"#696969",
+        "dimgrey":"#696969",
+        "dodgerblue":"#1e90ff",
+        "firebrick":"#b22222",
+        "floralwhite":"#fffaf0",
+        "forestgreen":"#228b22",
+        "fuchsia":"#ff00ff",
+        "gainsboro":"#dcdcdc",
+        "ghostwhite":"#f8f8ff",
+        "gold":"#ffd700",
+        "goldenrod":"#daa520",
+        "gray":"#808080",
+        "grey":"#808080",
+        "green":"#008000",
+        "greenyellow":"#adff2f",
+        "honeydew":"#f0fff0",
+        "hotpink":"#ff69b4",
+        "indianred":"#cd5c5c",
+        "indigo":"#4b0082",
+        "ivory":"#fffff0",
+        "khaki":"#f0e68c",
+        "lavender":"#e6e6fa",
+        "lavenderblush":"#fff0f5",
+        "lawngreen":"#7cfc00",
+        "lemonchiffon":"#fffacd",
+        "lightblue":"#add8e6",
+        "lightcoral":"#f08080",
+        "lightcyan":"#e0ffff",
+        "lightgoldenrodyellow":"#fafad2",
+        "lightgray":"#d3d3d3",
+        "lightgrey":"#d3d3d3",
+        "lightgreen":"#90ee90",
+        "lightpink":"#ffb6c1",
+        "lightsalmon":"#ffa07a",
+        "lightseagreen":"#20b2aa",
+        "lightskyblue":"#87cefa",
+        "lightslategray":"#778899",
+        "lightslategrey":"#778899",
+        "lightsteelblue":"#b0c4de",
+        "lightyellow":"#ffffe0",
+        "lime":"#00ff00",
+        "limegreen":"#32cd32",
+        "linen":"#faf0e6",
+        "magenta":"#ff00ff",
+        "maroon":"#800000",
+        "mediumaquamarine":"#66cdaa",
+        "mediumblue":"#0000cd",
+        "mediumorchid":"#ba55d3",
+        "mediumpurple":"#9370db",
+        "mediumseagreen":"#3cb371",
+        "mediumslateblue":"#7b68ee",
+        "mediumspringgreen":"#00fa9a",
+        "mediumturquoise":"#48d1cc",
+        "mediumvioletred":"#c71585",
+        "midnightblue":"#191970",
+        "mintcream":"#f5fffa",
+        "mistyrose":"#ffe4e1",
+        "moccasin":"#ffe4b5",
+        "navajowhite":"#ffdead",
+        "navy":"#000080",
+        "oldlace":"#fdf5e6",
+        "olive":"#808000",
+        "olivedrab":"#6b8e23",
+        "orange":"#ffa500",
+        "orangered":"#ff4500",
+        "orchid":"#da70d6",
+        "palegoldenrod":"#eee8aa",
+        "palegreen":"#98fb98",
+        "paleturquoise":"#afeeee",
+        "palevioletred":"#db7093",
+        "papayawhip":"#ffefd5",
+        "peachpuff":"#ffdab9",
+        "peru":"#cd853f",
+        "pink":"#ffc0cb",
+        "plum":"#dda0dd",
+        "powderblue":"#b0e0e6",
+        "purple":"#800080",
+        "rebeccapurple":"#663399",
+        "red":"#ff0000",
+        "rosybrown":"#bc8f8f",
+        "royalblue":"#4169e1",
+        "saddlebrown":"#8b4513",
+        "salmon":"#fa8072",
+        "sandybrown":"#f4a460",
+        "seagreen":"#2e8b57",
+        "seashell":"#fff5ee",
+        "sienna":"#a0522d",
+        "silver":"#c0c0c0",
+        "skyblue":"#87ceeb",
+        "slateblue":"#6a5acd",
+        "slategray":"#708090",
+        "slategrey":"#708090",
+        "snow":"#fffafa",
+        "springgreen":"#00ff7f",
+        "steelblue":"#4682b4",
+        "tan":"#d2b48c",
+        "teal":"#008080",
+        "thistle":"#d8bfd8",
+        "tomato":"#ff6347",
+        "turquoise":"#40e0d0",
+        "violet":"#ee82ee",
+        "wheat":"#f5deb3",
+        "white":"#ffffff",
+        "whitesmoke":"#f5f5f5",
+        "yellow":"#ffff00",
+        "yellowgreen":"#9acd32"
+      };
+      
+      var code2NameObj = {
+        "#f0f8ff":"aliceblue",
+        "#faebd7":"antiquewhite",
+        "#00ffff":"aqua",
+        "#7fffd4":"aquamarine",
+        "#f0ffff":"azure",
+        "#f5f5dc":"beige",
+        "#ffe4c4":"bisque",
+        "#000000":"black",
+        "#ffebcd":"blanchedalmond",
+        "#0000ff":"blue",
+        "#8a2be2":"blueviolet",
+        "#a52a2a":"brown",
+        "#deb887":"burlywood",
+        "#5f9ea0":"cadetblue",
+        "#7fff00":"chartreuse",
+        "#d2691e":"chocolate",
+        "#ff7f50":"coral",
+        "#6495ed":"cornflowerblue",
+        "#fff8dc":"cornsilk",
+        "#dc143c":"crimson",
+        "#00ffff":"cyan",
+        "#00008b":"darkblue",
+        "#008b8b":"darkcyan",
+        "#b8860b":"darkgoldenrod",
+        "#a9a9a9":"darkgray",
+        "#a9a9a9":"darkgrey",
+        "#006400":"darkgreen",
+        "#bdb76b":"darkkhaki",
+        "#8b008b":"darkmagenta",
+        "#556b2f":"darkolivegreen",
+        "#ff8c00":"darkorange",
+        "#9932cc":"darkorchid",
+        "#8b0000":"darkred",
+        "#e9967a":"darksalmon",
+        "#8fbc8f":"darkseagreen",
+        "#483d8b":"darkslateblue",
+        "#2f4f4f":"darkslategray",
+        "#2f4f4f":"darkslategrey",
+        "#00ced1":"darkturquoise",
+        "#9400d3":"darkviolet",
+        "#ff1493":"deeppink",
+        "#00bfff":"deepskyblue",
+        "#696969":"dimgray",
+        "#696969":"dimgrey",
+        "#1e90ff":"dodgerblue",
+        "#b22222":"firebrick",
+        "#fffaf0":"floralwhite",
+        "#228b22":"forestgreen",
+        "#ff00ff":"fuchsia",
+        "#dcdcdc":"gainsboro",
+        "#f8f8ff":"ghostwhite",
+        "#ffd700":"gold",
+        "#daa520":"goldenrod",
+        "#808080":"gray",
+        "#808080":"grey",
+        "#008000":"green",
+        "#adff2f":"greenyellow",
+        "#f0fff0":"honeydew",
+        "#ff69b4":"hotpink",
+        "#cd5c5c":"indianred",
+        "#4b0082":"indigo",
+        "#fffff0":"ivory",
+        "#f0e68c":"khaki",
+        "#e6e6fa":"lavender",
+        "#fff0f5":"lavenderblush",
+        "#7cfc00":"lawngreen",
+        "#fffacd":"lemonchiffon",
+        "#add8e6":"lightblue",
+        "#f08080":"lightcoral",
+        "#e0ffff":"lightcyan",
+        "#fafad2":"lightgoldenrodyellow",
+        "#d3d3d3":"lightgray",
+        "#d3d3d3":"lightgrey",
+        "#90ee90":"lightgreen",
+        "#ffb6c1":"lightpink",
+        "#ffa07a":"lightsalmon",
+        "#20b2aa":"lightseagreen",
+        "#87cefa":"lightskyblue",
+        "#778899":"lightslategray",
+        "#778899":"lightslategrey",
+        "#b0c4de":"lightsteelblue",
+        "#ffffe0":"lightyellow",
+        "#00ff00":"lime",
+        "#32cd32":"limegreen",
+        "#faf0e6":"linen",
+        "#ff00ff":"magenta",
+        "#800000":"maroon",
+        "#66cdaa":"mediumaquamarine",
+        "#0000cd":"mediumblue",
+        "#ba55d3":"mediumorchid",
+        "#9370db":"mediumpurple",
+        "#3cb371":"mediumseagreen",
+        "#7b68ee":"mediumslateblue",
+        "#00fa9a":"mediumspringgreen",
+        "#48d1cc":"mediumturquoise",
+        "#c71585":"mediumvioletred",
+        "#191970":"midnightblue",
+        "#f5fffa":"mintcream",
+        "#ffe4e1":"mistyrose",
+        "#ffe4b5":"moccasin",
+        "#ffdead":"navajowhite",
+        "#000080":"navy",
+        "#fdf5e6":"oldlace",
+        "#808000":"olive",
+        "#6b8e23":"olivedrab",
+        "#ffa500":"orange",
+        "#ff4500":"orangered",
+        "#da70d6":"orchid",
+        "#eee8aa":"palegoldenrod",
+        "#98fb98":"palegreen",
+        "#afeeee":"paleturquoise",
+        "#db7093":"palevioletred",
+        "#ffefd5":"papayawhip",
+        "#ffdab9":"peachpuff",
+        "#cd853f":"peru",
+        "#ffc0cb":"pink",
+        "#dda0dd":"plum",
+        "#b0e0e6":"powderblue",
+        "#800080":"purple",
+        "#663399":"rebeccapurple",
+        "#ff0000":"red",
+        "#bc8f8f":"rosybrown",
+        "#4169e1":"royalblue",
+        "#8b4513":"saddlebrown",
+        "#fa8072":"salmon",
+        "#f4a460":"sandybrown",
+        "#2e8b57":"seagreen",
+        "#fff5ee":"seashell",
+        "#a0522d":"sienna",
+        "#c0c0c0":"silver",
+        "#87ceeb":"skyblue",
+        "#6a5acd":"slateblue",
+        "#708090":"slategray",
+        "#708090":"slategrey",
+        "#fffafa":"snow",
+        "#00ff7f":"springgreen",
+        "#4682b4":"steelblue",
+        "#d2b48c":"tan",
+        "#008080":"teal",
+        "#d8bfd8":"thistle",
+        "#ff6347":"tomato",
+        "#40e0d0":"turquoise",
+        "#ee82ee":"violet",
+        "#f5deb3":"wheat",
+        "#ffffff":"white",
+        "#f5f5f5":"whitesmoke",
+        "#ffff00":"yellow",
+        "#9acd32":"yellowgreen"
+      };
+    </script>
+  </body>
+</html>
