@@ -174,6 +174,14 @@
             }, 1000);
         }
         
+        $(function() {
+          $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
+            function(json) {
+              $("#publicIp").text(json.ip);
+            }
+          );
+        });
+        
         //Test: Print the IP addresses into the console
         getIPs(function(ip){
           //local IPs
@@ -181,15 +189,6 @@
             var elem = $("<font>", {"color":"orchid"}).append($("<h1>").append($("<strong>").text("내부 아이피 주소 : "+ip)));
             $("#ipList").append(elem);
           }
-        });
-        
-        
-        $(function() {
-          $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
-            function(json) {
-              $("#publicIp").text(json.ip);
-            }
-          );
         });
         
       });
