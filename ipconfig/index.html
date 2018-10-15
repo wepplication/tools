@@ -56,43 +56,31 @@
                     </a>
                   </h4>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                  <div class="panel-body">
-                    ipconfig : 내 컴퓨터의 네트워크설정확인(IP주소확인)<br>
-                    ipconfig /all : 자세히표시 mac주소, dns서버등 표시<br>
-                    ipconfig /release : 현재 내 모든 어댑터(랜카드)의 IP(IPv4)를 반납<br>
-                    ipconfig /release6 : 현재 내 IP(IPv6)를 반납<br>
-                    ipconfig /renew : 아이피를 IP(IPv4) 다시 받아오기<br>
-                    ipconfig /renew6 : 아이피를 IP(IPv6) 다시 받아오기<br>
-                    ipconfig /displaydns : DNS 캐시 정보 보기<br>
-                    ipconfig /flushdns : DNS 캐시 초기화<br>
-                    ipconfig /registerdns : 모든 DHCP 임대를 새로 고치고 DNS 이름을 다시 등록<br>
-                    control netconnections : 네트워크 연결<br>
-                    tracert IP주소[또는 도메인] : IP 패킷이 목적지에 도달하기 위해 거치는 경로추적 Trace Route<br>
-                    ping IP주소[또는 도메인] : 해당IP 접속 테스트하기(접속여부, 응답시간, 패킷손실율 확인)<br>
-                    pathping IP주소[또는 도메인] : 경로추적과 접속테스트 같이하기(tracert + ping)<br>
-                    route print : 라우팅 테이블 확인<br>
-                    netstat : 내 컴퓨터와 접속한 TCP/IP 네트워크 연결 표시<br>
-                    netstat -a : 모든 포트표시, 컴퓨터 이름으로 표시<br>
-                    netstat -n : 접속된 사용자 IP주소로 표시<br>
-                    netstat -an : 모든 접속 내용을 IP로 표시<br>
-                    nbtstat -a [컴퓨터이름] : 컴퓨터이름으로 정보 확인<br>
-                    nbtstat -A [IP 주소] : IP주소로 정보 확인<br>
-                    net share : 현재 공유된 자원확인<br>
-                    net view : 네트워크 접속자 확인<br>
-                    net [start/stop] [실행/중지하려는 서비스명] : 윈도우내 프로그램의 실행과 중지<br>
-                    arp -a : IP 주소와 매칭되는 MAC 주소 표시<br>
-                    hostname : 현재 호스트의 이름 표시<br>
-                    nslookup [도메인] : DNS서버에 도메인의 IP 주소 찾기<br>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div><!-- row -->
         
+        <!-- 댓글 -->
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_config = function () {
+          this.page.url = "https://wepplication.github.io/tools/ipconfig/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "/tools/ipconfig/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wepplication.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <!-- /댓글 -->
+        
       </div><!-- container -->
     </main><!-- main -->
+    
     
     <footer w3-include-html="/tools/includes/footer.html"></footer>
     
@@ -104,102 +92,102 @@
     <script src="/tools/js/common.js"></script>
     <script>
       $(document).ready(function(){
+      
+        //get the IP addresses associated with an account
+        function getIPs(callback){
+            var ip_dups = {};
         
-      });
-      
-      //get the IP addresses associated with an account
-      function getIPs(callback){
-          var ip_dups = {};
-      
-          //compatibility for firefox and chrome
-          var RTCPeerConnection = window.RTCPeerConnection
-              || window.mozRTCPeerConnection
-              || window.webkitRTCPeerConnection;
-          var useWebKit = !!window.webkitRTCPeerConnection;
-      
-          //bypass naive webrtc blocking using an iframe
-          if(!RTCPeerConnection){
-              //NOTE: you need to have an iframe in the page right above the script tag
-              //
-              //<iframe id="iframe" sandbox="allow-same-origin" style="display: none"></iframe>
-              //<script>...getIPs called in here...
-              //
-              var win = iframe.contentWindow;
-              RTCPeerConnection = win.RTCPeerConnection
-                  || win.mozRTCPeerConnection
-                  || win.webkitRTCPeerConnection;
-              useWebKit = !!win.webkitRTCPeerConnection;
-          }
-      
-          //minimal requirements for data connection
-          var mediaConstraints = {
-              optional: [{RtpDataChannels: true}]
-          };
-      
-          var servers = {iceServers: [{urls: "stun:stun.services.mozilla.com"}]};
-      
-          //construct a new RTCPeerConnection
-          var pc = new RTCPeerConnection(servers, mediaConstraints);
-      
-          function handleCandidate(candidate){
-              //match just the IP address
-              var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
-              var ip_addr = ip_regex.exec(candidate)[1];
-      
-              //remove duplicates
-              if(ip_dups[ip_addr] === undefined)
-                  callback(ip_addr);
-      
-              ip_dups[ip_addr] = true;
-          }
-      
-          //listen for candidate events
-          pc.onicecandidate = function(ice){
-      
-              //skip non-candidate events
-              if(ice.candidate)
-                  handleCandidate(ice.candidate.candidate);
-          };
-      
-          //create a bogus data channel
-          pc.createDataChannel("");
-      
-          //create an offer sdp
-          pc.createOffer(function(result){
-      
-              //trigger the stun server request
-              pc.setLocalDescription(result, function(){}, function(){});
-      
-          }, function(){});
-      
-          //wait for a while to let everything done
-          setTimeout(function(){
-              //read candidate info from local description
-              var lines = pc.localDescription.sdp.split('\n');
-      
-              lines.forEach(function(line){
-                  if(line.indexOf('a=candidate:') === 0)
-                      handleCandidate(line);
-              });
-          }, 1000);
-      }
-      
-      //Test: Print the IP addresses into the console
-      getIPs(function(ip){
-        //local IPs
-        if (ip.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/)){
-          var elem = $("<font>", {"color":"orchid"}).append($("<h1>").append($("<strong>").text("내부 아이피 주소 : "+ip)));
-          $("#ipList").append(elem);
+            //compatibility for firefox and chrome
+            var RTCPeerConnection = window.RTCPeerConnection
+                || window.mozRTCPeerConnection
+                || window.webkitRTCPeerConnection;
+            var useWebKit = !!window.webkitRTCPeerConnection;
+        
+            //bypass naive webrtc blocking using an iframe
+            if(!RTCPeerConnection){
+                //NOTE: you need to have an iframe in the page right above the script tag
+                //
+                //<iframe id="iframe" sandbox="allow-same-origin" style="display: none"></iframe>
+                //<script>...getIPs called in here...
+                //
+                var win = iframe.contentWindow;
+                RTCPeerConnection = win.RTCPeerConnection
+                    || win.mozRTCPeerConnection
+                    || win.webkitRTCPeerConnection;
+                useWebKit = !!win.webkitRTCPeerConnection;
+            }
+        
+            //minimal requirements for data connection
+            var mediaConstraints = {
+                optional: [{RtpDataChannels: true}]
+            };
+        
+            var servers = {iceServers: [{urls: "stun:stun.services.mozilla.com"}]};
+        
+            //construct a new RTCPeerConnection
+            var pc = new RTCPeerConnection(servers, mediaConstraints);
+        
+            function handleCandidate(candidate){
+                //match just the IP address
+                var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
+                var ip_addr = ip_regex.exec(candidate)[1];
+        
+                //remove duplicates
+                if(ip_dups[ip_addr] === undefined)
+                    callback(ip_addr);
+        
+                ip_dups[ip_addr] = true;
+            }
+        
+            //listen for candidate events
+            pc.onicecandidate = function(ice){
+        
+                //skip non-candidate events
+                if(ice.candidate)
+                    handleCandidate(ice.candidate.candidate);
+            };
+        
+            //create a bogus data channel
+            pc.createDataChannel("");
+        
+            //create an offer sdp
+            pc.createOffer(function(result){
+        
+                //trigger the stun server request
+                pc.setLocalDescription(result, function(){}, function(){});
+        
+            }, function(){});
+        
+            //wait for a while to let everything done
+            setTimeout(function(){
+                //read candidate info from local description
+                var lines = pc.localDescription.sdp.split('\n');
+        
+                lines.forEach(function(line){
+                    if(line.indexOf('a=candidate:') === 0)
+                        handleCandidate(line);
+                });
+            }, 1000);
         }
-      });
-      
-      
-      $(function() {
-        $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
-          function(json) {
-            $("#publicIp").text(json.ip);
+        
+        //Test: Print the IP addresses into the console
+        getIPs(function(ip){
+          //local IPs
+          if (ip.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/)){
+            var elem = $("<font>", {"color":"orchid"}).append($("<h1>").append($("<strong>").text("내부 아이피 주소 : "+ip)));
+            $("#ipList").append(elem);
           }
-        );
+        });
+        
+        
+        $(function() {
+          $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
+            function(json) {
+              $("#publicIp").text(json.ip);
+            }
+          );
+        });
+        
       });
     </script>
   </body>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>GIF 생성 / 추출기</title>
+    <meta name="description" content="온라인 움짤,짤방 동영상 gif 만들기 및 GIF 사진 이미지 분리 추출기">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GIF 생성 / 추출기">
+    <meta property="og:description" content="온라인 움짤,짤방 동영상 gif 만들기 및 GIF 사진 이미지 분리 추출기">
+    <meta property="og:url" content="https://wepplication.github.io/tools/aniGifGen">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+    <link rel="stylesheet" href="/tools/js/jqueryFileupload/css/jquery.fileupload.css">
+    
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>애니메이션 GIF 생성기</b></h1>
+              온라인으로 간편하게 움짤,짤방 동영상 gif 생성하는 사이트<br>
+              생성한 움짤, 짤방 gif에서 이미지 추출도 가능합니다.<br>
+              사이즈가 동일한 이미지들을 첨부하세요. 모바일이나 인터넷익스프롤러의 경우 작업 시간이 오래 소요됩니다.<br>
+              모바일의 경우 이미지를 꾸욱 누르고 있으면 저장 하실 수 있습니다.
+            </div>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- Nav tabs -->
+            <ul id="myTabs" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+              <li role="presentation" class="active"><a href="#img2gifTab" aria-controls="img2gifTab" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">IMGS->GIF</span></a></li>
+              <li role="presentation" class="next"><a href="#gif2imgTab" aria-controls="gif2imgTab" role="tab" data-toggle="tab"><span class="text">GIF->IMGS</span></a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!--gif 생성 탭-->
+          <div role="tabpanel" class="tab-pane fade in active" id="img2gifTab">
+            <br/>
+            <div class="row">
+              <label for="delay" class="col-sm-1 control-label">간격</label>
+              <div class="col-sm-10 form-inline">
+                <div class="input-group">
+                <input type="number" class="form-control" id="delay" name="delay" placeholder=0.5 value=0.5 min=0.1 step=0.1>
+                <div class="input-group-addon">초</div>
+                </div>
+              </div><!-- /col-sm-10 -->
+            </div>
+            <br/>
+            <div class="row">
+              <label for="repeat" class="col-sm-1 control-label">반복</label>
+              <div class="col-sm-10 form-inline">
+                <div class="btn-group" id="repeat" data-toggle="buttons">
+                  <label class="btn btn-primary active">
+                    <input type="radio" name="repeat" autocomplete="off" value="0" checked> 반복
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="repeat" autocomplete="off" value="-1"> 1회
+                  </label>
+                </div>
+              </div><!-- /col-sm-10 -->
+            </div>
+            <br/>
+            <div class="row">
+              <label for="bgColor" class="col-sm-1 control-label">배경</label>
+              <div class="col-sm-10 form-inline">
+                <div class="btn-group" id="bgColor" data-toggle="buttons">
+                  <label class="btn btn-primary active">
+                    <input type="radio" name="bgColor" autocomplete="off" value="#fff" checked> white
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="bgColor" autocomplete="off" value="#000"> black
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="bgColor" autocomplete="off" value="transparent"> 투명
+                  </label>
+                </div>
+              </div><!-- /col-sm-10 -->
+            </div>
+            <br/>
+            <div class="row">
+              <label for="" class="col-sm-1 control-label">이미지</label>
+              <div class="col-sm-10">
+                <div id="files" class="files"></div>
+                <span id="uploadBtn" class="btn btn-success fileinput-button">
+                  <i class="glyphicon glyphicon-plus"></i>
+                  <span>Add file</span>
+                  <input id="fileupload" name="fileupload" type="file" accept="image/*" multiple>
+                </span>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <div id="fileuploadBar" class="progress" style="display:none;">
+                  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 0%"></div>
+                </div>
+                <div id="thumbnails">
+                  <!--<div class="col-xs-6 col-md-3">-->
+                  <!--  <a href="#" class="thumbnail">-->
+                  <!--    <img src="..." alt="...">-->
+                  <!--  </a>-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <label for="" class="col-sm-1 control-label">GIF</label>
+              <div class="col-md-10">
+                <button type="button" id="createBtn" class="btn btn-primary" autocomplete="off">생성</button>
+                <button type="button" id="clearBtn" class="btn btn-primary" autocomplete="off">초기화</button>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <div id="gifCreateBar" class="progress" style="display:none;">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 0%"></div>
+                </div>
+                <img id="gifImg" class="img-responsive center-block" style="display:none;" src="" />
+              </div>
+            </div>
+            <br/>
+            <div class="row hidden-xs hidden-sm"> <!-- 모바일에서 다운로드 되지 않아 보이지 않게 함 -->
+              <div class="col-md-10 col-md-offset-1">
+                <button type="button" id="downloadBtn" class="btn btn-primary" autocomplete="off" style="display:none;">다운로드</button>
+              </div>
+            </div>
+          </div><!--gif 생성 탭-->
+          <!--이미지 추출 탭-->
+          <div role="tabpanel" class="tab-pane fade" id="gif2imgTab">
+            <br/>
+            <div class="row">
+              <label for="bgColor" class="col-sm-1 control-label">배경</label>
+              <div class="col-sm-10 form-inline">
+                <div class="btn-group" id="isClear" data-toggle="buttons">
+                  <label class="btn btn-primary active">
+                    <input type="radio" name="isClear" autocomplete="off" value="false" checked> 불투명
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="isClear" autocomplete="off" value="true"> 투명
+                  </label>
+                </div>
+              </div><!-- /col-sm-10 -->
+            </div>
+            <br/>
+            <div class="row">
+              <label for="" class="col-sm-1 control-label">GIF</label>
+              <div class="col-sm-10">
+                <div id="files" class="files"></div>
+                <span id="gifUploadBtn" class="btn btn-success fileinput-button">
+                  <i class="glyphicon glyphicon-plus"></i>
+                  <span>Select file</span>
+                  <input id="gifupload" name="gifupload" type="file" accept="image/gif">
+                </span>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <img id="uploadgifImg" class="img-responsive center-block" style="display:none;" src="" />
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <label for="" class="col-sm-1 control-label">이미지</label>
+              <div class="col-md-10">
+                <div id="gifSplitBar" class="progress" style="display:none;">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 0%"></div>
+                </div>
+                <div id="outImgs">
+                  <!--<div class="col-xs-6 col-md-3">-->
+                  <!--  <a href="#" class="thumbnail">-->
+                  <!--    <img src="..." alt="...">-->
+                  <!--  </a>-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="row hidden-xs hidden-sm"> <!-- 모바일에서 다운로드 되지 않아 보이지 않게 함 -->
+              <div class="col-md-10 col-md-offset-1">
+                <button type="button" id="zipBtn" class="btn btn-primary" autocomplete="off" style="display:none;">다운로드</button>
+              </div>
+            </div>
+          </div><!--이미지 추출 탭-->
+        </div><!-- Tab panes -->
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <!-- 댓글 -->
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_config = function () {
+          this.page.url = "https://wepplication.github.io/tools/aniGifGen/";  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = "/tools/aniGifGen/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wepplication.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <!-- /댓글 -->
+    
+      </div><!-- container -->
+    
+      <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">preview</h4>
+              </div>
+              <div class="modal-body">
+                  <img src="" alt="" class="img-responsive center-block" />
+              </div>
+            </div>
+        </div>
+      </div>
+    </main><!-- main -->
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    <script src="/tools/js/gif/gif.js"></script>
+  	<script src="/tools/js/gifuctjs/gifuct-js.js"></script>
+  	<script src="/tools/js/FileSaver.min.js"></script>
+  	<script src="/tools/js/jszip.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        
+        var imgWidth, imgHeight, objUrl, BLOB, zip;
+        // Add file 버튼
+        $('input#fileupload').on("change", function(){
+          $("#fileuploadBar .progress-bar").css("width", "0%");
+          $("#fileuploadBar .progress-bar").width("0%");
+          $("#fileuploadBar .progress-bar").addClass("active");
+          $("#fileuploadBar").show();
+          $("#gifImg").hide();
+          $("#gifImg").attr("src", "");
+          $("#downloadBtn").hide();
+          $("#uploadBtn").attr("disabled", "disabled");
+          $("#uploadBtn span").text('loading...');
+          $("#createBtn").attr("disabled", "disabled");
+          $("#clearBtn").attr("disabled", "disabled");
+          var fileCount = this.files.length;
+          var cnt = 1;
+          readmultifiles(this.files, function(dataUrl){
+            //window.console.log("load file");
+            var progRange = Math.round(cnt/fileCount * 100);
+            $("#fileuploadBar .progress-bar").css("width", progRange+"%");
+            $("#fileuploadBar .progress-bar").width(progRange+"%");
+            cnt++;
+            
+            var img = new Image;
+            img.src = dataUrl;
+            imgWidth = img.width;
+            imgHeight = img.height;
+            var divElement = $('<div>',{class:"col-xs-3 col-md-2"});
+            var aElement = $('<a>',{href:"#", class:"thumbnail", "data-toggle":"modal", "data-target":"#lightbox"});
+            var imgElement = $('<img>',{src:dataUrl});
+            $('#thumbnails').append(divElement.append(aElement.append(imgElement)));
+            
+          }, function(){
+            //window.console.log("fileread done");
+            //file change 이벤트라서 같은 파일 올리면 안올라가는 현상으로 초기화 해줌
+            var input = $("#fileupload");
+            input.replaceWith(input.val('').clone(true));
+            $("#uploadBtn span").text('Add file');
+            $("#uploadBtn").removeAttr("disabled");
+            //$("#fileuploadBar").hide();
+            $("#fileuploadBar .progress-bar").removeClass("active");
+            $("#createBtn").removeAttr("disabled");
+            $("#clearBtn").removeAttr("disabled");
+          });
+        });
+        
+        // 생성버튼
+        $("#createBtn").on("click", function(){
+          if(objUrl){
+            window.URL.revokeObjectURL(objUrl);
+            objUrl = null;
+          }
+          if($('#thumbnails img').length == 0) return;
+          
+          var $btn = $(this).button('loading');
+          $("#clearBtn").attr("disabled", "disabled");
+          
+          var repeat = $("#repeat input:radio:checked").val();
+          var bgColor = $("#bgColor input:radio:checked").val();
+          
+          var option = new Object();
+          option.workers = 2;
+          option.quality = 1;
+          option.repeat = repeat;
+          option.workerScript = "/tools/js/gif/gif.worker.js";
+          option.width = imgWidth;
+          option.height = imgHeight;
+          if(bgColor == "transparent"){
+            option.transparent = "rgba(0,0,0,0)";
+          }else{
+            option.background = bgColor;
+          }
+          
+          var gif = new GIF(option);
+          var frameDelay = $("#delay").val()*1000;
+          $("#thumbnails img").each(function(i){
+            gif.addFrame(this, {delay: frameDelay});
+          });
+          
+          gif.on('start', function() {
+            $("#gifCreateBar .progress-bar").css("width", "0%");
+            $("#gifCreateBar .progress-bar").width("0%");
+            $("#gifCreateBar .progress-bar").addClass("active");
+            $("#gifCreateBar").show();
+          });
+          
+          gif.on('progress', function(p) {
+            $("#gifCreateBar .progress-bar").css("width", Math.round(p * 100)+"%");
+          });
+          
+          gif.on('finished', function(blob) {
+            window.URL = window.URL || window.webkitURL;
+            objUrl = window.URL.createObjectURL(blob);
+            BLOB = blob;
+            $("#gifImg").attr("src", objUrl);
+            $("#gifImg").show();
+            $("#downloadBtn").show();
+            //$("#gifCreateBar").hide();
+            $("#gifCreateBar .progress-bar").removeClass("active");
+            $("#clearBtn").removeAttr("disabled");
+            $btn.button('reset');
+          });
+          gif.render();
+        });
+        
+        // 다운로드 버튼
+        $("#downloadBtn").on("click", function(){
+          saveAs(BLOB, "result.gif");
+        });
+        // 초기화 버튼
+        $("#clearBtn").on("click", function(){
+          if(objUrl){
+            window.URL.revokeObjectURL(objUrl);
+            objUrl = null;
+          }
+          var input = $("#fileupload");
+          input.replaceWith(input.val('').clone(true));
+          $("#uploadBtn span").text('Select file');
+          $("#uploadBtn").removeAttr("disabled");
+          $("#fileuploadBar .progress-bar").css("width", "0%");
+          $("#fileuploadBar .progress-bar").width("0%");
+          $("#fileuploadBar .progress-bar").addClass("active");
+          $("#gifCreateBar .progress-bar").css("width", "0%");
+          $("#gifCreateBar .progress-bar").width("0%");
+          $("#gifCreateBar .progress-bar").addClass("active");
+          $("#fileuploadBar").hide();
+          $("#gifCreateBar").hide();
+          $('#thumbnails').children().remove();
+          $("#gifImg").attr("src", "");
+          $("#gifImg").hide();
+          $("#downloadBtn").hide();
+        });
+
+
+        // Select file 버튼
+        $('input#gifupload').on("change", function(){
+          $("#uploadgifImg").hide();
+          $("#uploadgifImg").attr("src", "");
+          $("#gifUploadBtn").attr("disabled", "disabled");
+          $("#gifUploadBtn span").text('loading...');
+          $('#outImgs').children().remove();
+          $("#zipBtn").hide();
+          
+          var isClear = ($("#isClear input:radio:checked").val() === "true");
+          var file     = this.files[0];
+          var reader = new FileReader();
+          reader.onload = function () {
+	          var blob = new Blob([reader.result]);
+          	window.URL = window.URL || window.webkitURL;
+          	var blobURL = window.URL.createObjectURL(blob);
+            $("#uploadgifImg").attr("src", blobURL);
+            $("#uploadgifImg").show();
+          };
+          reader.onloadend = function(){
+            // gif에서 이미지 추출
+            // $("#gifSplitBar .progress-bar").css("width", "0%");
+            // $("#gifSplitBar .progress-bar").width("0%");
+            // $("#gifSplitBar .progress-bar").addClass("active");
+            // $("#gifSplitBar").show();
+            var gif = new GIFUCT(reader.result);
+            var frames = gif.decompressFrames(true);
+            var frameImageData;
+            var canvas=document.createElement("canvas");
+            var ctx=canvas.getContext("2d");
+            var tempCanvas=document.createElement("canvas");
+            var tempCtx=tempCanvas.getContext("2d");
+            
+          	canvas.width = frames[0].dims.width;
+          	canvas.height = frames[0].dims.height;
+          	
+            zip = new JSZip();
+            for(var idx in frames){
+              var frame = frames[idx];
+              var dims = frame.dims;
+              if(!frameImageData || dims.width != frameImageData.width || dims.height != frameImageData.height){
+                tempCanvas.width = frame.dims.width;
+                tempCanvas.height = frame.dims.height;
+                frameImageData = tempCtx.createImageData(frame.dims.width, frame.dims.height);
+              }
+          	  frameImageData.data.set(frame.patch);
+              tempCtx.putImageData(frameImageData,0,0);
+	            
+	            if(isClear){
+	              ctx.clearRect(0, 0, canvas.width, canvas.height);
+	            }
+	            ctx.drawImage(tempCanvas, dims.left, dims.top);
+              
+              var divElement = $('<div>',{class:"col-xs-3 col-md-2"});
+              var aElement = $('<a>',{href:"#", class:"thumbnail", "data-toggle":"modal", "data-target":"#lightbox"});
+              var dataUrl = canvas.toDataURL();
+              var imgElement = $('<img>',{src:dataUrl});
+              zip.file(idx+".png", dataURItoBlob(dataUrl));
+              $('#outImgs').append(divElement.append(aElement.append(imgElement)));
+            }
+            $("#zipBtn").show();
+            $("#gifUploadBtn").removeAttr("disabled");
+            $("#gifUploadBtn span").text('Select file');
+            // $("#gifCreateBar .progress-bar").removeClass("active");
+            
+            //file change 이벤트라서 같은 파일 올리면 안올라가는 현상으로 초기화 해줌
+            var input = $("#gifupload");
+            input.replaceWith(input.val('').clone(true));
+          };
+          reader.readAsArrayBuffer(file);
+          
+        });// Select file 버튼
+        
+        
+        // 이미지 lightbox
+        var $lightbox = $('#lightbox');
+        $(document).on("click","[data-target='#lightbox']", function(event) {
+            var $img = $(this).find('img'), 
+                src = $img.attr('src'),
+                alt = $img.attr('alt')
+                
+            $lightbox.find('img').attr('src', src);
+            $lightbox.find('img').attr('alt', alt);
+        });
+        
+        $("#zipBtn").on("click", function(){
+          zip.generateAsync({type:"blob"}).then(function(content) {
+              saveAs(content, "outImgs.zip");
+          });
+        });
+        
+        // 모바일 동적 탭
+        $(document).on('show.bs.tab', '.nav-tabs-responsive [data-toggle="tab"]', function(e) {
+          var $target = $(e.target);
+          var $tabs = $target.closest('.nav-tabs-responsive');
+          var $current = $target.closest('li');
+          var $parent = $current.closest('li.dropdown');
+      		$current = $parent.length > 0 ? $parent : $current;
+          var $next = $current.next();
+          var $prev = $current.prev();
+          var updateDropdownMenu = function($el, position){
+            $el
+            	.find('.dropdown-menu')
+              .removeClass('pull-xs-left pull-xs-center pull-xs-right')
+            	.addClass( 'pull-xs-' + position );
+          };
+      
+          $tabs.find('>li').removeClass('next prev');
+          $prev.addClass('prev');
+          $next.addClass('next');
+          
+          updateDropdownMenu( $prev, 'left' );
+          updateDropdownMenu( $current, 'center' );
+          updateDropdownMenu( $next, 'right' );
+        });
+      });
+    </script>
+  </body>
+</html>
