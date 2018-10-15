@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>온라인 UUID 생성기</title>
+    <meta name="description" content="고유번호(UUID, GUID) 생성 사이트">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="온라인 UUID 생성기">
+    <meta property="og:description" content="고유번호(UUID, GUID) 생성 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/uuidGen/">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>UUID 생성기</b></h1>
+              RFC4122 알고리즘 GUID 생성 프로그램입니다.<br>
+              100% 중복이 안되진 않지만 중복 확률이 아주 낮습니다.
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <form id="form" class="form-horizontal">
+          <div class="form-group">
+            <label for="typeCombo" class="col-sm-1 control-label">타입</label>
+            <div class="col-sm-10 form-inline">
+              <select id="typeCombo" class="form-control">
+                <option value="v4">무작위</option>
+                <option value="v1">시간기반</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="genCnt" class="col-sm-1 control-label">생성수</label>
+            <div class="col-sm-10 form-inline">
+              <input type="number" class="form-control" id="genCnt" value="1"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="isUpperCase" class="col-sm-1 control-label">텍스트</label>
+            <div class="col-sm-10 form-inline">
+              <div class="btn-group" id="isUpperCase" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                  <input type="radio" name="isUpperCase" autocomplete="off" value="false" checked> 소문자
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="isUpperCase" autocomplete="off" value="true"> 대문자
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+              <button type="button" id="uuidGenBtn" class="btn btn-primary" autocomplete="off">생성</button>
+            </div>
+          </div>
+          
+          <hr/>
+          
+          <div class="form-group">
+            <div id="viewArea" class="col-sm-offset-1 col-sm-10">
+              <div class="panel panel-info">
+                <!--<div class="panel-body">-->
+                <!--  5d4f7b20-3612-11e6-94fb-474f9fdd9942-->
+                <!--</div>-->
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/uuidGen/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/uuidGen/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script src="/tools/js/uuid.js"></script>
+    <script>
+      $(document).ready(function(){
+        genUuid();
+        
+        // 생성 버튼
+        $('#uuidGenBtn').on('click', function(){
+          genUuid();
+        });
+        
+      });
+      
+      function genUuid(){
+          $("#viewArea .panel").children().remove();
+          
+          var genType = $("#typeCombo option:selected").val();
+          var genCnt = $("#genCnt").val();
+          var isUpperCase = ($("#isUpperCase input:radio:checked").val() === "true");
+          
+          for(var i=0; i<genCnt; i++){
+            var uuidText = uuid[genType]();
+            if(isUpperCase){
+              uuidText = uuidText.toUpperCase();
+            }
+            var panelDiv = $(document.createElement( "div" )).addClass( "panel-body").text(uuidText);
+            $("#viewArea .panel").append(panelDiv);
+          }
+      }
+    </script>
+  </body>
+</html>
