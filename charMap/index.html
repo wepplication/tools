@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,follow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>특수문자표 모음</title>
+    <meta name="description" content="KS X 1001 특수문자 / HTML 문자참조표 / 유니코드 리스트">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="특수문자표 모음">
+    <meta property="og:description" content="KS X 1001 특수문자 / HTML 문자참조표 / 유니코드 리스트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/charMap/">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>특수문자 표</b></h1>
+              KS X 1001 특수문자, HTML문자참조표, 유니코드 입니다.<br>
+              윈도우, 맥, 아이폰, 안드로이드폰 기본 폰트에서 깨지지 않는 특수 문자들만 모았습니다.<br>
+              원하는 특수문자를 복사하셔서 사용하시면 됩니다.
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div>
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
+            <li role="presentation" class="active"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자</span></a></li>
+            <li role="presentation" class="next"><a href="#htmlCharMap" aria-controls="htmlCharMap" role="tab" data-toggle="tab"><span class="text">HTML 문자참조 표</span></a></li>
+            <li role="presentation"><a href="#uniCodeMap" aria-controls="uniCodeMap" role="tab" data-toggle="tab"><span class="text">유니코드 표</span></a></li>
+            <li role="presentation"><a href="#uniCodeKrMap" aria-controls="uniCodeKrMap" role="tab" data-toggle="tab"><span class="text">유니코드(한글) 표</span></a></li>
+            <li role="presentation"><a href="#uniCodeCnMap" aria-controls="uniCodeCnMap" role="tab" data-toggle="tab"><span class="text">유니코드(한자) 표</span></a></li>
+          </ul>
+        
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="ksx1001CharMap"></div>
+            <div role="tabpanel" class="tab-pane fade" id="htmlCharMap"></div>
+            <div role="tabpanel" class="tab-pane fade" id="uniCodeMap"></div>
+            <div role="tabpanel" class="tab-pane fade" id="uniCodeKrMap"></div>
+            <div role="tabpanel" class="tab-pane fade" id="uniCodeCnMap"></div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/charMap/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/charMap/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script>
+      $(document).ready(function(){
+        $("#ksx1001CharMap").load("/tools/charMap/ksx1001CharMap.html");
+        $("#htmlCharMap").load("/tools/charMap/htmlCharMap.html");
+        $("#uniCodeMap").load("/tools/charMap/uniCodeMap.html");
+        $("#uniCodeKrMap").load("/tools/charMap/uniCodeKrMap.html");
+        $("#uniCodeCnMap").load("/tools/charMap/uniCodeCnMap.html");
+        
+        
+        // 모바일 동적 탭
+        $(document).on('show.bs.tab', '.nav-tabs-responsive [data-toggle="tab"]', function(e) {
+          var $target = $(e.target);
+          var $tabs = $target.closest('.nav-tabs-responsive');
+          var $current = $target.closest('li');
+          var $parent = $current.closest('li.dropdown');
+      		$current = $parent.length > 0 ? $parent : $current;
+          var $next = $current.next();
+          var $prev = $current.prev();
+          var updateDropdownMenu = function($el, position){
+            $el
+            	.find('.dropdown-menu')
+              .removeClass('pull-xs-left pull-xs-center pull-xs-right')
+            	.addClass( 'pull-xs-' + position );
+          };
+      
+          $tabs.find('>li').removeClass('next prev');
+          $prev.addClass('prev');
+          $next.addClass('next');
+          
+          updateDropdownMenu( $prev, 'left' );
+          updateDropdownMenu( $current, 'center' );
+          updateDropdownMenu( $next, 'right' );
+        });
+      });
+    </script>
+  </body>
+</html>
