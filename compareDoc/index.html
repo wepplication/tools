@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>텍스트 문서 비교 사이트</title>
+    <meta name="description" content="두개의 텍스트 비교하여 틀린점 찾아주는 온라인 툴">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="텍스트 문서 비교 사이트">
+    <meta property="og:description" content="두개의 텍스트 비교하여 틀린점 찾아주는 온라인 툴">
+    <meta property="og:url" content="https://wepplication.github.io/tools/compareDoc/">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+    <link rel="stylesheet" href="/tools/css/jquery.picadiff-0.7.1.css"/>
+    <style type="text/css">
+      form ins {
+          background-color: #c6ffc6;
+          text-decoration: none;
+      }
+      
+      del {
+          background-color: #ffc6c6;
+      }
+    </style>
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>문서 비교</b></h1>
+              온라인 상에서 문자열을 비교하여 차이점을 보여주는 사이트입니다.<br>
+              비교 결과를 한페이지 혹은 두페이지 분할로 보실 수 있습니다.
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-1 control-label">출력</label>
+            <div class="col-sm-10">
+              <div class="btn-group" id="codeType" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                  <input type="radio" name="codeType" autocomplete="off" value="one" checked> 한페이지
+                </label>
+                <label class="btn btn-primary">
+                  <input type="radio" name="codeType" autocomplete="off" value="two"> 두페이지
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label">원본</label>
+            <div class="col-sm-5">
+              <textarea class="form-control vresize original" rows="10"></textarea>
+            </div>
+            <div class="col-sm-5">
+              <textarea class="form-control vresize changed" rows="10"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+              <button type="button" id="convertBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">변환</button>
+            </div>
+          </div>
+          <div class="form-group" id="oneResult">
+            <label class="col-sm-1 control-label">비교</label>
+            <div class="col-sm-10">
+              <div class="diff well well-sm" style="overflow:scroll;"></div>
+            </div>
+          </div>
+          <div class="form-group" id="twoResult" style="display:none;">
+            <label class="col-sm-1 control-label">비교</label>
+            <div class="col-sm-10">
+              <div class="picadiff">
+                <div class="picadiff-content">
+                    <div class="left well well-sm"></div>
+                    <div class="right well well-sm"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/compareDoc/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/compareDoc/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script src="/tools/js/diff_match_patch.js"></script>
+    <script src="/tools/js/jquery.pretty-text-diff.min.js"></script>
+    <script src="/tools/js/jquery.picadiff-0.7.1.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        
+        // 변환 버튼
+        $('#convertBtn').on('click', function(){
+          var $btn = $(this).button('loading');
+          $("#oneResult div").prettyTextDiff({
+            originalContent: $(".original").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;"),
+            changedContent: $(".changed").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;"),
+            diffContainer: ".diff"
+          });
+          $('.picadiff').picadiff({
+              leftContent: $(".original").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;"),
+              rightContent: $(".changed").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;"),
+              timeout: 1
+            });
+          $btn.button('reset');
+        });
+        
+        // 문서종류 라디오 버튼
+        $("#codeType :input").change(function() {
+          var codeType = $(":radio[name='codeType']:checked").val();
+          if(codeType == "one"){
+            $("#oneResult").show();
+            $("#twoResult").hide();
+          }else if (codeType == "two"){
+            $("#oneResult").hide();
+            $("#twoResult").show();
+          }
+        });
+        
+        $(".left").scroll(function(){
+          $(".right").scrollLeft($(this).scrollLeft());
+        });
+        
+        $(".right").scroll(function(){
+          $(".left").scrollLeft($(this).scrollLeft());
+        });
+        
+      });
+    </script>
+  </body>
+</html>

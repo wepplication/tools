@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+.picadiff {
+  overflow: hidden;
+
+  padding-top: 0 !important; }
+  .picadiff .comparisoncontrol {
+    height: 40px;
+    width: 100%; }
+    .picadiff .comparisoncontrol .controlButtons {
+      float: right;
+      margin-right: 10px;
+      border: 1px solid #d3d3d3;
+      border-top: 0;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px; }
+      .picadiff .comparisoncontrol .controlButtons button {
+        font-size: 11px;
+        float: left;
+        margin: 0;
+        border-radius: 0;
+        border: 0; }
+        .picadiff .comparisoncontrol .controlButtons button.active {
+          background-color: white; }
+        .picadiff .comparisoncontrol .controlButtons button.over {
+          border-right: 0;
+          border-bottom-left-radius: 4px; }
+        .picadiff .comparisoncontrol .controlButtons button.align {
+          border-right: 1px solid grey;
+          border-left: 1px solid grey; }
+        .picadiff .comparisoncontrol .controlButtons button.wrap {
+          border-left: 0;
+          border-bottom-right-radius: 4px; }
+  .picadiff .right, .picadiff .left {
+
+    width: 50%;
+    padding: 10px 2.5%;
+    overflow: auto;
+    font-weight: 400;
+    font-size: 13px;
+    /*max-height:400px;*/ }
+
+    .picadiff .right{
+        margin-left: 50%;
+    }
+    .picadiff .left{
+        float: left;
+    }
+
+    .picadiff .picadiff-title .right , .picadiff .picadiff-title .left {
+      color: #000;
+      margin: 0 0 10px 0; }
+    .picadiff .picadiff-content {
+      font-family: 'Source Code Pro',monospace;
+      width: 100%;
+      overflow: hidden; }
+    .picadiff .right .equal, .picadiff .left .equal {
+      /*color: white;*/
+      /*background-color: #a8d975;*/
+      /*font-weight: bold;*/
+      /*border-bottom: 1px solid;*/ }
+    .picadiff .right .light, .picadiff .left .light {
+      background-color: #aaa; }
+    .picadiff .right .insertion, .picadiff .left .insertion {
+      /*color:#c61818;*/
+      background-color: #c6ffc6;}
+    .picadiff .right .deletion, .picadiff .left .deletion {
+      /*color:#c61818;*/
+      background-color: #ffc6c6;}
