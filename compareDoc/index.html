@@ -144,9 +144,10 @@
             changedContent: $(".changed").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;"),
             diffContainer: ".diff"
           });
+          window.console.log($(".original").val());
           $('.picadiff').picadiff({
-              leftContent: $(".original").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;"),
-              rightContent: $(".changed").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;"),
+              leftContent: $(".original").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;").replace(/\n/gi, "<br>"),
+              rightContent: $(".changed").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;").replace(/\n/gi, "<br>"),
               timeout: 1
             });
           $btn.button('reset');
