@@ -146,8 +146,9 @@
           });
           window.console.log($(".original").val());
           $('.picadiff').picadiff({
-              leftContent: $(".original").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;").replace(/\n/gi, "<br>"),
-              rightContent: $(".changed").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;").replace(/\n/gi, "<br>"),
+              leftContent: $(".original").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/\n/gi, "<br> "),
+              rightContent: $(".changed").val().replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/\n/gi, "<br> "),
+              lineLength: 5000,
               timeout: 1
             });
           $btn.button('reset');
