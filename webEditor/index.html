@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <title>HTML 웹에디터</title>
+    <meta name="description" content="웹에디터를 이용하여 사진 이미지 합치기 및 HTML 코드 생성하는 사이트">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="HTML 웹에디터">
+    <meta property="og:description" content="웹에디터를 이용하여 사진 이미지 합치기 및 HTML 코드 생성하는 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/webEditor/">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>HTML 웹에디터</b></h1>
+              글자를 포함한 사진 이미지 합치기 / 에디터를 이용한 HTML 코드 생성<br>
+              - 게시판 게시글 작성하듯이 문서를 만들어 이미지로 변환 및 소스코드를 생성해 드립니다.
+            </div>
+            <hr/>
+          </div>
+        </div>
+        
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <textarea name="editor1" id="editor1" rows="10" cols="80"></textarea>
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+              <button type="button" id="imgBtn" data-loading-text="처리중..." class="btn btn-default" autocomplete="off">이미지</button>
+              <button type="button" id="htmlBtn" data-loading-text="처리중..." class="btn btn-default" autocomplete="off">HTML</button>
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+              <div id="result"></div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/webEditor/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/webEditor/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script src="//cdn.ckeditor.com/4.5.10/full/ckeditor.js"></script>
+    <script src="/tools/js/html2canvas.js"></script>
+    <script>
+      $(document).ready(function(){
+        CKEDITOR.config.font_names="나눔고딕;맑은 고딕;굴림;굴림체;돋움;돋움체;바탕;바탕체;돋음;돋움체;궁서;궁서체;"+CKEDITOR.config.font_names;
+        CKEDITOR.replace('editor1', {
+	        contentsCss : [['https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'],['/tools/css/common.css']],
+	        extraPlugins : "image"
+        });
+        
+        $("#imgBtn").on("click", function(){
+          $("#result").html("");
+          var $btn = $(this).button('loading');
+          var $imgs = $('iframe').contents().find("body").find("img");
+          $imgs.each(function(){
+            if($(this).attr("src").indexOf("http") == 0){
+              $(this).attr("src", "/webEditor/img?url="+$(this).attr("src"));
+            }
+          });
+          
+          // html2canvas($("#result2")[0], {
+          html2canvas($('iframe').contents().find("body"), {
+            onrendered: function(canvas) {
+              $("#result").html("");
+              var src = canvas.toDataURL();
+              $("#result").append($("<img>", {"src": src}).addClass("img-responsive"));
+              $btn.button('reset');
+            }
+          });
+        });
+        
+        $("#htmlBtn").on("click", function(){
+          var body = CKEDITOR.instances.editor1.getData();
+          $("#result").html("");
+          $("#result").text(body);
+        });
+        
+      });
+    </script>
+  </body>
+</html>
