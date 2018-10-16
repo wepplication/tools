@@ -103,12 +103,6 @@
         $("#imgBtn").on("click", function(){
           $("#result").html("");
           var $btn = $(this).button('loading');
-          var $imgs = $('iframe').contents().find("body").find("img");
-          $imgs.each(function(){
-            if($(this).attr("src").indexOf("http") == 0){
-              $(this).attr("src", "/webEditor/img?url="+$(this).attr("src"));
-            }
-          });
           
           // html2canvas($("#result2")[0], {
           html2canvas($('iframe').contents().find("body"), {
