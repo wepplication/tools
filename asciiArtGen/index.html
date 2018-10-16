@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>아스키아트 변환 사이트</title>
+    <meta name="description" content="텍스트 및 이미지(URL,파일첨부)를 아스키코드로 만드는 아스키아트 생성 사이트">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="아스키아트 변환 사이트">
+    <meta property="og:description" content="텍스트 및 이미지(URL,파일첨부)를 아스키코드로 만드는 아스키아트 생성 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/asciiArtGen/">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+    
+    <link rel="stylesheet" href="/tools/js/jqueryFileupload/css/jquery.fileupload.css">
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>아스키아트 생성기</b></h1>
+              별도의 프로그램 설치 없이 웹에서 URL이나 파일 첨부로 이미지를 아스키코드로 만드는 아스키아트 생성 사이트<br>
+              텍스트로 아스키 아트를 생성할 경우 한글문자는 지원하지 않습니다.
+            </div>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-tabs-responsive" role="tablist">
+              <li role="presentation" class="active"><a href="#urlTab" aria-controls="urlTab" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">이미지 URL</span></a></li>
+              <li role="presentation" class="next"><a href="#atchTab" aria-controls="atchTab" role="tab" data-toggle="tab"><span class="text">이미지 첨부</span></a></li>
+              <li role="presentation"><a href="#textTab" aria-controls="textTab" role="tab" data-toggle="tab"><span class="text">텍스트</span></a></li>
+            </ul>
+          </div>
+        </div>
+      
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="urlTab">
+            <form id="urlForm" class="form-horizontal">
+              <div class="form-group">
+                <label for="size" class="col-sm-1 control-label">Size</label>
+                <div class="col-sm-10 form-inline">
+                  <input type="number" class="form-control" id="size" name="size" placeholder="100" value="100" min="10" max="300" onchange="sizeCheck(this)">
+                </div><!-- /col-sm-10 -->
+              </div><!-- /form-group -->
+              
+              <div class="form-group">
+                <label for="color" class="col-sm-1 control-label">Color</label>
+                <div class="col-sm-10">
+                  <div class="btn-group" id="color" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                      <input type="radio" name="color" autocomplete="off" value="false" checked> Black
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="color" autocomplete="off" value="true"> Color
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="url" class="col-sm-1 control-label">URL</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="url" name="url" placeholder="https://pixabay.com/static/uploads/photo/2015/12/25/13/25/mona-lisa-1107620_960_720.jpg" value="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTJPkRBNOJKeRpVZXZP34V-nQ2-wdpN7F7NWCz3rBy-cIN4De73Vw">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" id="convertBtn">변환</button>
+                    </span>
+                  </div><!-- /input-group -->
+                </div><!-- /col-sm-10 -->
+              </div><!-- /form-group -->
+              
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+      					  <div id="urlContents">
+              			<img width="150" id="jscii-element-image" src="" crossOrigin="Anonymous">
+              			<pre id="ascii-container-image" style="line-height:1;"></pre>
+      					  </div>
+      					</div>
+    					</div>
+            </form>
+          </div>
+          
+          <div role="tabpanel" class="tab-pane fade" id="atchTab">
+            <form id="fileForm" class="form-horizontal">
+              <div class="form-group">
+                <label for="size" class="col-sm-1 control-label">Size</label>
+                <div class="col-sm-10 form-inline">
+                  <input type="number" class="form-control" id="size" name="size" placeholder="100" value="100" min="10" max="300" onchange="sizeCheck(this)">
+                </div><!-- /col-sm-10 -->
+              </div><!-- /form-group -->
+              
+              <div class="form-group">
+                <label for="color" class="col-sm-1 control-label">Color</label>
+                <div class="col-sm-10">
+                  <div class="btn-group" id="color" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                      <input type="radio" name="color" autocomplete="off" value="false" checked> Black
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="color" autocomplete="off" value="true"> Color
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <label for="" class="col-sm-1 control-label">File</label>
+                <div class="col-sm-10">
+                  <div id="files" class="files"></div>
+                  <span id="uploadBtn" class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add file</span>
+                    <input id="fileupload" name="fileupload" type="file" accept="image/*">
+                  </span>
+                </div>
+              </div>
+    					<br/>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <div id="fileuploadBar" class="progress" style="display:none;">
+                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+      					  <div id="fileContents">
+              			<img width="150" id="jscii-element-file" src="" crossOrigin="Anonymous">
+              			<pre id="ascii-container-file" style="line-height:1;"></pre>
+      					  </div>
+      					</div>
+    					</div>
+            </form>
+          </div>
+          
+          <div role="tabpanel" class="tab-pane fade" id="textTab">
+            <form id="textForm" class="form-horizontal">
+              <div class="row">
+                <label for="" class="col-sm-1 control-label">Font</label>
+                <div class="col-sm-10">
+                  <select class="btn btn-default" id="fontSelector" name="fontSelector"></select>
+                </div>
+              </div>
+              <div class="row">
+                <label for="" class="col-sm-1 control-label">Text</label>
+                <div class="col-sm-10">
+                  <div class="input-group margin-bottom-sm">
+                    <input class="form-control" id="userInput" name="userInput" type="text" placeholder="input Text" value="Ab1#">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" id="createBtn">생성</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+      					  <div id="textContents"></div>
+      					</div>
+    					</div>
+            </form>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/asciiArtGen/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/asciiArtGen/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main> <!-- main -->
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script>var __dirname = "/tools/js/asciimo/lib";</script>
+    <script src="/tools/js/jscii.js"></script>
+    <script src="/tools/js/asciimo/lib/asciimo.js"></script>
+    <script src="/tools/js/asciimo/lib/fonts.js"></script>
+  	<script src="/tools/js/FileSaver.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        
+      	var chars = ['@','#','$','=','*','!',';',':','~','-',',','.','&nbsp;', '&nbsp;'];
+      	var charLen = chars.length-1;
+      	function getChar(val) { return chars[parseInt(val*charLen, 10)]; }
+    		var getRGB = function(d, i) { return [d[i=i*4], d[i+1], d[i+2]]; };
+    		
+        // 모바일에서 기본 사이즈 변경
+        if(findBootstrapEnvironment()=="xs"){
+          $("#urlForm #size").val("50");
+          $("#fileForm #size").val("50");
+        }
+        
+        
+        var imgWidth, imgHeight, objUrl, BLOB, zip;
+        // Add file 버튼
+        $('input#fileupload').on("change", function(){
+          $("#fileuploadBar .progress-bar").css("width", "0%");
+          $("#fileuploadBar .progress-bar").width("0%");
+          $("#fileuploadBar .progress-bar").addClass("active");
+          $("#fileuploadBar").show();
+          $("#uploadBtn").attr("disabled", "disabled");
+          $("#uploadBtn span").text('loading...');
+          var fileCount = this.files.length;
+          var cnt = 1;
+          readmultifiles(this.files, function(dataUrl){
+            //window.console.log("load file");
+            var progRange = Math.round(cnt/fileCount * 100);
+            $("#fileuploadBar .progress-bar").css("width", progRange+"%");
+            $("#fileuploadBar .progress-bar").width(progRange+"%");
+            cnt++;
+            
+            $("#jscii-element-file").attr("src", dataUrl);
+            
+          }, function(){
+            //window.console.log("fileread done");
+            //file change 이벤트라서 같은 파일 올리면 안올라가는 현상으로 초기화 해줌
+            var input = $("#fileupload");
+            input.replaceWith(input.val('').clone(true));
+            $("#uploadBtn span").text('Add file');
+            $("#uploadBtn").removeAttr("disabled");
+            $("#fileuploadBar .progress-bar").removeClass("active");
+          });
+        });
+        
+				$('#jscii-element-file').load(function(){
+          var color = $("#fileForm #color input:radio:checked").val();
+          var size = $("#fileForm #size").val();
+      		
+      		var canvas = document.createElement('canvas');
+      		var ratio = this.height/this.width;
+      		var width = size;
+      		var height = parseInt(width*ratio, 10);
+      		canvas.width = width;
+      		canvas.height = height;
+      		var ctx = canvas.getContext('2d');
+      		ctx.drawImage(this, 0, 0, width, height);
+      		var imageData = ctx.getImageData(0, 0, width, height).data;
+      		var len = width*height;
+      		var str = "";
+      		
+      		for(var i=0; i<len; i++) {
+      			if(i%width === 0) str += '\n';
+      			var rgb = getRGB(imageData, i);
+      			var val = Math.max(rgb[0], rgb[1], rgb[2])/255;
+      			if(this.color) str += '<font style="color: rgb('+rgb.join(',')+')">'+getChar(val)+'</font>';
+      			else str += getChar(val);
+      		}
+      		
+          document.getElementById('ascii-container-file').innerHTML = str;
+				});
+				
+        
+        //변환 버튼
+        $('#convertBtn').on('click', function(){
+          // $("#convertBtn").text('loading...');
+          $("#ascii-url-image").html("");
+          
+          var url = $("#urlForm #url").val();
+          
+          if(isURL(url)){
+          }else{
+            alert("URL을 입력해 주세요.");
+            return;
+          }
+          $("#jscii-element-image").attr("src", url);
+          
+          $(this).button('loading');
+        });
+        
+          
+				$('#jscii-element-image').load(function(){
+          var color = $("#urlForm #color input:radio:checked").val();
+          var size = $("#urlForm #size").val();
+      		
+      		var canvas = document.createElement('canvas');
+      		var ratio = this.height/this.width;
+      		var width = size;
+      		var height = parseInt(width*ratio, 10);
+      		canvas.width = width;
+      		canvas.height = height;
+      		var ctx = canvas.getContext('2d');
+      		ctx.drawImage(this, 0, 0, width, height);
+      		var imageData = ctx.getImageData(0, 0, width, height).data;
+      		var len = width*height;
+      		var str = "";
+      		
+      		for(var i=0; i<len; i++) {
+      			if(i%width === 0) str += '\n';
+      			var rgb = getRGB(imageData, i);
+      			var val = Math.max(rgb[0], rgb[1], rgb[2])/255;
+      			if(this.color) str += '<font style="color: rgb('+rgb.join(',')+')">'+getChar(val)+'</font>';
+      			else str += getChar(val);
+      		}
+      		
+          document.getElementById('ascii-container-image').innerHTML = str;
+          $('#convertBtn').button('reset');
+				});
+				
+        // 텍스트 -> 아스키
+        // font 리스트 추가
+        for(var i = 0; i<Figlet.fontList.length; i++){
+          var fontTitle = Figlet.fontList[i].replace(/_/gi,'').replace("C64-fonts/", "").replace("bdffonts/", ""); // remove the file extentions for the title
+          $('#fontSelector').append('<option value = "'+Figlet.fontList[i]+'">'+fontTitle+'</option>');
+        }
+        $('#fontSelector').val("Doom");
+      
+        //생성 버튼
+        $('#createBtn').on('click', function(){
+          $("#ascii-url-image").html("");
+          
+          var text = $("#textForm #userInput").val();
+          var font = $('#fontSelector').val();
+          $('#textContents').html('');
+          Figlet.write(text, font, function(str) {
+            $('#textContents').html('<pre>' + str + '</pre>');
+          });
+        });
+        
+        // 모바일 탭
+        $(document).on('show.bs.tab', '.nav-tabs-responsive [data-toggle="tab"]', function(e) {
+          var $target = $(e.target);
+          var $tabs = $target.closest('.nav-tabs-responsive');
+          var $current = $target.closest('li');
+          var $parent = $current.closest('li.dropdown');
+      		$current = $parent.length > 0 ? $parent : $current;
+          var $next = $current.next();
+          var $prev = $current.prev();
+          var updateDropdownMenu = function($el, position){
+            $el
+            	.find('.dropdown-menu')
+              .removeClass('pull-xs-left pull-xs-center pull-xs-right')
+            	.addClass( 'pull-xs-' + position );
+          };
+      
+          $tabs.find('>li').removeClass('next prev');
+          $prev.addClass('prev');
+          $next.addClass('next');
+          
+          updateDropdownMenu( $prev, 'left' );
+          updateDropdownMenu( $current, 'center' );
+          updateDropdownMenu( $next, 'right' );
+        });
+        
+      });
+      
+      function sizeCheck(object){
+        if($(object).val() < 10){
+          $(object).val(10);
+        }
+        if($(object).val() > 400){
+          $(object).val(400);
+        }
+      }
+      
+    </script>
+  </body>
+</html>
