@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>이미지 Data URL 생성기</title>
+    <meta name="description" content="이미지 url이나 파일 첨부를 통해 이미지 파일의 Data URL을 뽑는 사이트">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="이미지 Data URL 생성기">
+    <meta property="og:description" content="이미지 url이나 파일 첨부를 통해 이미지 파일의 Data URL을 뽑는 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/img2Url/">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+    
+    <link rel="stylesheet" href="/tools/js/jqueryFileupload/css/jquery.fileupload.css">
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>이미지 파일 Data URL 변환기</b></h1>
+              이미지 url이나 파일 첨부를 통해 이미지 파일의 Data URL을 뽑는 사이트
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- Nav tabs -->
+            <ul id="myTabs" class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#urlTab" aria-controls="urlTab" role="tab" data-toggle="tab"><span class="text">URL</span></a></li>
+              <li role="presentation"><a href="#atchTab" aria-controls="atchTab" role="tab" data-toggle="tab"><span class="text">첨부</span></a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- 이미지URL -->
+          <div role="tabpanel" class="tab-pane fade in active" id="urlTab">
+            <br/>
+            <div class="row">
+              <label for="url" class="col-sm-1 control-label">URL</label>
+              <div class="col-sm-10">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="url" name="url" placeholder="input img url" value="https://upload.wikimedia.org/wikipedia/en/2/24/Binary-icon.png">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="convertBtn">변환</button>
+                  </span>
+                </div><!-- /input-group -->
+              </div><!-- /col-sm-10 -->
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <div id="thumbnail">
+                  <!--<div class="col-xs-6 col-md-3">-->
+                  <!--  <a href="#" class="thumbnail">-->
+                  <!--    <img src="..." alt="...">-->
+                  <!--  </a>-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <label for="" class="col-sm-1 control-label">Data URL</label>
+              <div class="col-sm-10">
+          			<div>
+          				<button class="btn btn-info" type="button" id="selectAllBtn" style="display:none;">복사</button>
+          			</div>
+                <textarea id="dataUri" class="form-control vresize" rows="10"></textarea>
+              </div>
+            </div>
+          </div> <!--tabpanel-->
+          
+          <!-- 이미지첨부 -->
+          <div role="tabpanel" class="tab-pane fade" id="atchTab">
+            <br/>
+            <div class="row">
+              <label for="" class="col-sm-1 control-label">File</label>
+              <div class="col-sm-10">
+                <span class="btn btn-success fileinput-button">
+                  <i class="glyphicon glyphicon-plus"></i>
+                  <span id="uploadBtn">Select file</span>
+                  <input id="fileupload" name="fileupload" type="file" accept="image/jpeg"> <!-- accept=jpeg img-->
+                </span>
+                <div id="files" class="files"></div>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <div id="thumbnails">
+                  <!--<div class="col-xs-6 col-md-3">-->
+                  <!--  <a href="#" class="thumbnail">-->
+                  <!--    <img src="..." alt="...">-->
+                  <!--  </a>-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <label for="" class="col-sm-1 control-label">Data URL</label>
+              <div class="col-sm-10">
+          			<div>
+          				<button class="btn btn-info" type="button" id="btnSelectAll" style="display:none;">복사</button>
+          			</div>
+                <textarea id="dataUrl" class="form-control vresize" rows="10"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/img2Url/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/img2Url/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script>
+      $(document).ready(function(){
+        //변환 버튼
+        $('#convertBtn').on('click', function(){
+          // $("#convertBtn").text('loading...');
+          $("#dataUri").text("");
+          $('#thumbnail').children().remove();
+          
+          var url = $("#url").val();
+          
+          if(isURL(url)){
+          }else{
+            alert("URL을 입력해 주세요.");
+            return;
+          }
+          
+          var $btn = $(this).button('loading');
+          
+          var img = new Image();
+          img.onload = function () {
+            var canvas = document.createElement("canvas");
+            canvas.width =this.width;
+            canvas.height =this.height;
+    
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(this, 0, 0);
+    
+            var dataURL = canvas.toDataURL("image/png");
+    
+            $("#dataUri").text(dataURL);
+            
+            
+            var divElement = $('<div>',{class:"col-xs-3 col-md-2"});
+            var aElement = $('<a>',{href:"#", class:"thumbnail"});
+            var imgElement = $('<img>',{src:dataURL});
+            $('#thumbnail').append(divElement.append(aElement.append(imgElement)));
+          
+            $btn.button('reset');
+            $("#selectAllBtn").show();
+          }
+          img.onerror = function(e){
+            alert("이미지를 불러올 수 없습니다.");
+            $btn.button('reset');
+          }
+          
+          img.crossOrigin = "anonymous"
+          img.src = url;
+        });
+        
+        
+	    	$("#selectAllBtn").click((function() {
+          var elemId = "dataUri";
+          return function() {
+            var elm = document.getElementById(elemId);
+            
+            if (document.selection) {
+                var range = document.body.createTextRange();
+                    range.moveToElementText(elm);
+                range.select();
+            } else if (window.getSelection) {
+                /*var range = document.createRange();
+                elm.focus();
+                range.selectNode(elm);
+                window.getSelection().addRange(range);*/
+
+                elm.contentEditable = false;
+                elm.focus();
+                var mySelection = window.getSelection();
+                if(mySelection.rangeCount > 0) {mySelection.removeAllRanges();}
+                var range = document.createRange();
+                range.selectNode(elm.parentNode);
+                mySelection.addRange(range);
+                elm.contentEditable = true;
+                
+            }
+
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                alert('Unable to copy text, you will need to press Ctrl+C on your keyboard to copy.');
+            }
+          };
+        })());
+        
+        var input = document.querySelector('input#fileupload');
+        input.addEventListener('change', function () {
+          var file     = input.files[0];
+          var reader   = new FileReader();
+          $("#dataUrl").text("");
+          $('#thumbnails').children().remove();
+          
+          reader.onload = function () {
+            var img = new Image;
+            img.src = reader.result;
+            var divElement = $('<div>',{class:"col-xs-3 col-md-2"});
+            var aElement = $('<a>',{href:"#", class:"thumbnail"});
+            var imgElement = $('<img>',{src:reader.result});
+            $('#thumbnails').append(divElement.append(aElement.append(imgElement)));
+            
+            $("#dataUrl").text(reader.result);
+            $("#btnSelectAll").show();
+          };
+          
+          if (file) {
+            reader.readAsDataURL(file);
+          }
+          
+        });
+        
+        
+	    	$("#btnSelectAll").click((function() {
+          var elemId = "dataUrl";
+          return function() {
+              var elm = document.getElementById(elemId);
+              
+              if (document.selection) {
+                  var range = document.body.createTextRange();
+                      range.moveToElementText(elm);
+                  range.select();
+              } else if (window.getSelection) {
+                  /*var range = document.createRange();
+                  elm.focus();
+                  range.selectNode(elm);
+                  window.getSelection().addRange(range);*/
+
+                  elm.contentEditable = false;
+                  elm.focus();
+                  var mySelection = window.getSelection();
+                  if(mySelection.rangeCount > 0) {mySelection.removeAllRanges();}
+                  var range = document.createRange();
+                  range.selectNode(elm.parentNode);
+                  mySelection.addRange(range);
+                  elm.contentEditable = true;
+                  
+              }
+
+              try {
+                  document.execCommand('copy');
+              } catch (err) {
+                  alert('Unable to copy text, you will need to press Ctrl+C on your keyboard to copy.');
+              }
+          };
+        })());
+        
+      });
+    </script>
+  </body>
+</html>
