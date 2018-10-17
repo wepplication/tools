@@ -128,14 +128,11 @@
           $("#result").html("");
           var $btn = $(this).button('loading');
           
-          // html2canvas($("#result2")[0], {
-          html2canvas($('iframe').contents().find("body"), {
-            onrendered: function(canvas) {
+          html2canvas(document.getElementsByTagName("iframe")[0].contentWindow.document.body).then(function(canvas) {
               $("#result").html("");
               var src = canvas.toDataURL();
               $("#result").append($("<img>", {"src": src}).addClass("img-responsive"));
               $btn.button('reset');
-            }
           });
         });
         
