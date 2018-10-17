@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>매직아이 생성기</title>
+    <meta name="description" content="온라인 매직아이 생성기 텍스트, 이미지 첨부, 이미지 URL, 직접 그리기 지원">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="매직아이 생성기">
+    <meta property="og:description" content="온라인 매직아이 생성기 텍스트, 이미지 첨부, 이미지 URL, 직접 그리기 지원">
+    <meta property="og:url" content="https://wepplication.github.io/tools/magicEyeGen/">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+    
+    <link rel="stylesheet" href="/tools/js/jqueryFileupload/css/jquery.fileupload.css">
+    <style>
+      #file-input {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+      }
+  
+      #canvas, #magic-eye {
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+      }
+      
+      #canvas:hover {
+        cursor: crosshair;
+      }
+      
+      /*.brush-swatches {*/
+      /*  display: inline;*/
+      /*  float: left;*/
+      /*  padding-top: 10px;*/
+      /*}*/
+      
+      /*.brush-sizes {*/
+      /*  display: inline;*/
+      /*  float: right;*/
+      /*  height: 80px;*/
+      /*}*/
+      
+      input.brush-value {
+        display: none;
+      }
+      
+      input.brush-value + label {
+        display: inline-block;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0 5px;
+        width: 30px;
+        height: 30px;
+      }
+      
+      input.brush-value:checked + label {
+        border-color: #B04388 !important;
+      }
+      
+      input.brush-value + label:hover {
+        border-color: #BD81A7 !important;
+        cursor: pointer;
+      }
+      
+      #brush-0   + label{ background: #000; border-color: #000; }
+      #brush-25  + label{ background: #333; border-color: #333; }
+      #brush-50  + label{ background: #666; border-color: #666; }
+      #brush-75  + label{ background: #999; border-color: #999; }
+      #brush-100 + label{ background: #fff; border-color: #aaa; }
+      
+      input.brush-size {
+        display: none;
+      }
+      
+      input.brush-size + label {
+        display: block;
+        float: left;
+        border: none;
+        border-radius: 100%;
+        background: #aaa;
+        margin: 0 10px;
+      }
+      
+      input.brush-size:checked + label {
+        background: #B04388 !important;
+      }
+      
+      input.brush-size + label:hover {
+        background: #BD81A7 !important;
+        cursor: pointer;
+      }
+      
+      #sm-brush + label { width: 10px; height: 10px; margin-top: 10px; }
+      #md-brush + label { width: 20px; height: 20px; margin-top: 5px; }
+      #lg-brush + label { width: 30px; height: 30px; }
+      
+      .buttons {
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>매직아이 생성기</b></h1>
+              텍스트 및 이미지를 매직아이로 생성하는 사이트 입니다.<br>
+              이미지의 경우 파일첨부, URL입력, 직접 그리기를 통해 매직아이로 보여질 이미지를 넣을 수 있습니다.<br>
+              단순한 흑백 depthmap 이미지로 해야 가독성이 좋습니다.
+              URL입력 시 hotlink를 막은 url은 동작하지 않습니다.
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <form name="brush" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <!-- Nav tabs -->
+              <ul id="myTabs" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+                <li role="presentation" class="active"><a href="#textTab" aria-controls="textTab" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">텍스트</span></a></li>
+                <li role="presentation" class="next"><a href="#urlTab" aria-controls="urlTab" role="tab" data-toggle="tab"><span class="text">URL</span></a></li>
+                <li role="presentation"><a href="#atchTab" aria-controls="atchTab" role="tab" data-toggle="tab"><span class="text">첨부</span></a></li>
+                <li role="presentation"><a href="#drawTab" aria-controls="drawTab" role="tab" data-toggle="tab"><span class="text">그리기</span></a></li>
+              </ul>
+            </div>
+          </div>
+          
+          
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <!-- 텍스트 -->
+            <div role="tabpanel" class="tab-pane fade in active" id="textTab">
+              <br/>
+              <div class="row">
+                <label for="userInput" class="col-sm-1 control-label">Text</label>
+                <div class="col-sm-10">
+                  <div class="input-group margin-bottom-sm">
+                    <input class="form-control" id="userInput" name="userInput" type="text" placeholder="input Text" value="★">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" id="createBtn">생성</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <div class="embed-responsive embed-responsive-4by3">
+                    <div class="embed-responsive-item">
+                      <img id="magic-eye-text" src=""/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 이미지URL -->
+            <div role="tabpanel" class="tab-pane fade" id="urlTab">
+              <br/>
+              <div class="row">
+                <label for="url" class="col-sm-1 control-label">URL</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <!--<input type="text" class="form-control" id="url" name="url" placeholder="input jpg depthmap img url" value="https://upload.wikimedia.org/wikipedia/commons/3/3e/Stereogram_Tut_Shark_Depthmap.png">-->
+                    <input type="text" class="form-control" id="url" name="url" placeholder="input jpg depthmap img url" value="https://eyewellbeing.com/images/page_treats_magic_map_1.jpg">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" id="convertBtn">변환</button>
+                    </span>
+                  </div><!-- /input-group -->
+                </div><!-- /col-sm-10 -->
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <img id="url-img" style="display:block;" src="" />
+                  <canvas id="canvas-img-preview" style="display: none;"></canvas>
+                  <img id="magic-eye-url" class="img-responsive center-block" style="display:none;" src="" />
+                </div>
+              </div>
+            </div> <!--tabpanel-->
+            
+            <!-- 이미지첨부 -->
+            <div role="tabpanel" class="tab-pane fade" id="atchTab">
+              <br/>
+              <div class="row">
+                <label for="" class="col-sm-1 control-label">File</label>
+                <div class="col-sm-10">
+                  <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span id="uploadBtn">Select file</span>
+                    <input id="fileupload" name="fileupload" type="file" accept="image/jpeg"> <!-- accept=jpeg img-->
+                  </span>
+                  <div id="files" class="files"></div>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <canvas id="canvas-preview" style="display: none;"></canvas>
+                  <img id="magic-eye-file"  class="img-responsive center-block" style="display:none;" src="" />
+                </div>
+              </div>
+            </div>
+            
+            <!-- 직접그리기 -->
+            <div role="tabpanel" class="tab-pane fade" id="drawTab">
+              <div class="row buttons">
+                <div id="brushColor" class="brush-swatches col-md-5 col-md-offset-1">
+                  <input name="value" type="radio" class="brush-value" id="brush-100" value="100" />
+                  <label for="brush-100"></label>
+                  <input name="value" type="radio" class="brush-value" id="brush-75" value="75" />
+                  <label for="brush-75"></label>
+                  <input name="value" type="radio" class="brush-value" id="brush-50" value="50" />
+                  <label for="brush-50"></label>
+                  <input name="value" type="radio" class="brush-value" id="brush-25" value="25" />
+                  <label for="brush-25"></label>
+                  <input name="value" type="radio" class="brush-value" id="brush-0" value="0" />
+                  <label for="brush-0"></label>
+                </div>
+                <div id="brushSize" class="brush-sizes col-md-5">
+                  <div style="display:inline-block;">
+                    <input name="size" type="radio" class="brush-size" id="sm-brush" value="10" />
+                    <label for="sm-brush"></label>
+                    <input name="size" type="radio" class="brush-size" id="md-brush" value="20" />
+                    <label for="md-brush"></label>
+                    <input name="size" type="radio" class="brush-size" id="lg-brush" value="40" />
+                    <label for="lg-brush"></label>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <canvas id="canvas" style="border:1px solid #000000;">Sorry, your browser doesn't support HTML5 Canvas!</canvas>
+                  <img id="magiceye"  class="img-responsive center-block" style="display:none;" src="" />
+                </div>
+              </div>
+              <br/>
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <button type="button" id="show-magiceye" class="btn btn-primary" autocomplete="off">Show Magic Eye</button>
+                  <button type="button" id="show-canvas" class="btn btn-primary" autocomplete="off" style="display: none;">Show Depth Map</button>
+                  <button type="button" id="clear" class="btn btn-primary" autocomplete="off" >Clear</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/magicEyeGen/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/magicEyeGen/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script src="/tools/js/magiceye/magiceye.min.js"></script>
+    <script src="/tools/js/magiceye/depthmappers/TextDepthMapper.js"></script>
+    <script src="/tools/js/magiceye/depthmappers/ImgDepthMapper.js"></script>
+    <script src="/tools/js/magiceye/depthmappers/CanvasDepthMapper.js"></script>
+    <script>
+      $(document).ready(function(){
+        var blackAndWhite = false;
+        var input = document.querySelector('input#fileupload');
+  
+        input.addEventListener('change', function () {
+          var magiceye = document.querySelector('img#magic-eye-file');
+          var canvas   = document.querySelector('canvas#canvas-preview');
+          var file     = input.files[0];
+          var reader   = new FileReader();
+          
+          var img = new Image;
+          img.onload = function() {
+        		magiceye.width = canvas.width = this.width;
+        		magiceye.height = canvas.height = this.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, this.width, this.height);
+            renderMagicEye("magic-eye-file");
+            magiceye.style.display = 'block';
+          }
+          
+          reader.onload = function () {
+            img.src = reader.result;
+          };
+          
+          if (file) {
+            reader.readAsDataURL(file);
+          }
+          
+        });
+        
+        function renderMagicEye(str) {
+          var canvas = document.querySelector('canvas#canvas-preview');
+          var text = $('#userInput').val();
+          //var img = document.querySelector('img#url-img');
+          var img = document.querySelector('canvas#canvas-img-preview');
+          var drawingCanvas = document.querySelector('canvas#canvas');
+          MagicEye.render({
+            el: str,
+            colors: blackAndWhite ? [[0, 0, 0, 255], [255, 255, 255, 255]] : generatePalette(10),
+            depthMapper: str=="magic-eye-text" ? new MagicEye.TextDepthMapper(text, { textAlign: 'center' }) : str=="magic-eye-file" ? new MagicEye.CanvasDepthMapper(canvas, { inverted: false }) : 
+            str=="magic-eye-url" ?  new MagicEye.CanvasDepthMapper(img, { inverted: false }) //new MagicEye.ImgDepthMapper(img)
+            : new MagicEye.CanvasDepthMapper(drawingCanvas, { inverted: false })
+          });
+        }
+        
+        //생성 버튼 TEXT
+        $('#createBtn').on('click', function(){
+          // $("#convertBtn").text('loading...');
+          var $btn = $(this).button('loading');
+          var magiceye = document.querySelector('img#magic-eye-text');
+          magiceye.width = $(magiceye).parent().width();
+          magiceye.height = $(magiceye).parent().height();
+          renderMagicEye("magic-eye-text");
+          magiceye.style.display = 'block';
+          $btn.button('reset');
+        });
+        
+        //변환 버튼 URL
+        $('#convertBtn').on('click', function(){
+          var $btn = $(this).button('loading');
+          var url = $("#url").val();
+          
+          if(isURL(url)){
+          }else{
+            alert("URL을 입력해 주세요.");
+            return;
+          }
+          
+          var magiceye = document.querySelector('img#magic-eye-url');
+          
+          var img = new Image;
+          img.onload = function() {
+        		magiceye.width = canvas.width = this.width;
+        		magiceye.height = canvas.height = this.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, this.width, this.height);
+            renderMagicEye("magic-eye-url");
+            magiceye.style.display = 'block';
+            $btn.button('reset');
+          }
+          img.onerror = function(e){
+            alert("이미지를 불러올 수 없습니다.");
+            $btn.button('reset');
+          }
+          img.crossOrigin = "Anonymous"
+          img.src = url;
+        });
+        
+        var canvas = document.getElementById("canvas"),
+            context = canvas.getContext("2d"),
+            magicEye = document.getElementById("magiceye"),
+            drawMode = true,
+            showingMagicEye = false;
+        
+
+        var px, py,
+            drawing = false;
+            x = 0,
+            y = 0;
+  
+        var brush = {
+          value: 0,
+          size: 10,
+          opacity: 0.5
+        };
+          
+        $('#myTabs a[href="#drawTab"]').click(function (e) {
+          //magicEye.width = canvas.width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+          magicEye.width = canvas.width = 945;
+          magicEye.height = canvas.height = 708.75;
+          clear();
+          
+          // e.preventDefault();
+          // $(this).tab('show');
+        });
+        
+        document.getElementById('show-magiceye').onclick = function () {
+          renderMagicEye('magiceye');
+          canvas.style.display = 'none';
+          magicEye.style.display = 'block';
+          document.getElementById('show-magiceye').style.display = 'none';
+          document.getElementById('show-canvas').style.display = 'inline';
+          showingMagicEye = true;
+        };
+        
+        document.getElementById('show-canvas').onclick = function () {
+          magicEye.style.display = 'none';
+          canvas.style.display = 'block';
+          document.getElementById('show-magiceye').style.display = 'inline';
+          document.getElementById('show-canvas').style.display = 'none';
+          showingMagicEye = false;
+        };
+        
+        document.getElementById('clear').onclick = function () {
+          clear();
+          if (showingMagicEye) {
+            document.getElementById('show-canvas').click();
+          }
+        };
+        
+        for (var i = 0; i < document.brush.value.length; i++) {
+          document.brush.value[i].onchange = function () {
+            brush.value = Math.ceil(parseInt(getRadioVal(document.brush, 'value')) * 255 / 100);
+          };
+        };
+  
+        for (var i = 0; i < document.brush.size.length; i++) {
+          document.brush.size[i].onchange = function () {
+            brush.size = parseInt(getRadioVal(document.brush, 'size'));
+          };
+        };
+        
+        function getRadioVal(form, name) {
+          if (typeof form.elements[name].value !== undefined){
+            if (typeof form.elements[name].value == "string"){
+              return form.elements[name].value;
+            }
+          } 
+          var val, radios = form.elements[name];
+          for (var i = 0; i < radios.length; i++) {
+            if ( radios[i].checked ) {
+              val = radios[i].value;
+              break;
+            }
+          }
+          return val;
+        }
+        
+        function clear() {
+          context.fillStyle = "#ffffff";
+          context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // function resize() {
+        //   magicEye.width = canvas.width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
+        // }
+        
+        function draw(x, y, w, v, a) {
+          if (!drawMode) return;
+          var gradient = context.createRadialGradient(x, y, 0, x, y, w);
+          gradient.addColorStop(0, 'rgba(' + v + ',' + v + ',' + v  + ',' + a + ')');
+          gradient.addColorStop(1, 'rgba(' + v + ',' + v + ',' + v  + ',0)');
+          
+          context.beginPath();
+          context.arc(x, y, w, 0, 2 * Math.PI);
+          context.fillStyle = gradient;
+          context.fill();
+          context.closePath();
+        };
+
+        canvas.onmousedown = function (e) {
+          if (!drawMode) return;
+          drawing = true;
+          // px = e.pageX - canvas.offsetLeft;
+          // py = e.pageY - canvas.offsetTop;
+          var bound = canvas.getBoundingClientRect();
+          var bw = 5;
+          px = (e.clientX - bound.left - bw) * (canvas.width / (bound.width - bw * 2));
+          py = (e.clientY - bound.top - bw) * (canvas.height / (bound.height - bw * 2));
+  
+          draw(px, py, brush.size, brush.value, brush.opacity);
+        };
+  
+        document.body.onmouseup = function () {
+          if (!drawMode) return;
+          drawing = false;
+        };
+  
+        canvas.onmousemove = function (e) {
+          if (!drawMode) return;
+          if (drawing) {
+            // x = e.pageX - canvas.offsetLeft;
+            // y = e.pageY - canvas.offsetTop;
+            
+            var bound = canvas.getBoundingClientRect();
+            var bw = 5;
+            x = (e.clientX - bound.left - bw) * (canvas.width / (bound.width - bw * 2));
+            y = (e.clientY - bound.top - bw) * (canvas.height / (bound.height - bw * 2));
+            
+            var dis = Math.sqrt(Math.pow(px - x, 2) + Math.pow(px - y, 2));
+  
+            for (var i = 0; i < dis; i++) {
+              var s = i / dis;
+              draw(px * s + x * (1 - s), py * s + y * (1 - s), brush.size, brush.value, brush.opacity);
+            }
+            px = x;
+            py = y;
+          }
+        };
+        
+        // Set up touch events for mobile, etc
+        canvas.addEventListener("touchstart", function (e) {
+                mousePos = getTouchPos(canvas, e);
+          var touch = e.touches[0];
+          var mouseEvent = new MouseEvent("mousedown", {
+            clientX: touch.clientX,
+            clientY: touch.clientY
+          });
+          canvas.dispatchEvent(mouseEvent);
+        }, false);
+        canvas.addEventListener("touchend", function (e) {
+          var mouseEvent = new MouseEvent("mouseup", {});
+          canvas.dispatchEvent(mouseEvent);
+        }, false);
+        canvas.addEventListener("touchmove", function (e) {
+          var touch = e.touches[0];
+          var mouseEvent = new MouseEvent("mousemove", {
+            clientX: touch.clientX,
+            clientY: touch.clientY
+          });
+          canvas.dispatchEvent(mouseEvent);
+        }, false);
+        
+        // Get the position of a touch relative to the canvas
+        function getTouchPos(canvasDom, touchEvent) {
+          var rect = canvasDom.getBoundingClientRect();
+          return {
+            x: touchEvent.touches[0].clientX - rect.left,
+            y: touchEvent.touches[0].clientY - rect.top
+          };
+        }
+        
+        // Prevent scrolling when touching the canvas
+        document.body.addEventListener("touchstart", function (e) {
+          if (e.target == canvas) {
+            e.preventDefault();
+          }
+        }, false);
+        document.body.addEventListener("touchend", function (e) {
+          if (e.target == canvas) {
+            e.preventDefault();
+          }
+        }, false);
+        document.body.addEventListener("touchmove", function (e) {
+          if (e.target == canvas) {
+            e.preventDefault();
+          }
+        }, false);
+
+        document.brush.size[2].click();
+        document.brush.value[4].click();
+        
+        //document.getElementById('show-canvas').click();
+        
+        
+        // 모바일 동적 탭
+        $(document).on('show.bs.tab', '.nav-tabs-responsive [data-toggle="tab"]', function(e) {
+          var $target = $(e.target);
+          var $tabs = $target.closest('.nav-tabs-responsive');
+          var $current = $target.closest('li');
+          var $parent = $current.closest('li.dropdown');
+      		$current = $parent.length > 0 ? $parent : $current;
+          var $next = $current.next();
+          var $prev = $current.prev();
+          var updateDropdownMenu = function($el, position){
+            $el
+            	.find('.dropdown-menu')
+              .removeClass('pull-xs-left pull-xs-center pull-xs-right')
+            	.addClass( 'pull-xs-' + position );
+          };
+      
+          $tabs.find('>li').removeClass('next prev');
+          $prev.addClass('prev');
+          $next.addClass('next');
+          
+          updateDropdownMenu( $prev, 'left' );
+          updateDropdownMenu( $current, 'center' );
+          updateDropdownMenu( $next, 'right' );
+        });
+        
+      }); //document.ready
+      
+      function randomRGBa() {
+        return [Math.floor(Math.random() * 256),
+                Math.floor(Math.random() * 256),
+                Math.floor(Math.random() * 256),
+                255];
+      }
+
+      function generatePalette(numColors) {
+        var palette = [];
+        for (var i = 0; i < numColors; i++) {
+          palette.push(randomRGBa());
+        }
+        return palette;
+      }
+    </script>
+  </body>
+</html>

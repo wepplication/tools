@@ -140,14 +140,6 @@
                   </span>
                 </div>
               </div>
-    					<br/>
-              <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                  <div id="fileuploadBar" class="progress" style="display:none;">
-                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: 0%"></div>
-                  </div>
-                </div>
-              </div>
               
               <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -248,32 +240,23 @@
         var imgWidth, imgHeight, objUrl, BLOB, zip;
         // Add file 버튼
         $('input#fileupload').on("change", function(){
-          $("#fileuploadBar .progress-bar").css("width", "0%");
-          $("#fileuploadBar .progress-bar").width("0%");
-          $("#fileuploadBar .progress-bar").addClass("active");
-          $("#fileuploadBar").show();
           $("#uploadBtn").attr("disabled", "disabled");
           $("#uploadBtn span").text('loading...');
-          var fileCount = this.files.length;
-          var cnt = 1;
-          readmultifiles(this.files, function(dataUrl){
-            //window.console.log("load file");
-            var progRange = Math.round(cnt/fileCount * 100);
-            $("#fileuploadBar .progress-bar").css("width", progRange+"%");
-            $("#fileuploadBar .progress-bar").width(progRange+"%");
-            cnt++;
-            
-            $("#jscii-element-file").attr("src", dataUrl);
-            
-          }, function(){
-            //window.console.log("fileread done");
+          
+          var file     = this.files[0];
+          var reader   = new FileReader();
+          reader.onload = function () {
+            $("#jscii-element-file").attr("src", reader.result);
             //file change 이벤트라서 같은 파일 올리면 안올라가는 현상으로 초기화 해줌
             var input = $("#fileupload");
             input.replaceWith(input.val('').clone(true));
             $("#uploadBtn span").text('Add file');
             $("#uploadBtn").removeAttr("disabled");
-            $("#fileuploadBar .progress-bar").removeClass("active");
-          });
+          };
+          
+          if (file) {
+            reader.readAsDataURL(file);
+          }
         });
         
 				$('#jscii-element-file').load(function(){
