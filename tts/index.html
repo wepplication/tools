@@ -96,13 +96,12 @@
     <script src="/tools/js/artyom.window.js"></script>
     <script>
         $(document).ready(function(){
-            var artyom = new Artyom();
+            window.artyom = new Artyom();
             if(artyom.speechSupported()){
+                artyom.ArtyomVoicesIdentifiers["ko-KR"] = ["Google 한국의", "ko-KR", "ko_KR"];
                 artyom.initialize({
                     lang:"ko-KR",
-                    debug:true,
-                    continuous:false,
-                    listen:true
+                    debug:false
                 }).then(() => {
                 }).catch((err) => {
                     console.log("Artyom couldn't be initialized, please check the console for errors");
@@ -116,12 +115,10 @@
             $("#ttsBtn").on("click", function(){
                 var contents = $("#contents").val();
                 var $btn = $(this).button('loading');
-                artyom.restart().then(() => {
-                    artyom.say(contents,{
-                        onEnd: function(){
-                            $btn.button('reset');
-                        }
-                    });
+                artyom.say(contents,{
+                    onEnd: function(){
+                        $btn.button('reset');
+                    }
                 });
             });
         });
