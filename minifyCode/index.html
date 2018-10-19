@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta name="robots" content="index,nofollow">
     <meta name="Mediapartners-Google" content="index, nofollow">
-    <title>웹 소스코드 정렬 사이트</title>
-    <meta name="description" content="온라인 코드 정렬 사이트 js, css 등의 소스를 깔끔하게 정렬해주는 사이트">
+    <title>소스코드 압축 사이트</title>
+    <meta name="description" content="소스 코드(js, css 등) 코드 압축(Minify, Compress) 사이트">
     <!-- 소셜 미디어로 공유 활용 정보 -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="웹 소스코드 정렬 사이트">
-    <meta property="og:description" content="온라인 코드 정렬 사이트 js, css 등의 소스를 깔끔하게 정렬해주는 사이트">
-    <meta property="og:url" content="https://wepplication.github.io/tools/beautifyCode/">
+    <meta property="og:title" content="소스코드 압축 사이트">
+    <meta property="og:description" content="소스 코드(js, css 등) 코드 압축(Minify, Compress) 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/minifyCode/">
     
     <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
     <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
@@ -36,37 +36,25 @@
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
             <div id="title">
-              <h1><b>코드 정렬</b></h1>
-              문서 종류를 선택 후 코드 입력 후 변환 버튼을 누르면 깔끔하게 정렬된 코드를 출력합니다.<br>
+              <h1><b>코드 압축</b></h1>
+              HTML / JS / CSS 코드 입력 후 변환 버튼을 누르면 압축된 코드를 출력합니다.<br>
             </div>
-            <hr/>
           </div>
         </div>
         
+        <hr/>
         
         <form class="form-horizontal">
           <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-10">
-              <div class="btn-group" id="codeType" data-toggle="buttons">
-                <label class="btn btn-primary active">
-                  <input type="radio" name="codeType" autocomplete="off" value="html" checked> HTML/CSS/JS
-                </label>
-                <label class="btn btn-primary">
-                  <input type="radio" name="codeType" autocomplete="off" value="sql"> SQL
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
             <label for="orgText" class="col-sm-1 control-label">원본</label>
             <div class="col-sm-10">
-              <textarea id="orgText" name="orgText" class="form-control vresize" rows="10"></textarea>
+              <textarea id="orgText" name="orgText" class="form-control vresize lined" rows="10"></textarea>
             </div>
           </div>
           <div class="form-group">
-            <label for="beautifyText" class="col-sm-1 control-label">정렬</label>
+            <label for="minifyText" class="col-sm-1 control-label">압축</label>
             <div class="col-sm-10">
-              <pre id="beautifyText"class="prettyprint"></pre>
+              <textarea id="minifyText" name="minifyText" class="form-control vresize lined" rows="10"></textarea>
             </div>
           </div>
           <div class="form-group">
@@ -89,8 +77,8 @@
             <div id="disqus_thread"></div>
             <script>
             var disqus_config = function () {
-              this.page.url = "https://wepplication.github.io/tools/beautifyCode/";  // Replace PAGE_URL with your page's canonical URL variable
-              this.page.identifier = "/tools/beautifyCode/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              this.page.url = "https://wepplication.github.io/tools/minifyCode/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/minifyCode/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
             (function() { // DON'T EDIT BELOW THIS LINE
             var d = document, s = d.createElement('script');
@@ -104,7 +92,6 @@
           </div>
         </div>
       </div>
-    
       <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel">
         <div class="modal-dialog modal-sm" role="document">
           <div class="modal-content">
@@ -121,7 +108,7 @@
           </div>
         </div>
       </div>
-    </main> <!-- main -->
+    </main>
     
     <footer w3-include-html="/tools/includes/footer.html"></footer>
     
@@ -130,50 +117,62 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/tools/js/common.js"></script>
     
-    <script src="https://cdn.rawgit.com/beautify-web/js-beautify/v1.8.8/js/lib/beautify.js"></script>
-    <script src="https://cdn.rawgit.com/beautify-web/js-beautify/v1.8.8/js/lib/beautify-css.js"></script>
-    <script src="https://cdn.rawgit.com/beautify-web/js-beautify/v1.8.8/js/lib/beautify-html.js"></script>
-    <script src="/tools/js/sql-formatter.js"></script>
-    
+    <script src="/tools/js/htmlminifier.js"></script>
     <script>
       $(document).ready(function(){
         // 변환 버튼
         $('#convertBtn').on('click', function(){
-          var source = $("#orgText").val();
-          var output = "";
           
-          if(source == ""){
+          var resource = $("#orgText").val();
+          if(resource == ""){
             alert("원본 코드를 입력해주세요.");
             return;
           }
           
-          var codeType = $("#codeType input:radio:checked").val();
-          if(codeType == "html"){
-            if (looks_like_html(source)){
-              output = html_beautify(source);
-            }else{
-              output = js_beautify(source);
-            }
-          }else if(codeType == "sql"){
-            output = sqlFormatter.format(source, {language: "sql"});
+          $("#minifyText").val("");
+          
+          var $btn = $(this).button('loading');
+          var minify = require('html-minifier').minify;
+          try{
+            var output = minify(resource, {
+                "caseSensitive": false,
+                "collapseBooleanAttributes": true,
+                "collapseInlineTagWhitespace": false,
+                "collapseWhitespace": true,
+                "conservativeCollapse": false,
+                "decodeEntities": true,
+                "html5": true,
+                "includeAutoGeneratedTags": false,
+                "keepClosingSlash": false,
+                "minifyCSS": true,
+                "minifyJS": true,
+                "preserveLineBreaks": false,
+                "preventAttributesEscaping": false,
+                "processConditionalComments": true,
+                "processScripts": ["text/html"],
+                "removeAttributeQuotes": true,
+                "removeComments": true,
+                "removeEmptyAttributes": true,
+                "removeEmptyElements": false,
+                "removeOptionalTags": true,
+                "removeRedundantAttributes": true,
+                "removeScriptTypeAttributes": true,
+                "removeStyleLinkTypeAttributes": true,
+                "removeTagWhitespace": true,
+                "sortAttributes": true,
+                "sortClassName": true,
+                "trimCustomFragments": true,
+                "useShortDoctype": true
+            });
+          }catch(e){
+            alert("parse Error");
+            $btn.button('reset');
           }
-          
-          $("#beautifyText").text(output);
-          
-        });
-        
-        // 문서종류 라디오 버튼
-        $("#codeType :input").change(function() {
-            $("#orgText").val("");
-            $("#beautifyText").text("");
+          $("#minifyText").val(output);
+          $btn.button('reset');
         });
         
       });
-      
-      function looks_like_html(source) {
-        var trimmed = source.replace(/^[ \t\n\r]+/, '');
-        return trimmed && (trimmed.substring(0, 1) === '<');
-      }
       
       // modal창 생성
       function alertModal(msg){
