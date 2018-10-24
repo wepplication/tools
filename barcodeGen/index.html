@@ -153,13 +153,20 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="barcodeTab">
       
-            <div class="barcode-container">
+            <div class="container center-text">
               <div id="barcodeBox" class="row col-md-10 col-md-offset-1">
                 <img id="barcode" alt="바코드 이미지" style="display:none;"/>
                 <span id="invalid">유효하지 않는 데이터입니다.</span>
               </div>
             </div>
             <div class="container">
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1 center-text">
+      			      <br/>
+      			      <button class="btn btn-primary" type="button" id="saveBarcodeFile">저장</button>
+      			      <hr/>
+                </div>
+              </div>
               <div class="row search-bar">
                 <div class="col-md-10 col-md-offset-1">
                   <div class="input-group margin-bottom-sm">
@@ -286,11 +293,18 @@
           </div>
           <div role="qrcodeTab" class="tab-pane fade in" id="qrcodeTab">
             
-            <div class="barcode-container">
+            <div class="container center-text">
               <div id="qrcode" class="row col-md-10 col-md-offset-1"></div>
             </div>
             
             <div class="container">
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1 center-text">
+      			      <br/>
+      			      <button class="btn btn-primary" type="button" id="saveQrcodeFile">저장</button>
+      			      <hr/>
+                </div>
+              </div>
               <div class="row search-bar">
                 <div class="col-md-10 col-md-offset-1">
                   <div class="input-group margin-bottom-sm">
@@ -366,6 +380,7 @@
     <script src="/tools/js/rangeslider/js/rangeslider.min.js"></script>
     <script src="/tools/js/jqColorPicker.min.js"></script>
     <script src="/tools/js/jquery.qrcode.min.js"></script>
+  	<script src="/tools/js/FileSaver.js"></script>
     <script>
      /*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
       if (!String.fromCodePoint) {
@@ -555,6 +570,30 @@
           updateDropdownMenu( $next, 'right' );
         });
         
+        $("#saveBarcodeFile").on("click", function(){
+          var image = $("#barcode").get(0);
+      		var canvas = document.createElement('canvas');
+      		canvas.width = image.width;
+      		canvas.height = image.height;
+      		var ctx = canvas.getContext('2d');
+      		ctx.drawImage(image, 0, 0, image.width, image.height);
+      		canvas.toBlob(function(blob) {
+            saveAs(blob, "barcode.png");
+          });
+        });
+        
+        $("#saveQrcodeFile").on("click", function(){
+          var image = $("#qrcodeimg").get(0);
+      		var canvas = document.createElement('canvas');
+      		canvas.width = image.width;
+      		canvas.height = image.height;
+      		var ctx = canvas.getContext('2d');
+      		ctx.drawImage(image, 0, 0, image.width, image.height);
+      		canvas.toBlob(function(blob) {
+            saveAs(blob, "qrcode.png");
+          });
+        });
+        
       });
       
       var newBarcode = function() {
@@ -610,7 +649,7 @@
         
         // 모바일에서 다운 가능하게 img 태그로 변경
         var src = document.querySelector('#qrcode canvas').toDataURL();
-        $("#qrcode").html("<img src=''/>");
+        $("#qrcode").html("<img src='' id='qrcodeimg'/>");
         $("#qrcode img").attr("src", src);
         
         $("#qr-size-display").text($("#qr-size").val());

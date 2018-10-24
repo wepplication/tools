@@ -100,6 +100,7 @@
               			<img width="150" id="jscii-element-image" src="" crossOrigin="Anonymous">
               			<pre id="ascii-container-image" style="line-height:1;"></pre>
       					  </div>
+      					  <button class="btn btn-default" type="button" id="copyUrlAscii" style="display:none;">복사</button>
       					</div>
     					</div>
             </form>
@@ -146,6 +147,7 @@
               			<img width="150" id="jscii-element-file" src="" crossOrigin="Anonymous">
               			<pre id="ascii-container-file" style="line-height:1;"></pre>
       					  </div>
+      					  <button class="btn btn-default" type="button" id="copyFileAscii" style="display:none;">복사</button>
       					</div>
     					</div>
             </form>
@@ -173,7 +175,8 @@
               
               <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-      					  <div id="textContents"></div>
+      					  <pre id="textContents"></pre>
+      					  <button class="btn btn-default" type="button" id="copyTextAscii" style="display:none;">복사</button>
       					</div>
     					</div>
             </form>
@@ -283,6 +286,7 @@
       		}
       		
           document.getElementById('ascii-container-file').innerHTML = str;
+          $("#copyFileAscii").show();
 				});
 				
         
@@ -329,6 +333,7 @@
       		}
       		
           document.getElementById('ascii-container-image').innerHTML = str;
+          $("#copyUrlAscii").show();
           $('#convertBtn').button('reset');
 				});
 				
@@ -348,8 +353,19 @@
           var font = $('#fontSelector').val();
           $('#textContents').html('');
           Figlet.write(text, font, function(str) {
-            $('#textContents').html('<pre>' + str + '</pre>');
+            $('#textContents').html(str);
+            $("#copyTextAscii").show();
           });
+        });
+        
+        $("#copyUrlAscii").on("click", function(){
+          saveClipboard("ascii-container-image");
+        });
+        $("#copyFileAscii").on("click", function(){
+          saveClipboard("ascii-container-file");
+        });
+        $("#copyTextAscii").on("click", function(){
+          saveClipboard("textContents");
         });
         
         // 모바일 탭
@@ -379,6 +395,31 @@
         
       });
       
+		  function saveClipboard(elemId) {
+        var elm = document.getElementById(elemId);
+        
+        if (document.selection) {
+            var range = document.body.createTextRange();
+                range.moveToElementText(elm);
+            range.select();
+        } else if (window.getSelection) {
+            elm.contentEditable = false;
+            elm.focus();
+            var mySelection = window.getSelection();
+            if(mySelection.rangeCount > 0) {mySelection.removeAllRanges();}
+            var range = document.createRange();
+            range.selectNode(elm.parentNode);
+            mySelection.addRange(range);
+            elm.contentEditable = true;
+        }
+
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            alert('Unable to copy text, you will need to press Ctrl+C on your keyboard to copy.');
+        }
+      };
+        
       function sizeCheck(object){
         if($(object).val() < 10){
           $(object).val(10);
