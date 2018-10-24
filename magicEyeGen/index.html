@@ -179,6 +179,12 @@
                   </div>
                 </div>
               </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <button class="btn btn-primary" type="button" id="saveTextImage">저장</button>
+                </div>
+              </div>
             </div>
             
             <!-- 이미지URL -->
@@ -204,6 +210,12 @@
                   <img id="magic-eye-url" class="img-responsive center-block" style="display:none;" src="" />
                 </div>
               </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <button class="btn btn-primary" type="button" id="saveUrlImage">저장</button>
+                </div>
+              </div>
             </div> <!--tabpanel-->
             
             <!-- 이미지첨부 -->
@@ -225,6 +237,12 @@
                 <div class="col-md-10 col-md-offset-1">
                   <canvas id="canvas-preview" style="display: none;"></canvas>
                   <img id="magic-eye-file"  class="img-responsive center-block" style="display:none;" src="" />
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <button class="btn btn-primary" type="button" id="saveFileImage">저장</button>
                 </div>
               </div>
             </div>
@@ -268,6 +286,12 @@
                   <button type="button" id="show-magiceye" class="btn btn-primary" autocomplete="off">Show Magic Eye</button>
                   <button type="button" id="show-canvas" class="btn btn-primary" autocomplete="off" style="display: none;">Show Depth Map</button>
                   <button type="button" id="clear" class="btn btn-primary" autocomplete="off" >Clear</button>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <button class="btn btn-primary" type="button" id="saveDrawImage">저장</button>
                 </div>
               </div>
             </div>
@@ -316,6 +340,7 @@
     <script src="/tools/js/magiceye/depthmappers/TextDepthMapper.js"></script>
     <script src="/tools/js/magiceye/depthmappers/ImgDepthMapper.js"></script>
     <script src="/tools/js/magiceye/depthmappers/CanvasDepthMapper.js"></script>
+  	<script src="/tools/js/FileSaver.js"></script>
     <script>
       $(document).ready(function(){
         var blackAndWhite = false;
@@ -360,6 +385,16 @@
             str=="magic-eye-url" ?  new MagicEye.CanvasDepthMapper(img, { inverted: false }) //new MagicEye.ImgDepthMapper(img)
             : new MagicEye.CanvasDepthMapper(drawingCanvas, { inverted: false })
           });
+          
+          if(str=="magic-eye-text"){
+            $("#saveTextImage").show();
+          }else if(str=="magic-eye-file"){
+            $("#saveFileImage").show();
+          }else if(str=="magic-eye-url"){
+            $("#saveUrlImage").show();
+          }else{
+            $("#saveDrawImage").show();
+          }
         }
         
         //생성 버튼 TEXT
@@ -627,6 +662,54 @@
           updateDropdownMenu( $next, 'right' );
         });
         
+        
+        $("#saveTextImage").on("click", function(){
+          var image = $("#magic-eye-text").get(0);
+      		var canvas = document.createElement('canvas');
+      		canvas.width = image.width;
+      		canvas.height = image.height;
+      		var ctx = canvas.getContext('2d');
+      		ctx.drawImage(image, 0, 0, image.width, image.height);
+      		canvas.toBlob(function(blob) {
+            saveAs(blob, "magicEyeImg.png");
+          });
+        });
+        
+        $("#saveFileImage").on("click", function(){
+          var image = $("#magic-eye-file").get(0);
+      		var canvas = document.createElement('canvas');
+      		canvas.width = image.width;
+      		canvas.height = image.height;
+      		var ctx = canvas.getContext('2d');
+      		ctx.drawImage(image, 0, 0, image.width, image.height);
+      		canvas.toBlob(function(blob) {
+            saveAs(blob, "magicEyeImg.png");
+          });
+        });
+        
+        $("#saveUrlImage").on("click", function(){
+          var image = $("#magic-eye-url").get(0);
+      		var canvas = document.createElement('canvas');
+      		canvas.width = image.width;
+      		canvas.height = image.height;
+      		var ctx = canvas.getContext('2d');
+      		ctx.drawImage(image, 0, 0, image.width, image.height);
+      		canvas.toBlob(function(blob) {
+            saveAs(blob, "magicEyeImg.png");
+          });
+        });
+        
+        $("#saveDrawImage").on("click", function(){
+          var image = $("#magiceye").get(0);
+      		var canvas = document.createElement('canvas');
+      		canvas.width = image.width;
+      		canvas.height = image.height;
+      		var ctx = canvas.getContext('2d');
+      		ctx.drawImage(image, 0, 0, image.width, image.height);
+      		canvas.toBlob(function(blob) {
+            saveAs(blob, "magicEyeImg.png");
+          });
+        });
       }); //document.ready
       
       function randomRGBa() {

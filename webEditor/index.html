@@ -71,13 +71,14 @@
         <br/>
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-              <div id="result"></div>
+            <div id="result"></div>
           </div>
         </div>
         
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-            <hr/>
+      		  <button class="btn btn-primary" type="button" id="saveImage" style="display:none;">저장</button>
+      		  <button class="btn btn-default" type="button" id="copyHtml" style="display:none;">복사</button>
             <hr/>
           </div>
         </div>
@@ -115,6 +116,7 @@
     
     <script src="//cdn.ckeditor.com/4.5.10/full/ckeditor.js"></script>
     <script src="/tools/js/html2canvas.js"></script>
+  	<script src="/tools/js/FileSaver.js"></script>
     <script>
       $(document).ready(function(){
         CKEDITOR.config.font_names="나눔고딕;맑은 고딕;굴림;굴림체;돋움;돋움체;바탕;바탕체;돋음;돋움체;궁서;궁서체;"+CKEDITOR.config.font_names;
@@ -125,20 +127,62 @@
         
         $("#imgBtn").on("click", function(){
           $("#result").html("");
+          $("#saveImage").hide();
+          $("#copyHtml").hide();
           var $btn = $(this).button('loading');
-          
           html2canvas(document.getElementsByTagName("iframe")[0].contentWindow.document.body).then(function(canvas) {
               $("#result").html("");
               var src = canvas.toDataURL();
-              $("#result").append($("<img>", {"src": src}).addClass("img-responsive"));
+              $("#result").append($("<img>", {"id": "editorImg", "src": src}).addClass("img-responsive"));
+              $("#saveImage").show();
               $btn.button('reset');
           });
         });
         
         $("#htmlBtn").on("click", function(){
-          var body = CKEDITOR.instances.editor1.getData();
           $("#result").html("");
+          $("#saveImage").hide();
+          $("#copyHtml").hide();
+          var body = CKEDITOR.instances.editor1.getData();
           $("#result").text(body);
+          $("#copyHtml").show();
+        });
+        
+        $("#saveImage").on("click", function(){
+          var image = $("#editorImg").get(0);
+      		var canvas = document.createElement('canvas');
+      		canvas.width = image.width;
+      		canvas.height = image.height;
+      		var ctx = canvas.getContext('2d');
+      		ctx.drawImage(image, 0, 0, image.width, image.height);
+      		canvas.toBlob(function(blob) {
+            saveAs(blob, "editorImg.png");
+          });
+        });
+        
+        $("#copyHtml").on("click", function(){
+        var elm = document.getElementById("result");
+        
+        if (document.selection) {
+            var range = document.body.createTextRange();
+                range.moveToElementText(elm);
+            range.select();
+        } else if (window.getSelection) {
+            elm.contentEditable = false;
+            elm.focus();
+            var mySelection = window.getSelection();
+            if(mySelection.rangeCount > 0) {mySelection.removeAllRanges();}
+            var range = document.createRange();
+            range.selectNode(elm.parentNode);
+            mySelection.addRange(range);
+            elm.contentEditable = true;
+        }
+
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            alert('Unable to copy text, you will need to press Ctrl+C on your keyboard to copy.');
+        }
         });
         
       });
