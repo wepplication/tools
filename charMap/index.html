@@ -96,7 +96,15 @@
     
     <footer w3-include-html="/tools/includes/footer.html"></footer>
     
-    <analytics w3-include-html="/tools/includes/analytics.html"></analytics>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128075739-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-128075739-1');
+    </script>
     
     <script src="/tools/js/include.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
