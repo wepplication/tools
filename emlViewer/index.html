@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,follow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>EML 뷰어</title>
+    <meta name="description" content="온라인 EML 뷰어">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="EML 뷰어">
+    <meta property="og:description" content="온라인 EML 뷰어">
+    <meta property="og:url" content="https://wepplication.github.io/tools/emlViewer/">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>온라인 EML 뷰어</b></h1>
+              메일 백업 파일인 eml 파일 내용을 보는 사이트
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+      
+        <form id="urlForm" class="form-horizontal">
+          <div class="row">
+            <label for="filename" class="col-sm-1 control-label">Upload</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></span>
+                <input type="text" id="filename" class="form-control" disabled placeholder="Upload EML File">
+                <span class="input-group-btn">
+                  <button id="fileBtn" class="btn btn-success" type="button">Add file</button>
+                  <input id="fileupload" name="fileupload" type="file" style="display:none;">
+                </span>
+              </div><!-- /input-group -->
+            </div>
+          </div>
+          <div class="row">
+            <hr/>
+          </div>
+          <div class="row">
+            <label for="subject" class="col-sm-1 control-label">제목</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control" id="subject" value="">
+            </div>
+          </div>
+          <div class="row">
+            <label for="from" class="col-sm-1 control-label">보낸사람</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control" id="from" value="">
+            </div>
+          </div>
+          <div class="row">
+            <label for="to" class="col-sm-1 control-label">받는사람</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control" id="to" value="">
+            </div>
+          </div>
+          <div class="row">
+            <label for="date" class="col-sm-1 control-label">날짜</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control" id="date" value="">
+            </div>
+          </div>
+          <div class="row">
+            <label for="attach" class="col-sm-1 control-label">첨부파일</label>
+            <div class="col-sm-10">
+              <div class="panel-group" role="tablist">
+                <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="fileListGroupHeading">
+                    <h4 class="panel-title"> <a href="#fileListGroup" class="collapsed" id="attachHead" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="fileListGroup">첨부파일이 없습니다.</a> </h4>
+                  </div>
+                  <div class="panel-collapse collapse" role="tabpanel" id="fileListGroup" aria-labelledby="fileListGroupHeading" aria-expanded="false" style="height: 0px;">
+                    <ul class="list-group" id="attachList">
+                      
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <hr/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" id="body"></iframe>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/emlViewer/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/emlViewer/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128075739-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-128075739-1');
+    </script>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+	  <script src="/tools/js/browserify/eml-format.bundle.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.0-rc.4/dist/FileSaver.min.js"></script>
+    
+    <script>
+      //https://github.com/papnkukn/eml-format
+  		var emlformat = require('eml-format');
+  		var attachments = [];
+      $(document).ready(function(){
+        $("#fileBtn").on('click', function(){
+          $("#fileupload").trigger('click');
+        });
+        
+  			var file = document.querySelector('#fileupload');
+  			file.onchange = function(event){
+  				attachments = [];
+  				var file     = event.target.files[0];
+  				var reader   = new FileReader();
+  				if(file){
+  					reader.readAsText(file);
+  					$("#filename").val(file.name);
+  				}  
+  				reader.onload = function () {
+  					emlformat.read(reader.result, function(error, data) {
+  					  if (error) return console.log(error);
+  					  //Attachments
+  					  $("#attachList").children().remove();
+  					  if (data.attachments && data.attachments.length > 0) {
+    						$("#attachHead").text("첨부파일 "+data.attachments.length+"개 ▼");
+    						for (var i = 0; i < data.attachments.length; i++) {
+    						  var attachment = data.attachments[i];
+    						  var mimeType = attachment.contentType.split(";")[0];
+    						  var filename = attachment.name;
+    						  if(!filename){
+    							  filename = "attachment_" + (i + 1) + emlformat.getFileExtension(mimeType);
+    						  }else{
+    							  filename = emlformat.unquoteUTF8(filename);
+    						  }
+    						  attachment.filename = filename;
+    						  attachment.type = mimeType;
+    						  attachments.push(attachment);
+    						  
+                  //<li class="list-group-item">sample.txt</li>
+    						  $("#attachList").append($("<li>").addClass("list-group-item").attr("onclick", "downloadAttach("+i+")").text(filename));
+    						}
+  					  }else{
+    						$("#attachHead").text("첨부파일이 없습니다.");
+  					  }
+  					  
+  					  var fromEmail = data.from.name + " <" + data.from.email + ">";
+  					  var toEmail = [];
+  					  var toArr = data.headers.To.replace(/\r?\n/gi, "").split(",");
+  					  for(var idx in toArr){
+  					    var toObj = emlformat.getEmailAddress(toArr[idx]);
+  					    toEmail.push(toObj.name + " <" + toObj.email + ">");
+  					  }
+  					  
+  					  document.getElementById('from').value = fromEmail;
+  					  document.getElementById('to').value = toEmail.join(", ");
+  					  document.getElementById('date').value = moment(data.date).locale('ko').format("YYYY-MM-DD (ddd) HH:mm");
+  					  document.getElementById('subject').value = data.subject;
+  					  var iframe =   document.getElementById('body');
+  					  var doc = iframe.contentDocument||iframe.contentWindow.document;
+  					  doc.body.innerHTML = data.html;
+  					}); // emlformat.read
+  				}; // reader.onload
+  			}; // file.onchange
+  			
+      }); // $(document).ready
+  			
+			function downloadAttach(idx){
+				var blob = new Blob([attachments[idx].data], {type:attachments[idx].mimeType});
+				saveAs(blob, attachments[idx].filename);
+			}
+    </script>
+  </body>
+</html>
