@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <title>짧은주소 원래주소 변환기</title>
+    <meta name="description" content="짧은 URL 주소의 원래 실제 웹URL 주소를 조회 할 수 있는 사이트">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="짧은주소 원래주소 변환기">
+    <meta property="og:description" content="짧은 URL 주소의 원래 실제 웹URL 주소를 조회 할 수 있는 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/longUrl/">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>짧은주소 -> 원래주소 변환기</b></h1>
+              url 입력을 통해 짧게 줄인 URL의 실제 URL 주소를 보여줍니다.
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+          <label for="shortUrl" class="col-sm-1 control-label">Short URL</label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="text" class="form-control" id="shortUrl" name="shortUrl" placeholder="http://bitly.kr/8wDr">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="searchBtn">변환</button>
+              </span>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-12 -->
+        </div>
+        
+        <hr/>
+            
+        <div class="row">
+          <label for="longUrl" class="col-sm-1 control-label">Original URL</label>
+          <div class="col-sm-10">
+            <pre id="longUrl"></pre>
+            <div id="urlTitle"></div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/longUrl/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/longUrl/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128075739-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-128075739-1');
+    </script>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script>
+      $(document).ready(function(){
+        $('#searchBtn').on('click', function(){
+          var url = $("#shortUrl").val();
+          
+          if(isURL(url)){
+          }else{
+            if(url.indexOf("http://") != 0){
+              url = "http://"+url;
+              $("#shortUrl").val(url);
+            }
+            if(isURL(url)){
+            }else{
+              alert("URL을 입력해 주세요.");
+              return;
+            }
+          }
+          
+          var $btn = $('#searchBtn').button('loading');
+          $("#longUrl").text("");
+          $("#urlTitle").text("");
+          
+			    var CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+          var reqUrl = url;
+          $.ajax({
+            type: "GET",
+            dataType: "text",
+            url: CORS_PROXY + reqUrl,
+            success: function (data, status, request ) {
+              var long_url = request.getResponseHeader('x-final-url');
+	            var title = "";
+              var re = /(<\s*title[^>]*>(.+?)<\s*\/\s*title)>/gi;
+    	        var str=data;
+    	        var match = re.exec(str);
+    	        if (match && match[2]) {
+    	        	title = match[2];
+    	        }
+              $("#longUrl").text(long_url);
+              $("#urlTitle").text("페이지 타이틀 : "+title);
+            },
+            error: function(request, status, error){
+              window.console.log("on error");
+            },
+            complete : function(request, status) {
+              $btn.button('reset');
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
