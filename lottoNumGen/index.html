@@ -139,6 +139,14 @@
       gtag('config', 'UA-128075739-1');
     </script>
     
+    <!-- Naver Analytics -->
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if(!wcs_add) var wcs_add = {};
+      wcs_add["wa"] = "2b27e8a158b290";
+      wcs_do();
+    </script>
+    
     <script src="/tools/js/include.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
@@ -147,38 +155,38 @@
     
     <script>
       $(document).ready(function(){
-		var strNums = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45";
-		
-		$("#genBtn").on("click", function(){
-		    var arrNums = strNums.split(',');
-    		var results = [];
-    		for(var i=0; i<6; i++){
-    			var idx = Math.floor((Math.random() * arrNums.length));
-    			results = results.concat(arrNums.splice(idx, 1));
-    		}
-    		results.sort(function(a, b){return a - b;});
+    		var strNums = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45";
     		
-    		var resultNumsDiv = $("<div>").addClass("wrapper");
-    		for(var idx in results){
-    			var num = results[idx];
-    			var ballDiv = $("<div>").addClass( "ball wrapper" );
-    			switch(parseInt(num/10)){
-    				case 0: ballDiv.addClass( "yellow" );
-    					break;
-    				case 1: ballDiv.addClass( "blue" );
-    					break;
-    				case 2: ballDiv.addClass( "red" );
-    					break;
-    				case 3: ballDiv.addClass( "grey" );
-    					break;
-    				default: ballDiv.addClass( "green" );
-    			}
-    			resultNumsDiv.append(ballDiv.append($("<span>").addClass("num").text(num)));
-    		}
-    		$("#output").append(resultNumsDiv);
-		});
-		
-		$("#genBtn").trigger("click");
+    		$("#genBtn").on("click", function(){
+    		    var arrNums = strNums.split(',');
+        		var results = [];
+        		for(var i=0; i<6; i++){
+        			var idx = Math.floor((Math.random() * arrNums.length));
+        			results = results.concat(arrNums.splice(idx, 1));
+        		}
+        		results.sort(function(a, b){return a - b;});
+        		
+        		var resultNumsDiv = $("<div>").addClass("wrapper");
+        		for(var idx in results){
+        			var num = results[idx];
+        			var ballDiv = $("<div>").addClass( "ball wrapper" );
+        			switch(parseInt(num/10)){
+        				case 0: ballDiv.addClass( "yellow" );
+        					break;
+        				case 1: ballDiv.addClass( "blue" );
+        					break;
+        				case 2: ballDiv.addClass( "red" );
+        					break;
+        				case 3: ballDiv.addClass( "grey" );
+        					break;
+        				default: ballDiv.addClass( "green" );
+        			}
+        			resultNumsDiv.append(ballDiv.append($("<span>").addClass("num").text(num)));
+        		}
+        		$("#output").append(resultNumsDiv);
+    		});
+    		
+    		$("#genBtn").trigger("click");
 		
       });
     </script>
