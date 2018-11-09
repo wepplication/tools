@@ -136,29 +136,31 @@
   		var isLight = false;
   		var hasTorch = false;
   		
+  		(function(){
+  		  if (SUPPORTS_MEDIA_DEVICES) {
+    		  //Get the environment camera (usually the second one)
+    		  navigator.mediaDevices.enumerateDevices().then(devices => {
+    		  
+      			const cameras = devices.filter((device) => device.kind === 'videoinput');
+      
+      			if (cameras.length === 0) {
+      			  throw 'No camera found on this device.';
+      			}
+      			const camera = cameras[cameras.length - 1];
+      
+      			// Create stream and get video track
+      			navigator.mediaDevices.getUserMedia({
+      			  video: {
+        				deviceId: camera.deviceId,
+        				facingMode: ['user', 'environment']
+      			  }
+      			}).then(stream => {
+      			  track = stream.getVideoTracks()[0];
+      			});
+    		  });
+    		}
+  		})();
   		
-  		if (SUPPORTS_MEDIA_DEVICES) {
-  		  //Get the environment camera (usually the second one)
-  		  navigator.mediaDevices.enumerateDevices().then(devices => {
-  		  
-    			const cameras = devices.filter((device) => device.kind === 'videoinput');
-    
-    			if (cameras.length === 0) {
-    			  throw 'No camera found on this device.';
-    			}
-    			const camera = cameras[cameras.length - 1];
-    
-    			// Create stream and get video track
-    			navigator.mediaDevices.getUserMedia({
-    			  video: {
-      				deviceId: camera.deviceId,
-      				facingMode: ['user', 'environment']
-    			  }
-    			}).then(stream => {
-    			  track = stream.getVideoTracks()[0];
-    			});
-  		  });
-  		}
   		
       $(document).ready(function(){
         var target = $('#lightLayer')[0];
