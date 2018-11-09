@@ -172,6 +172,7 @@
         $('#lightBtn').on('click', function(){
 			    isLight = isLight ? false : true;
 			    if(hasTorch){
+			      alert(hasTorch+ " "+isLight);
   				  track.applyConstraints({
   					  advanced: [{torch: isLight}]
   				  });
