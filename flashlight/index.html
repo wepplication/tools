@@ -155,7 +155,7 @@
         				deviceId: camera.deviceId,
         				facingMode: ['user', 'environment']
       			  }
-      			}).then(stream => {
+      			}).then(function(stream){
       			  track = stream.getVideoTracks()[0];
       			});
     		  });
