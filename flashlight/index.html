@@ -156,13 +156,6 @@
     			  }
     			}).then(stream => {
     			  track = stream.getVideoTracks()[0];
-    			  
-    			  const imageCapture = new ImageCapture(track)
-    			  const photoCapabilities = imageCapture.getPhotoCapabilities().then(() => {
-      				if(track.getCapabilities().touch){
-      					hasTorch = track.getCapabilities().touch;
-      				}
-    			  });
     			});
   		  });
   		}
@@ -171,8 +164,7 @@
         var target = $('#lightLayer')[0];
         $('#lightBtn').on('click', function(){
 			    isLight = isLight ? false : true;
-			    alert(hasTorch+ " "+isLight);
-			    if(hasTorch){
+			    if(track){
   				  track.applyConstraints({
   					  advanced: [{torch: isLight}]
   				  });
