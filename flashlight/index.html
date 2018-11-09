@@ -140,9 +140,9 @@
   		(function(){
   		  if (SUPPORTS_MEDIA_DEVICES) {
     		  //Get the environment camera (usually the second one)
-    		  navigator.mediaDevices.enumerateDevices().then(devices => {
+    		  navigator.mediaDevices.enumerateDevices().then(function(devices){
     		  
-      			const cameras = devices.filter((device) => device.kind === 'videoinput');
+      			const cameras = devices.filter(function(device){return device.kind === 'videoinput'});
       
       			if (cameras.length === 0) {
       			  throw 'No camera found on this device.';
@@ -170,7 +170,8 @@
 			    if(track){
   				  track.applyConstraints({
   					  advanced: [{torch: isLight}]
-  				  });
+  				  }).catch(function(e){
+            });
 			    }
         	if (screenfull.enabled) {
         	  if(screenfull.isFullscreen){ }else{
