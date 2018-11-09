@@ -171,8 +171,8 @@
         var target = $('#lightLayer')[0];
         $('#lightBtn').on('click', function(){
 			    isLight = isLight ? false : true;
+			    alert(hasTorch+ " "+isLight);
 			    if(hasTorch){
-			      alert(hasTorch+ " "+isLight);
   				  track.applyConstraints({
   					  advanced: [{torch: isLight}]
   				  });
