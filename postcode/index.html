@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <title>우편번호 찾기 : 지번주소 / 도로명주소 검색</title>
+    <meta name="description" content="우편번호 / 지번주소 / 도로명주소 검색하는 사이트">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="우편번호 찾기 : 지번주소 / 도로명주소 검색">
+    <meta property="og:description" content="우편번호 / 지번주소 / 도로명주소  검색하는 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/postcode/">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>우편번호 찾기 : 지번주소 / 도로명주소 검색</b></h1>
+              우편번호 / 지번주소 / 도로명주소  검색하는 사이트<br/>
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <form id="fileForm" class="form-horizontal">
+            <div class="form-group">
+                <label for="postcode" class="col-sm-1 control-label">우편번호</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="postcode" name="postcode" placeholder="우편번호" disabled>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="postcodeBtn">찾기</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div><!-- /col-sm-10 -->
+            </div><!-- /form-group -->
+            
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div id="wrap" style="display:none;border:1px solid;min-width:300px;min-height:200px;margin:5px 0;position:relative">
+                        <img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="form-group">
+                <label for="roadAddress" class="col-sm-1 control-label">도로명<br/>주소</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="roadAddress" name="roadAddress" placeholder="도로명주소" disabled>
+                </div><!-- /col-sm-10 -->
+            </div><!-- /form-group -->
+                  
+            <div class="form-group">
+                <label for="jibunAddress" class="col-sm-1 control-label">지번주소</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="jibunAddress" name="jibunAddress" placeholder="지번주소" disabled>
+                </div><!-- /col-sm-10 -->
+            </div><!-- /form-group -->
+        </form>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/postcode/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/postcode/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128075739-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-128075739-1');
+    </script>
+    
+    <!-- Naver Analytics -->
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if(!wcs_add) var wcs_add = {};
+      wcs_add["wa"] = "2b27e8a158b290";
+      wcs_do();
+    </script>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+    <script>
+        // 우편번호 찾기 찾기 화면을 넣을 element
+        var element_wrap = document.getElementById('wrap');
+    
+        function foldDaumPostcode() {
+            // iframe을 넣은 element를 안보이게 한다.
+            element_wrap.style.display = 'none';
+        }
+        
+        $(document).ready(function(){    
+            $("#postcodeBtn").on("click", function(){
+                // 현재 scroll 위치를 저장해놓는다.
+                var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+                
+                new daum.Postcode({
+                    oncomplete: function(data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+            
+                        // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                        var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+            
+                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                            extraRoadAddr += data.bname;
+                        }
+                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                           extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                        if(extraRoadAddr !== ''){
+                            extraRoadAddr = ' (' + extraRoadAddr + ')';
+                        }
+                        // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                        if(fullRoadAddr !== ''){
+                            fullRoadAddr += extraRoadAddr;
+                        }
+            
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        document.getElementById('postcode').value = data.zonecode; //5자리 새우편번호 사용
+                        document.getElementById('roadAddress').value = fullRoadAddr;
+                        document.getElementById('jibunAddress').value = data.jibunAddress;
+            
+
+                        // iframe을 넣은 element를 안보이게 한다.
+                        // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                        element_wrap.style.display = 'none';
+        
+                        // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+                        document.body.scrollTop = currentScroll;
+                    },
+                    // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+                    onresize : function(size) {
+                        element_wrap.style.height = size.height+'px';
+                    },
+                    width : '100%',
+                    height : '100%'
+                }).embed(element_wrap);
+                
+                // iframe을 넣은 element를 보이게 한다.
+                element_wrap.style.display = 'block';
+            });
+        });
+    </script>
+  </body>
+</html>
