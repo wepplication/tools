@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <title>키보드 이벤트 테스트</title>
+    <meta name="description" content="Javascript KeyCodes 이벤트 확인 하는 사이트">
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="키보드 이벤트 테스트">
+    <meta property="og:description" content="Javascript KeyCodes 이벤트 확인 하는 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/keyCode/">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+    <style>
+        .marginx {
+            margin:0 5px;
+        }
+    </style>
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>키보드 이벤트 테스트</b></h1>
+              Javascript KeyCodes 이벤트 확인 하는 사이트<br/>
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="col-xs-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading text-center">key</div>
+                        <div class="text-center" id="inputKey" style="padding:15px 0px;"></div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading text-center">which</div>
+                        <div class="text-center" id="inputWhich" style="padding:15px 0px;"></div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading text-center">code</div>
+                        <div class="text-center" id="inputCode" style="padding:15px 0px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="well" id="displayInputKey" style="overflow-x: scroll; "></div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingDetail">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseDetail" aria-expanded="false" aria-controls="collapseDetail">
+                                    상세 내용 보기
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseDetail" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingDetail">
+                            <ul class="list-group" id="detailList">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <button type="button" id="initBtn" class="btn btn-default">초기화</button>
+            </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/keyCode/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/keyCode/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128075739-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-128075739-1');
+    </script>
+    
+    <!-- Naver Analytics -->
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if(!wcs_add) var wcs_add = {};
+      wcs_add["wa"] = "2b27e8a158b290";
+      wcs_do();
+    </script>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script>
+        var press = {};
+        $(document).ready(function(){
+            
+            document.querySelector("body").onkeydown = function(e) {
+                $("#inputKey").text(e.key);
+                $("#inputWhich").text(e.which);
+                $("#inputCode").text(e.code);
+                if($("#displayInputKey").has("span").length){
+                    if(Object.keys(press)>0){
+                        $("#displayInputKey").append("+");
+                    }else{
+                        $("#displayInputKey").append(",");
+                    }
+                }
+                $("#displayInputKey").append('<span class="label label-info marginx" data-toggle="tooltip" data-placement="bottom" title="which:'+e.which+' code:'+e.code+'">'+e.key+'</span>');
+                $("#detailList").append('<li class="list-group-item">key:'+e.key+' which:'+e.which+' code:'+e.code+' keydown</li>');
+                press[e.which]=true;
+                return false;
+            }
+            
+            document.querySelector("body").onkeyup = function(e) {
+                delete press[e.which];
+                $("#detailList").append('<li class="list-group-item disabled">key:'+e.key+' which:'+e.which+' code:'+e.code+' keyup</li>');
+                return false;
+            }
+            
+            $("#displayInputKey").on("click","span",function(){
+                $(this).tooltip("show");
+            });
+            
+            $("#initBtn").on("click", function(){
+                $("#inputKey").text("");
+                $("#inputWhich").text("");
+                $("#inputCode").text("");
+                $("#displayInputKey").text("");
+                $("#detailList").children().remove();
+            });
+        });
+    </script>
+  </body>
+</html>
