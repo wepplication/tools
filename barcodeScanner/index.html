@@ -54,6 +54,8 @@
             </div>
         </div>
         
+        <hr/>
+        
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
                 <div class="embed-responsive embed-responsive-4by3">
@@ -118,8 +120,11 @@
             if (window.ZXing) {
                 ZXing = ZXing();
                 decodePtr = ZXing.Runtime.addFunction(decodeCallback);
+                
+                isPaused = false;
+                scanBarcode();
             } else {
-                setTimeout(tick, 10);
+                setTimeout(tick, 50);
             }
         };
         
@@ -127,34 +132,11 @@
             var result = new Uint8Array(ZXing.HEAPU8.buffer, ptr, len);
             // console.log(String.fromCharCode.apply(null, result));
             barcode_result.textContent = String.fromCharCode.apply(null, result);
-            canvas.style.display = 'block';
             $('#resultModal').modal('show');
         };
         
-        function dataURItoBlob(dataURI) {
-            // convert base64/URLEncoded data component to raw binary data held in a string
-            var byteString;
-            if (dataURI.split(',')[0].indexOf('base64') >= 0)
-                byteString = atob(dataURI.split(',')[1]);
-            else
-                byteString = unescape(dataURI.split(',')[1]);
-            
-            // separate out the mime component
-            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-            
-            // write the bytes of the string to a typed array
-            var ia = new Uint8Array(byteString.length);
-            for (var i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-            }
-            
-            return new Blob([ia], {
-                type: mimeString
-            });
-        }
         
         $('#resultModal').on('hidden.bs.modal', function (e) {
-            canvas.style.display = 'none';
             isPaused = false;
             scanBarcode();
         })
@@ -181,7 +163,7 @@
             context.drawImage(videoElement, 0, 0, width, height);
             
             var vid = document.getElementById("video");
-            // console.log("video width: " + vid.videoWidth + ", height: " + vid.videoHeight);
+            //console.log("video width: " + vid.videoWidth + ", height: " + vid.videoHeight);
             var barcodeCanvas = document.createElement("canvas");
             barcodeCanvas.width = vid.videoWidth;
             barcodeCanvas.height = vid.videoHeight;
@@ -200,7 +182,7 @@
             // console.timeEnd('decode barcode');
             // console.log("error code", err);
             if (err == -2) {
-                setTimeout(scanBarcode, 30);
+                //setTimeout(scanBarcode, 30);
             }
         }
         
@@ -247,10 +229,6 @@
         function gotStream(stream) {
             window.stream = stream; // make stream available to console
             videoElement.srcObject = stream;
-            
-            canvas.style.display = 'none';
-            isPaused = false;
-            scanBarcode();
         }
         
         function handleError(error) {
