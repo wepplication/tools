@@ -239,6 +239,8 @@
                 .then(gotDevices).then(getStream).catch(handleError);
                 
                 tick();
+            }else{
+                alert("지원하지 않는 기기/브라우저 입니다.");
             }
         });
     </script>
