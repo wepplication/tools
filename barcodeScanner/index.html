@@ -131,8 +131,11 @@
         
         var decodeCallback = function (ptr, len, resultIndex, resultCount) {
             var result = new Uint8Array(ZXing.HEAPU8.buffer, ptr, len);
-            alert(new TextDecoder("utf-8").decode(result));
+            try{
             resultText = new TextDecoder("utf-8").decode(result);
+            }catch(e){
+                alert(e);
+            }
             $("#barcode_result").src("href", resultText);
             $("#barcode_result").text = resultText;
             $('#resultModal').modal('show');
