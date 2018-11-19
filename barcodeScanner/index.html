@@ -105,6 +105,8 @@
     
     <script async src="/tools/js/zxing.js"></script>
     <script>
+  		const SUPPORTS_MEDIA_DEVICES = 'mediaDevices' in navigator;
+  		
         var videoElement = document.querySelector('video');
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');
@@ -117,6 +119,9 @@
         var ZXing = null;
         var decodePtr = null;
         
+        var videoSelect = document.querySelector('#videoSource');
+        videoSelect.onchange = getStream;
+                
         var tick = function () {
             if (window.ZXing && document.getElementById("video").videoWidth > 0) {
                 ZXing = ZXing();
@@ -186,14 +191,6 @@
             }
         }
         
-        // https://github.com/samdutton/simpl/tree/gh-pages/getusermedia/sources 
-        var videoSelect = document.querySelector('#videoSource');
-        
-        navigator.mediaDevices.enumerateDevices()
-        .then(gotDevices).then(getStream).catch(handleError);
-        
-        videoSelect.onchange = getStream;
-        
         function gotDevices(deviceInfos) {
             for (var i = deviceInfos.length - 1; i >= 0; --i) {
                 var deviceInfo = deviceInfos[i];
@@ -237,7 +234,12 @@
         }
         
         $(document).ready(function(){
-            tick();
+            if (SUPPORTS_MEDIA_DEVICES) {
+                navigator.mediaDevices.enumerateDevices()
+                .then(gotDevices).then(getStream).catch(handleError);
+                
+                tick();
+            }
         });
     </script>
   </body>
