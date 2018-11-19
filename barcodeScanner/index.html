@@ -109,7 +109,6 @@
         var videoSelect = document.querySelector('#videoSource');
         var barcode_result = document.getElementById('dbr');
 
-        var isPaused = false;
         var videoWidth = 240,
         videoHeight = 320;
         
@@ -117,11 +116,9 @@
         var decodePtr = null;
         
         var tick = function () {
-            if (window.ZXing) {
+            if (window.ZXing && document.getElementById("video").videoWidth > 0) {
                 ZXing = ZXing();
                 decodePtr = ZXing.Runtime.addFunction(decodeCallback);
-                
-                isPaused = false;
                 scanBarcode();
             } else {
                 setTimeout(tick, 50);
@@ -137,7 +134,6 @@
         
         
         $('#resultModal').on('hidden.bs.modal', function (e) {
-            isPaused = false;
             scanBarcode();
         })
         
