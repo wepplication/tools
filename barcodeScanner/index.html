@@ -214,7 +214,7 @@
                 window.stream.getTracks().forEach(function(track) {
                     track.stop();
                 });
-                window.stream = null;
+                videoElement.pause();
             }
             
             var constraints = {
