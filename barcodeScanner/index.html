@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <title>바코드 스캐너</title>
+    <meta name="description" content="바코드 스캐너">
+    
+    <link rel="canonical" href="https://wepplication.github.io/tools/barcodeScanner/">
+    
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="바코드 스캐너">
+    <meta property="og:description" content="바코드 스캐너">
+    <meta property="og:url" content="https://wepplication.github.io/tools/barcodeScanner/">
+    <meta property="og:image" content="https://wepplication.github.io/tools/image/screenshot/barcodeScanner.png">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>바코드 스캐너</b></h1>
+              바코드 스캐너<br/>
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+            <label for="videoSource" class="col-sm-1 control-label">카메라: </label>
+            <div class="col-sm-10 form-inline">
+                <select class="form-control" id="videoSource"></select>
+                <button type="button" id="go" class="btn btn-primary">스캔</button>
+            </div>
+        </div>
+        
+        <div class="row">
+            <label for="videoSource" class="col-sm-1 control-label">스캔 값: </label>
+            <div class="col-sm-10 form-inline">
+                <span id="dbr"></span>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <video muted autoplay id="video" playsinline="true" class="embed-responsive-item"></video>
+                    <canvas id="canvas" width="240" height="320" style="display: none; float: bottom;"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script async src="/tools/js/zxing.js"></script>
+    <script>
+        var videoElement = document.querySelector('video');
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var videoSelect = document.querySelector('#videoSource');
+        var buttonGo = document.getElementById('go');
+        var barcode_result = document.getElementById('dbr');
+
+        var isPaused = false;
+        var videoWidth = 240,
+        videoHeight = 320;
+        
+        var ZXing = null;
+        var decodePtr = null;
+        
+        var tick = function () {
+            if (window.ZXing) {
+                ZXing = ZXing();
+                decodePtr = ZXing.Runtime.addFunction(decodeCallback);
+            } else {
+                setTimeout(tick, 10);
+            }
+        };
+        
+        var decodeCallback = function (ptr, len, resultIndex, resultCount) {
+            var result = new Uint8Array(ZXing.HEAPU8.buffer, ptr, len);
+            // console.log(String.fromCharCode.apply(null, result));
+            barcode_result.textContent = String.fromCharCode.apply(null, result);
+            buttonGo.disabled = false;
+            canvas.style.display = 'block';
+        };
+        
+        function dataURItoBlob(dataURI) {
+            // convert base64/URLEncoded data component to raw binary data held in a string
+            var byteString;
+            if (dataURI.split(',')[0].indexOf('base64') >= 0)
+                byteString = atob(dataURI.split(',')[1]);
+            else
+                byteString = unescape(dataURI.split(',')[1]);
+            
+            // separate out the mime component
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            
+            // write the bytes of the string to a typed array
+            var ia = new Uint8Array(byteString.length);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            
+            return new Blob([ia], {
+                type: mimeString
+            });
+        }
+        
+        // add button event
+        buttonGo.onclick = function () {
+            canvas.style.display = 'none';
+            
+            isPaused = false;
+            scanBarcode();
+            buttonGo.disabled = true;
+        };
+        
+        // scan barcode
+        function scanBarcode() {
+            barcode_result.textContent = "";
+            
+            if (ZXing == null) {
+                buttonGo.disabled = false;
+                alert("Barcode Reader is not ready!");
+                return;
+            }
+            
+            var data = null,
+            context = null,
+            width = 0,
+            height = 0,
+            dbrCanvas = null;
+            context = ctx;
+            width = videoWidth;
+            height = videoHeight;
+            dbrCanvas = canvas;
+            
+            context.drawImage(videoElement, 0, 0, width, height);
+            
+            var vid = document.getElementById("video");
+            // console.log("video width: " + vid.videoWidth + ", height: " + vid.videoHeight);
+            var barcodeCanvas = document.createElement("canvas");
+            barcodeCanvas.width = vid.videoWidth;
+            barcodeCanvas.height = vid.videoHeight;
+            var barcodeContext = barcodeCanvas.getContext('2d');
+            var imageWidth = vid.videoWidth, imageHeight = vid.videoHeight;
+            barcodeContext.drawImage(videoElement, 0, 0, imageWidth, imageHeight);
+            // read barcode
+            var imageData = barcodeContext.getImageData(0, 0, imageWidth, imageHeight);
+            var idd = imageData.data;
+            var image = ZXing._resize(imageWidth, imageHeight);
+            // console.time("decode barcode");
+            for (var i = 0, j = 0; i < idd.length; i += 4, j++) {
+                ZXing.HEAPU8[image + j] = idd[i];
+            }
+            var err = ZXing._decode_any(decodePtr);
+            // console.timeEnd('decode barcode');
+            // console.log("error code", err);
+            if (err == -2) {
+                setTimeout(scanBarcode, 30);
+            }
+        }
+        
+        // https://github.com/samdutton/simpl/tree/gh-pages/getusermedia/sources 
+        var videoSelect = document.querySelector('#videoSource');
+        
+        navigator.mediaDevices.enumerateDevices()
+        .then(gotDevices).then(getStream).catch(handleError);
+        
+        videoSelect.onchange = getStream;
+        
+        function gotDevices(deviceInfos) {
+            for (var i = deviceInfos.length - 1; i >= 0; --i) {
+                var deviceInfo = deviceInfos[i];
+                var option = document.createElement('option');
+                option.value = deviceInfo.deviceId;
+                if (deviceInfo.kind === 'videoinput') {
+                    option.text = deviceInfo.label || 'camera ' +
+                    (videoSelect.length + 1);
+                    videoSelect.appendChild(option);
+                } else {
+                // console.log('Found one other kind of source/device: ', deviceInfo);
+                }
+            }
+        }
+        
+        function getStream() {
+            buttonGo.disabled = false;
+            if (window.stream) {
+                window.stream.getTracks().forEach(function(track) {
+                    track.stop();
+                });
+            }
+            
+            var constraints = {
+                video: {
+                    deviceId: {exact: videoSelect.value}
+                }
+            };
+            
+            navigator.mediaDevices.getUserMedia(constraints).
+            then(gotStream).catch(handleError);
+        }
+        
+        function gotStream(stream) {
+            window.stream = stream; // make stream available to console
+            videoElement.srcObject = stream;
+        }
+        
+        function handleError(error) {
+            console.log('Error: ', error);
+        }
+        
+        $(document).ready(function(){
+            tick();
+        });
+    </script>
+  </body>
+</html>
