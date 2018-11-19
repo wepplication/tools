@@ -176,9 +176,9 @@
             }
             var err = ZXing._decode_any(decodePtr);
             // console.timeEnd('decode barcode');
-            alert("error code :: "+ err);
+            // alert("error code :: "+ err);
             if (err == -2) {
-                //setTimeout(scanBarcode, 30);
+                setTimeout(scanBarcode, 50);
             }
         }
         
