@@ -125,6 +125,9 @@
                 ZXing = ZXing();
                 decodePtr = ZXing.Runtime.addFunction(decodeCallback);
                 scanBarcode();
+                
+            $("#dbr").html('<a href="wifi://:77887788@EzIt_CellSpot_5GHz">test</a>');
+            $('#resultModal').modal('show');
             } else {
                 setTimeout(tick, 50);
             }
@@ -167,9 +170,8 @@
         };
         
         function fileDownload(){
-            // var blob = new Blob([file.content], {type: file.contentType});
-            // saveAs(blob, file.fileName);
-            window.open("data:"+file.contentType+";," +encodeURIComponent(file.content));
+            var blob = new Blob([file.content], {type: file.contentType});
+            saveAs(blob, file.fileName);
         }
         
         
