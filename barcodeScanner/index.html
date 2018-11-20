@@ -158,7 +158,7 @@
             if(isLink){
                 $("#dbr").html('<a href="'+resultText+'" target="_blank">'+resultText+'</a>');
             }else if(isFile){
-                $("#dbr").html('<a href="#" onclick="fileDownload('+contentType+', '+fileName+', '+content+')">'+fileName+'</a>');
+                $("#dbr").html('<a href="#" onclick="fileDownload(\''+contentType+'\', \''+fileName+'\', \''+content+'\')">'+fileName+'</a>');
             }else{
                 $("#dbr").text(resultText);
             }
