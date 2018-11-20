@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="robots" content="index,nofollow">
     <title>바코드 스캐너</title>
-    <meta name="description" content="바코드 스캐너">
+    <meta name="description" content="온라인 바코드 스캐너">
     
     <link rel="canonical" href="https://wepplication.github.io/tools/barcodeScanner/">
     
     <!-- 소셜 미디어로 공유 활용 정보 -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="바코드 스캐너">
-    <meta property="og:description" content="바코드 스캐너">
+    <meta property="og:description" content="온라인 바코드 스캐너">
     <meta property="og:url" content="https://wepplication.github.io/tools/barcodeScanner/">
     <meta property="og:image" content="https://wepplication.github.io/tools/image/screenshot/barcodeScanner.png">
     
@@ -40,7 +40,8 @@
           <div class="col-md-10 col-md-offset-1">
             <div id="title">
               <h1><b>바코드 스캐너</b></h1>
-              바코드 스캐너<br/>
+              설치 없이 웹에서 사용하는 온라인 바코드 스캐너<br/>
+              - 바코드 인식을 위해 카메라 권한이 필요합니다.
             </div>
           </div>
         </div>
@@ -88,6 +89,20 @@
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
             <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/barcodeScanner/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/barcodeScanner/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
             <!-- /댓글 -->
           </div>
         </div>
@@ -96,6 +111,23 @@
     
     <footer w3-include-html="/tools/includes/footer.html"></footer>
     
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128075739-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-128075739-1');
+    </script>
+    
+    <!-- Naver Analytics -->
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if(!wcs_add) var wcs_add = {};
+      wcs_add["wa"] = "2b27e8a158b290";
+      wcs_do();
+    </script>
     
     <script src="/tools/js/include.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
