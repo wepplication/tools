@@ -167,8 +167,9 @@
         };
         
         function fileDownload(){
-            var blob = new Blob([file.content], {type: file.contentType});
-            saveAs(blob, file.fileName);
+            // var blob = new Blob([file.content], {type: file.contentType});
+            // saveAs(blob, file.fileName);
+            window.open("data:"+file.contentType+";," +encodeURIComponent(file.content));
         }
         
         
