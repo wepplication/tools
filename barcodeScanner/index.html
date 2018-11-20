@@ -74,7 +74,7 @@
                     <div class="modal-body text-center">
                         <div><canvas id="canvas" width="240" height="320" style=""></canvas></div>
                         <hr/>
-                        <p><a href="#" id="dbr"></a></p>
+                        <p id="dbr"></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -130,15 +130,49 @@
         var decodeCallback = function (ptr, len, resultIndex, resultCount) {
             var result = new Uint8Array(ZXing.HEAPU8.buffer, ptr, len);
             resultText = new TextDecoder("utf-8").decode(result);
-            $("#dbr").attr("href", resultText);
-            barcode_result.textContent = resultText;
+            var isLink = false;
+            var isFile = false;
+            var contentType = "";
+            var fileName = "";
+            var content = "";
+            
+            if(/^(URLTO|mailto|facetime|facetime-audio|sms|SMSTO|mms|MMSTO|tel|geo):/.test(resultText)){
+                isLink = true;
+            }else if(resultText.indexOf("://") > 0){ // 4 custom uri scheme
+                isLink = true;
+            }
+            
+            if(/^(BEGIN:VCARD)/.test(resultText)){
+                isFile = true;
+                contentType = "text/vcard";
+                fileName = "VCARD.vcf";
+                content = resultText;
+            }else if(/^(BEGIN:VCALENDAR|BEGIN:VEVENT)/.test(resultText)){
+                isFile = true;
+                contentType = "text/calendar";
+                fileName = "ICALENDAR.ics";
+                content = resultText;
+            }
+            
+            if(isLink){
+                $("#dbr").html('<a href="'+resultText+'" target="_blank">'+resultText+'</a>');
+            }else if(isFile){
+                $("#dbr").html('<a href="#" onclick="fileDownload('+contentType+', '+fileName+', '+content+')">'+fileName+'</a>');
+            }else{
+                $("#dbr").text(resultText);
+            }
+            
             $('#resultModal').modal('show');
         };
         
+        function fileDownload(contentType, fileName, content){
+            var blob = new Blob([content], {type: contentType});
+            FileSaver.saveAs(blob, fileName);
+        }
+        
         
         $('#resultModal').on('hidden.bs.modal', function (e) {
-            $("#dbr").attr("href", "#");
-            barcode_result.textContent = "";
+            $("#dbr").html("");
             scanBarcode();
         })
         
