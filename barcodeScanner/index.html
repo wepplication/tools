@@ -118,6 +118,8 @@
         var ZXing = null;
         var decodePtr = null;
         
+        var file = {};
+        
         var tick = function () {
             if (window.ZXing && document.getElementById("video").videoWidth > 0) {
                 ZXing = ZXing();
@@ -133,9 +135,7 @@
             resultText = new TextDecoder("utf-8").decode(result);
             var isLink = false;
             var isFile = false;
-            var contentType = "";
-            var fileName = "";
-            var content = "";
+            file = {};
             
             if(/^(URLTO|mailto|facetime|facetime-audio|sms|SMSTO|mms|MMSTO|tel|geo):/.test(resultText)){
                 isLink = true;
@@ -145,20 +145,20 @@
             
             if(/^(BEGIN:VCARD)/.test(resultText)){
                 isFile = true;
-                contentType = "text/vcard";
-                fileName = "VCARD.vcf";
-                content = resultText;
+                file.contentType = "text/vcard";
+                file.fileName = "VCARD.vcf";
+                file.content = resultText;
             }else if(/^(BEGIN:VCALENDAR|BEGIN:VEVENT)/.test(resultText)){
                 isFile = true;
-                contentType = "text/calendar";
-                fileName = "ICALENDAR.ics";
-                content = resultText;
+                file.contentType = "text/calendar";
+                file.fileName = "ICALENDAR.ics";
+                file.content = resultText;
             }
             
             if(isLink){
                 $("#dbr").html('<a href="'+resultText+'" target="_blank">'+resultText+'</a>');
             }else if(isFile){
-                $("#dbr").html('<a href="#" onclick="fileDownload(\''+contentType+'\', \''+fileName+'\', \''+content+'\')">'+fileName+'</a>');
+                $("#dbr").html('<a href="#" onclick="fileDownload()">'+file.fileName+'</a>');
             }else{
                 $("#dbr").text(resultText);
             }
@@ -166,9 +166,9 @@
             $('#resultModal').modal('show');
         };
         
-        function fileDownload(contentType, fileName, content){
-            var blob = new Blob([content], {type: contentType});
-            FileSaver.saveAs(blob, fileName);
+        function fileDownload(){
+            var blob = new Blob([file.content], {type: file.contentType});
+            saveAs(blob, file.fileName);
         }
         
         
