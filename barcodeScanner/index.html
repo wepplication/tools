@@ -131,7 +131,7 @@
             var result = new Uint8Array(ZXing.HEAPU8.buffer, ptr, len);
             resultText = new TextDecoder("utf-8").decode(result);
             $("#dbr").attr("href", resultText);
-            barcode_result.textContent = "";
+            barcode_result.textContent = resultText;
             $('#resultModal').modal('show');
         };
         
