@@ -72,9 +72,9 @@
                         <h4 class="modal-title">스캔 값</h4>
                     </div>
                     <div class="modal-body text-center">
-                        <canvas id="canvas" width="240" height="320" style="float: bottom;"></canvas>
+                        <div><canvas id="canvas" width="240" height="320" style=""></canvas></div>
                         <hr/>
-                        <div><a id="dbr"></a></div>
+                        <p><a href="#" id="dbr"></a></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -130,20 +130,20 @@
         var decodeCallback = function (ptr, len, resultIndex, resultCount) {
             var result = new Uint8Array(ZXing.HEAPU8.buffer, ptr, len);
             resultText = new TextDecoder("utf-8").decode(result);
-            $("#barcode_result").attr("href", resultText);
-            $("#barcode_result").text = resultText;
+            $("#dbr").attr("href", resultText);
+            barcode_result.textContent = "";
             $('#resultModal').modal('show');
         };
         
         
         $('#resultModal').on('hidden.bs.modal', function (e) {
+            $("#dbr").attr("href", "#");
+            barcode_result.textContent = "";
             scanBarcode();
         })
         
         // scan barcode
         function scanBarcode() {
-            barcode_result.textContent = "";
-            
             if (ZXing == null) {
                 alert("Barcode Reader is not ready!");
                 return;
