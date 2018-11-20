@@ -125,9 +125,6 @@
                 ZXing = ZXing();
                 decodePtr = ZXing.Runtime.addFunction(decodeCallback);
                 scanBarcode();
-                
-            $("#dbr").html('<a href="wifi://:77887788@EzIt_CellSpot_5GHz">test</a>');
-            $('#resultModal').modal('show');
             } else {
                 setTimeout(tick, 50);
             }
