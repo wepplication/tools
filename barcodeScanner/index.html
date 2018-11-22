@@ -169,6 +169,10 @@
             var isFile = false;
             file = {};
             
+            var fnc1 = String.fromCodePoint(29);
+            var re = new RegExp(fnc1,"g");
+            resultText.replace(re, "<GS>");
+            
             if(/^(URLTO|mailto|facetime|facetime-audio|sms|SMSTO|mms|MMSTO|tel|geo):/.test(resultText)){
                 isLink = true;
             }else if(resultText.indexOf("://") > 0){ // 4 custom uri scheme
