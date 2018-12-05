@@ -161,12 +161,15 @@
                   content += "\n";
                 }
                 $("#contents").val(content+text);
+              },
+              onError:function(err){
+                alert(err);
               }
             });
             UserDictation.start();
             
           }).catch(function(err){
-              console.log(err);
+            alert(err);
           });
         }
       
