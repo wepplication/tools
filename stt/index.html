@@ -58,13 +58,10 @@
         
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-            <textarea id="contents" name="contents" class="form-control vresize" rows="10" style="background:#fff;" disabled></textarea>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-10 col-md-offset-1">
-            <pre id="log"></pre>
+            <div id="contents" name="contents" class="well">
+              <div id="final"></div>
+              <div id="interim"></div>
+            </div>
           </div>
         </div>
             
@@ -124,22 +121,11 @@
     
     <script src="/tools/js/artyom.window.js"></script>
     <script>
-(function () {
-    var old = console.log;
-    var logger = document.getElementById('log');
-    console.log = function () {
-      for (var i = 0; i < arguments.length; i++) {
-        if (typeof arguments[i] == 'object') {
-            logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(arguments[i], undefined, 2) : arguments[i]) + '<br />';
-        } else {
-            logger.innerHTML += arguments[i] + '<br />';
-        }
-      }
-    }
-})();
-    
+      
         window.artyom = new Artyom();
         var UserDictation = null;
+        var finalHistory = {};
+        
         $(document).ready(function(){
             if(artyom.recognizingSupported()){
                 artyom.ArtyomVoicesIdentifiers["ko-KR"] = ["Google 한국의", "ko-KR", "ko_KR"];
@@ -176,15 +162,19 @@
             
             UserDictation = artyom.newDictation({
               continuous:true, // Enable continuous if HTTPS connection
-              onResult:function(text, interim){
-                console.log("Recognized text: ", text);
-                console.log("Recognized interim: ", interim);
+              onResult:function(text, temporal){
+                $("#contents #interim").text(text);
                 
-                var content = $("#contents").val();
-                if(content != ""){
-                  content += "\n";
+                for(var idx in temporal){
+                  if(finalHistory[temporal[idx]]){
+                    //이미 있음
+                  }else{
+                    finalHistory[temporal[idx]]=1;
+                    var newDiv = document.createElement("div");
+                    $("#contents #final").append(newDiv);
+                    $("#contents #final div").last().text(temporal[idx]);
+                  }
                 }
-                $("#contents").val(content+text);
               },
               onStart:function(){
                 console.log("Dictation started by the user");

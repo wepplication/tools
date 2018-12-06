@@ -1109,14 +1109,12 @@ var Artyom = (function () {
         dictado.interimResults = true;
         dictado.lang = _this.ArtyomProperties.lang;
         dictado.onresult = function (event) {
-            var temporal = "";
             var interim = "";
+            var temporal = [];
             for (var i = 0; i < event.results.length; ++i) {
-                console.log(event.results);
-                if (event.results[i].isFinal) {
-                    temporal += event.results[i][0].transcript;
-                }
-                else {
+                if(event.results[i].isFinal){
+                    temporal.push(event.results[i][0].transcript);
+                }else{
                     interim += event.results[i][0].transcript;
                 }
             }
