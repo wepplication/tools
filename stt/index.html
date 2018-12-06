@@ -61,6 +61,12 @@
             <textarea id="contents" name="contents" class="form-control vresize" rows="10" style="background:#fff;" disabled></textarea>
           </div>
         </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <pre id="log"></pre>
+          </div>
+        </div>
             
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
@@ -118,6 +124,20 @@
     
     <script src="/tools/js/artyom.window.js"></script>
     <script>
+(function () {
+    var old = console.log;
+    var logger = document.getElementById('log');
+    console.log = function () {
+      for (var i = 0; i < arguments.length; i++) {
+        if (typeof arguments[i] == 'object') {
+            logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(arguments[i], undefined, 2) : arguments[i]) + '<br />';
+        } else {
+            logger.innerHTML += arguments[i] + '<br />';
+        }
+      }
+    }
+})();
+    
         window.artyom = new Artyom();
         var UserDictation = null;
         $(document).ready(function(){
@@ -157,11 +177,18 @@
             UserDictation = artyom.newDictation({
               continuous:true, // Enable continuous if HTTPS connection
               onResult:function(text){
+                console.log("Recognized text: ", text);
                 var content = $("#contents").val();
                 if(content != ""){
                   content += "\n";
                 }
                 $("#contents").val(content+text);
+              },
+              onStart:function(){
+                console.log("Dictation started by the user");
+              },
+              onEnd:function(){
+                console.log("Dictation stopped by the user");
               }
             });
             UserDictation.start();
