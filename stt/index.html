@@ -176,8 +176,10 @@
             
             UserDictation = artyom.newDictation({
               continuous:true, // Enable continuous if HTTPS connection
-              onResult:function(text){
+              onResult:function(text, interim){
                 console.log("Recognized text: ", text);
+                console.log("Recognized interim: ", interim);
+                
                 var content = $("#contents").val();
                 if(content != ""){
                   content += "\n";
