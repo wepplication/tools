@@ -1112,7 +1112,7 @@ var Artyom = (function () {
             var interim = "";
             var temporal = [];
             for (var i = 0; i < event.results.length; ++i) {
-                if(event.results[i].isFinal){
+                if(event.results[i].isFinal && (event.result[0].confidence > 0)){
                     temporal.push(event.results[i][0].transcript);
                 }else{
                     interim += event.results[i][0].transcript;
