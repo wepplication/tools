@@ -1118,8 +1118,6 @@ var Artyom = (function () {
                         finalObj.transcript = event.results[i][0].transcript;
                         finalObj.confidence = event.results[i][0].confidence;
                         final.push(finalObj);
-                    }else{
-                        interim = event.results[i][0].transcript;
                     }
                 }else{
                     interim += event.results[i][0].transcript;
