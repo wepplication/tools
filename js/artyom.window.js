@@ -1110,16 +1110,19 @@ var Artyom = (function () {
         dictado.lang = _this.ArtyomProperties.lang;
         dictado.onresult = function (event) {
             var interim = "";
-            var temporal = [];
+            var final = [];
             for (var i = 0; i < event.results.length; ++i) {
                 if(event.results[i].isFinal && (event.result[0].confidence > 0)){
-                    temporal.push(event.results[i][0].transcript);
+                    var finalObj = {};
+                    finalObj.transcript = event.results[i][0].transcript;
+                    finalObj.confidence = event.results[i][0].confidence;
+                    final.push(finalObj);
                 }else{
                     interim += event.results[i][0].transcript;
                 }
             }
             if (settings.onResult) {
-                settings.onResult(interim, temporal);
+                settings.onResult(interim, final);
             }
         };
         return new function () {

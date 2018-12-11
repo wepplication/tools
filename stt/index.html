@@ -166,13 +166,13 @@
                 $("#contents #interim").text(text);
                 
                 for(var idx in temporal){
-                  if(finalHistory[temporal[idx]]){
+                  if(finalHistory[temporal[idx].transcript+temporal[idx].confidence]){
                     //이미 있음
                   }else{
-                    finalHistory[temporal[idx]]=1;
+                    finalHistory[temporal[idx].transcript+temporal[idx].confidence]=1;
                     var newDiv = document.createElement("div");
                     $("#contents #final").append(newDiv);
-                    $("#contents #final div").last().text(temporal[idx]);
+                    $("#contents #final div").last().text(temporal[idx].transcript);
                   }
                 }
               },
