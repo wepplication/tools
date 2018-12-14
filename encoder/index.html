@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <meta name="Mediapartners-Google" content="index, nofollow">
+    <title>온라인 인코딩/디코딩</title>
+    <meta name="description" content="온라인 인코더/디코더. URL, Base64, HTML 등 문자열을 인코딩/디코딩 하는 사이트">
+    
+    <link rel="canonical" href="https://wepplication.github.io/tools/encoder/">
+    
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="온라인 인코딩/디코딩">
+    <meta property="og:description" content="온라인 인코더/디코더. URL, Base64, HTML 등 문자열을 인코딩/디코딩 하는 사이트">
+    <meta property="og:url" content="https://wepplication.github.io/tools/encoder/">
+    <meta property="og:image" content="https://wepplication.github.io/tools/image/screenshot/encoder.png">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>디코더/인코더</b></h1>
+              문자열을 인코딩 / 인코딩 된 문자열을 디코딩 하는 무료 온라인 툴<br>
+              인코딩 종류: URL(encodeURI, encodeURI, Component, escape), HTML, Base32, Base64
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- Nav tabs -->
+            <ul id="myTabs" class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#urlTab" aria-controls="urlTab" role="tab" data-toggle="tab"><span class="text">URL</span></a></li>
+              <li role="presentation"><a href="#htmlTab" aria-controls="htmlTab" role="tab" data-toggle="tab"><span class="text">HTML</span></a></li>
+              <li role="presentation"><a href="#b32Tab" aria-controls="b32Tab" role="tab" data-toggle="tab"><span class="text">Base32</span></a></li>
+              <li role="presentation"><a href="#b64Tab" aria-controls="b64Tab" role="tab" data-toggle="tab"><span class="text">Base64</span></a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- URL -->
+          <div role="tabpanel" class="tab-pane fade in active" id="urlTab">
+            <br/>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <div class="btn-group btn-group-responsive" id="urlCodeType" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                      <input type="radio" name="urlCodeType" autocomplete="off" value="encodeURI" checked> encodeURI
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="urlCodeType" autocomplete="off" value="decodeURI"> decodeURI
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="urlCodeType" autocomplete="off" value="encodeURIComponent"> encodeURIComponent
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="urlCodeType" autocomplete="off" value="decodeURIComponent"> decodeURIComponent
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="urlCodeType" autocomplete="off" value="escape"> escape
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="urlCodeType" autocomplete="off" value="unescape"> unescape
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="orgUrlText" class="col-sm-1 control-label">원본</label>
+                <div class="col-sm-10">
+                  <textarea id="orgUrlText" name="orgUrlText" class="form-control vresize lined" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="decodeUrlText" class="col-sm-1 control-label">변환</label>
+                <div class="col-sm-10">
+                  <textarea id="decodeUrlText" name="decodeUrlText" class="form-control vresize lined" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <button type="button" id="convertUrlBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">변환</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          
+          <!-- HTML -->
+          <div role="tabpanel" class="tab-pane fade" id="htmlTab">
+            <br/>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <div class="btn-group btn-group-responsive" id="htmlCodeType" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                      <input type="radio" name="htmlCodeType" autocomplete="off" value="encode" checked> encode
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="htmlCodeType" autocomplete="off" value="decode"> decode
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="orgHtmlText" class="col-sm-1 control-label">원본</label>
+                <div class="col-sm-10">
+                  <textarea id="orgHtmlText" name="orgHtmlText" class="form-control vresize lined" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="decodeHtmlText" class="col-sm-1 control-label">변환</label>
+                <div class="col-sm-10">
+                  <textarea id="decodeHtmlText" name="decodeHtmlText" class="form-control vresize lined" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <button type="button" id="convertHtmlBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">변환</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          
+          <!-- Base32 -->
+          <div role="tabpanel" class="tab-pane fade" id="b32Tab">
+            <br/>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <div class="btn-group btn-group-responsive" id="b32CodeType" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                      <input type="radio" name="b32CodeType" autocomplete="off" value="encode" checked> encode
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="b32CodeType" autocomplete="off" value="decode"> decode
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="orgB32Text" class="col-sm-1 control-label">원본</label>
+                <div class="col-sm-10">
+                  <textarea id="orgB32Text" name="orgB32Text" class="form-control vresize lined" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="decodeB32Text" class="col-sm-1 control-label">변환</label>
+                <div class="col-sm-10">
+                  <textarea id="decodeB32Text" name="decodeB32Text" class="form-control vresize lined" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <button type="button" id="convertB32Btn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">변환</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          
+          <!-- Base64 -->
+          <div role="tabpanel" class="tab-pane fade" id="b64Tab">
+            <br/>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <div class="btn-group btn-group-responsive" id="b64CodeType" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                      <input type="radio" name="b64CodeType" autocomplete="off" value="encode" checked> encode
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="b64CodeType" autocomplete="off" value="decode"> decode
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="orgB64Text" class="col-sm-1 control-label">원본</label>
+                <div class="col-sm-10">
+                  <textarea id="orgB64Text" name="orgB64Text" class="form-control vresize lined" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="decodeB64Text" class="col-sm-1 control-label">변환</label>
+                <div class="col-sm-10">
+                  <textarea id="decodeB64Text" name="decodeB64Text" class="form-control vresize lined" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <button type="button" id="convertB64Btn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">변환</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          
+        </div>
+
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <hr/>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/encoder/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/encoder/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128075739-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-128075739-1');
+    </script>
+    
+    <!-- Naver Analytics -->
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if(!wcs_add) var wcs_add = {};
+      wcs_add["wa"] = "2b27e8a158b290";
+      wcs_do();
+    </script>
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script src="/tools/js/encode/htmlencode.js"></script>
+    <script src="/tools/js/encode/base32.js"></script>
+    <script src="/tools/js/encode/base64.js"></script>
+    <script>
+      $(document).ready(function(){
+        
+        // URL 변환 버튼
+        $('#convertUrlBtn').on('click', function(){
+          var $btn = $(this).button('loading');
+          $("#decodeUrlText").val("");
+          
+          var orgText = $("#orgUrlText").val();
+          var decodeText = "";
+          var codeType = $("#urlCodeType input:radio:checked").val();
+          
+          if(codeType == "encodeURI"){
+            decodeText = encodeURI(orgText);
+          }else if(codeType == "decodeURI"){
+            decodeText = decodeURI(orgText);
+          }else if(codeType == "encodeURIComponent"){
+            decodeText = encodeURIComponent(orgText);
+          }else if(codeType == "decodeURIComponent"){
+            decodeText = decodeURIComponent(orgText);
+          }else if(codeType == "escape"){
+            decodeText = escape(orgText);
+          }else if(codeType == "unescape"){
+            decodeText = unescape(orgText);
+          }
+          
+          $("#decodeUrlText").val(decodeText);
+          
+          $btn.button('reset');
+        });
+        
+        // HTML 변환 버튼
+        $('#convertHtmlBtn').on('click', function(){
+          var $btn = $(this).button('loading');
+          $("#decodeHtmlText").val("");
+          
+          var orgText = $("#orgHtmlText").val();
+          var decodeText = "";
+          var codeType = $("#htmlCodeType input:radio:checked").val();
+          
+          if(codeType == "encode"){
+            decodeText = htmlEncode(orgText);
+          }else if(codeType == "decode"){
+            decodeText = htmlDecode(orgText);
+          }
+          
+          $("#decodeHtmlText").val(decodeText);
+          
+          $btn.button('reset');
+        });
+        
+        // Base32 변환 버튼
+        $('#convertB32Btn').on('click', function(){
+          var $btn = $(this).button('loading');
+          $("#decodeB32Text").val("");
+          
+          var orgText = $("#orgB32Text").val();
+          var decodeText = "";
+          var codeType = $("#b32CodeType input:radio:checked").val();
+          
+          if(codeType == "encode"){
+            decodeText = base32.encode(orgText);
+          }else if(codeType == "decode"){
+            decodeText = base32.decode(orgText);
+          }
+          
+          $("#decodeB32Text").val(decodeText);
+          
+          $btn.button('reset');
+        });
+        
+        // Base64 변환 버튼
+        $('#convertB64Btn').on('click', function(){
+          var $btn = $(this).button('loading');
+          $("#decodeB64Text").val("");
+          
+          var orgText = $("#orgB64Text").val();
+          var decodeText = "";
+          var codeType = $("#b64CodeType input:radio:checked").val();
+          
+          if(codeType == "encode"){
+            decodeText = base64.encode(orgText);
+          }else if(codeType == "decode"){
+            decodeText = base64.decode(orgText);
+          }
+          
+          $("#decodeB64Text").val(decodeText);
+          
+          $btn.button('reset');
+        });
+        
+      });
+    </script>
+  </body>
+</html>
