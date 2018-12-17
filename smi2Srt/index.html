@@ -196,6 +196,7 @@
           var textReader   = new FileReader();
           textReader.onload = function (evt) {
               var smi = evt.target.result;
+              smi = smi.replace(/\n|\r/g, "");
               var srt = subsrt.convert(smi, { format: 'srt' });
               var file = new File([srt], fileName+".srt");
               saveAs(file);
