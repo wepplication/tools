@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <title>암호화 도구 모음</title>
+    <meta name="description" content="Hash, HMAC, PBKDF2, AES, Random 문자열 등 암호화/복호화 관련 도구 모음">
+    
+    <link rel="canonical" href="https://wepplication.github.io/tools/crypt/">
+    
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="암호화 도구 모음">
+    <meta property="og:description" content="Hash, HMAC, PBKDF2, AES, Random 문자열 등 암호화/복호화 관련 도구 모음">
+    <meta property="og:url" content="https://wepplication.github.io/tools/crypt/">
+    <meta property="og:image" content="https://wepplication.github.io/tools/image/screenshot/crypt.png">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>암호화 도구 모음</b></h1>
+              Hash, HMAC, PBKDF2, AES, Random 문자열 등 암호화/복호화 관련 도구 모음<br>
+              Hash: SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, MD5, RIPEMD-160<br>
+              HMAC: HMAC-SHA-1, HMAC-SHA-256, HMAC-SHA-512<br>
+              Adaptive Key Derivation Functions: PBKDF2<br>
+              대칭키 암호: AES
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- Nav tabs -->
+            <ul id="myTabs" class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#hashTab" aria-controls="hashTab" role="tab" data-toggle="tab"><span class="text">Hash</span></a></li>
+              <li role="presentation"><a href="#hmacTab" aria-controls="hmacTab" role="tab" data-toggle="tab"><span class="text">HMAC</span></a></li>
+              <li role="presentation"><a href="#pbkdf2Tab" aria-controls="pbkdf2Tab" role="tab" data-toggle="tab"><span class="text">PBKDF2</span></a></li>
+              <li role="presentation"><a href="#aesTab" aria-controls="aesTab" role="tab" data-toggle="tab"><span class="text">AES</span></a></li>
+              <li role="presentation"><a href="#randomBytesTab" aria-controls="randomBytesTab" role="tab" data-toggle="tab"><span class="text">Random String</span></a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- Hash Tab -->
+          <div role="tabpanel" class="tab-pane fade in active" id="hashTab">
+            <br/>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="hashAlgorithm" class="col-sm-1 control-label">Algorithm</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="hashAlgorithm" name="hashAlgorithm">
+                    <option value="sha1">SHA-1</option>
+                    <option value="sha224">SHA-224</option>
+                    <option value="sha256">SHA-256</option>
+                    <option value="sha384">SHA-384</option>
+                    <option value="sha512">SHA-512</option>
+                    <option value="md5">MD5</option>
+                    <option value="rmd160">RIPEMD-160</option>
+                  </select>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="hashOrgText" class="col-sm-1 control-label">Text</label>
+                <div class="col-sm-10">
+                  <textarea id="hashOrgText" name="hashOrgText" class="form-control vresize lined" rows="3" placeholder="hello world"></textarea>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <button type="button" id="hashBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">변환</button>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="hashText" class="col-sm-1 control-label">Result</label>
+                <div class="col-sm-10">
+                  <textarea id="hashText" name="hashText" class="form-control vresize lined" rows="3" placeholder="2aae6c35c94fcfb415dbe95f408b9ce91ee846ed"></textarea>
+                </div>
+              </div><!-- /.row -->
+            </form>
+          </div><!-- ! Hash Tab -->
+          
+          <!-- HMAC Tab -->
+          <div role="tabpanel" class="tab-pane fade" id="hmacTab">
+            <br/>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="hmacOrgText" class="col-sm-1 control-label">Text</label>
+                <div class="col-sm-10">
+                  <textarea id="hmacOrgText" name="hmacOrgText" class="form-control vresize lined" rows="3" placeholder="hello world"></textarea>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="hmacAlgorithm" class="col-sm-1 control-label">Algorithm</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="hmacAlgorithm" name="hmacAlgorithm">
+                    <option value="sha1">HMAC-SHA-1</option>
+                    <option value="sha256">HMAC-SHA-256</option>
+                    <option value="sha512">HMAC-SHA-512</option>
+                  </select>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="hmacPassword" class="col-sm-1 control-label">Password</label>
+                <div class="col-sm-10">
+                  <input type="text" id="hmacPassword" name="hmacPassword" class="form-control" placeholder="password"/>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <button type="button" id="hmacBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">변환</button>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="hmacResult" class="col-sm-1 control-label">Result</label>
+                <div class="col-sm-10">
+                  <input type="text" id="hmacResult" name="hmacResult" class="form-control" placeholder="2aae6c35c94fcfb415dbe95f408b9ce91ee846ed"/>
+                </div>
+              </div><!-- /.row -->
+            </form>
+          </div><!-- ! HMAC Tab -->
+          
+          <!-- PBKDF2 Tab -->
+          <div role="tabpanel" class="tab-pane fade" id="pbkdf2Tab">
+            <br/>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="pbkdf2Algorithm" class="col-sm-1 control-label">Algorithm</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="pbkdf2Algorithm" name="pbkdf2Algorithm">
+                    <option value="sha1">HMAC-SHA-1</option>
+                    <option value="sha256">HMAC-SHA-256</option>
+                    <option value="sha512">HMAC-SHA-512</option>
+                  </select>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="pbkdf2Password" class="col-sm-1 control-label">Password</label>
+                <div class="col-sm-10">
+                  <input type="text" id="pbkdf2Password" name="pbkdf2Password" class="form-control" placeholder="password"/>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="pbkdf2Salt" class="col-sm-1 control-label">Salt</label>
+                <div class="col-sm-10">
+                  <input type="text" id="pbkdf2Salt" name="pbkdf2Salt" class="form-control" placeholder="salt"/>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="pbkdf2Iterations" class="col-sm-1 control-label">iterations</label>
+                <div class="col-sm-10">
+                  <input type="number" id="pbkdf2Iterations" name="pbkdf2Iterations" class="form-control" placeholder="100000"/>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="pbkdf2Keylen" class="col-sm-1 control-label">Derived key length</label>
+                <div class="col-sm-10">
+                  <input type="number" id="pbkdf2Keylen" name="pbkdf2Keylen" class="form-control" placeholder="16"/>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                  <button type="button" id="pbkdf2Btn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">변환</button>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="pbkdf2Result" class="col-sm-1 control-label">Result</label>
+                <div class="col-sm-10">
+                  <input type="text" id="pbkdf2Result" name="pbkdf2Result" class="form-control" placeholder="f5496bb1328184f5228eff393ab4be9a"/>
+                </div>
+              </div><!-- /.row -->
+            </form>
+          </div><!-- ! pbkdf2 Tab -->
+          
+          <!-- AES Tab -->
+          <div role="tabpanel" class="tab-pane fade" id="aesTab">
+            <br/>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="aesPlainText" class="col-sm-1 control-label">Plain Text</label>
+                <div class="col-sm-10">
+                  <input type="text" id="aesPlainText" name="aesPlainText" class="form-control" placeholder="Plain Text"/>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10 text-right">
+                  <button type="button" id="aesDecryptBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">Decrypt</button>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="aesMode" class="col-sm-1 control-label">Mode</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="aesMode" name="aesMode">
+                    <option value="cbc">CBC (Cipher Block Chaining)</option>
+                    <option value="ecb">ECB (Electronic Codebook)</option>
+                    <option value="cfb">CFB (Cipher Feedback)</option>
+                    <option value="ofb">OFB (Output Feedback)</option>
+                    <option value="ctr">CTR (Counter)</option>
+                    <option value="gcm">GCM (Galois/Counter Mode)</option>
+                  </select>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="aesKeySize" class="col-sm-1 control-label">Key Size in Bits</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="aesKeySize" name="aesKeySize">
+                    <option value="128">128</option>
+                    <option value="192">192</option>
+                    <option value="256">256</option>
+                  </select>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="aesSecretKey" class="col-sm-1 control-label">Secret Key</label>
+                <div class="col-sm-10">
+                  <input type="text" id="aesSecretKey" name="aesSecretKey" class="form-control" placeholder="SecretKey"/>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-9">
+                  <select class="form-control" id="aesEncoding" name="aesEncoding">
+                    <option value="base64">Base64</option>
+                    <option value="hex">HEX</option>
+                  </select>
+                </div>
+                <div class="col-sm-1 text-right">
+                  <button type="button" id="aesEncryptBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">Encrypt</button>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="aesCipherText" class="col-sm-1 control-label">Cipher Text</label>
+                <div class="col-sm-10">
+                  <input type="text" id="aesCipherText" name="aesCipherText" class="form-control" placeholder="a2c2646186828474b754591a547c18f1"/>
+                </div>
+              </div><!-- /.row -->
+            </form>
+          </div><!-- ! AES Tab -->
+          
+          <!-- Random Bytes Tab -->
+          <div role="tabpanel" class="tab-pane fade" id="randomBytesTab">
+            <br/>
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="randomSize" class="col-sm-1 control-label">Size</label>
+                <div class="col-sm-10">
+                  <input type="number" id="randomSize" name="randomSize" class="form-control" placeholder="16"/>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-9">
+                  <select class="form-control" id="randomEncoding" name="randomEncoding">
+                    <option value="hex">HEX</option>
+                    <option value="base64">Base64</option>
+                  </select>
+                </div>
+                <div class="col-sm-1 text-right">
+                  <button type="button" id="randomBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">생성</button>
+                </div>
+              </div><!-- /.row -->
+              <div class="form-group">
+                <label for="randomOutput" class="col-sm-1 control-label">Result</label>
+                <div class="col-sm-10">
+                  <input type="text" id="randomOutput" name="randomOutput" class="form-control" placeholder="3c3cb986aa2a43a6f87e6db28fba0238"/>
+                </div>
+              </div><!-- /.row -->
+            </form>
+          </div><!-- ! RSA Tab -->
+        </div>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_config = function () {
+              this.page.url = "https://wepplication.github.io/tools/crypt/";  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = "/tools/crypt/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://wepplication.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <!-- 아날리틱스 -->
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128075739-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-128075739-1');
+    </script>
+    
+    <!-- Naver Analytics -->
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if(!wcs_add) var wcs_add = {};
+      wcs_add["wa"] = "2b27e8a158b290";
+      wcs_do();
+    </script>
+    
+    <!-- !아날리틱스 -->
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    
+    <script src="/tools/js/browserify/crypto.bundle.js"></script>
+    <script>
+      $(document).ready(function(){
+        var crypto = require("crypto");
+        
+        
+        
+        $('#hashBtn').on('click', function(){
+          var $btn = $(this).button('loading');
+          
+          var orgText = $("#hashOrgText").val();
+          var algorithm = $("#hashAlgorithm").val();
+          var hashText = crypto.createHash(algorithm).update(orgText, 'utf8').digest('hex');
+          $("#hashText").val(hashText);
+          
+          $btn.button('reset');
+        });
+        
+        $('#pbkdf2Btn').on('click', function(){
+          var $btn = $(this).button('loading');
+          
+          var password = $("#pbkdf2Password").val();
+          var salt = $("#pbkdf2Salt").val();
+          var iterations = parseInt($("#pbkdf2Iterations").val());
+          var keylen = parseInt($("#pbkdf2Keylen").val());
+          var digest = $("#pbkdf2Algorithm").val();
+          crypto.pbkdf2(password, salt, iterations, keylen, digest, (err, derivedKey) => {
+            if (err) console.log(err);
+            $("#pbkdf2Result").val(derivedKey.toString('hex'));  // '3745e48...08d59ae'
+            
+            $btn.button('reset');
+          });
+        });
+        
+        $('#hmacBtn').on('click', function(){
+          var $btn = $(this).button('loading');
+          
+          var orgText = $("#hmacOrgText").val();
+          var password = $("#hmacPassword").val();
+          var algorithm = $("#hmacAlgorithm").val();
+          var resultText = crypto.createHash(algorithm, password).update(orgText, 'utf8').digest('hex');
+          $("#hmacResult").val(resultText);
+          
+          $btn.button('reset');
+        });
+        
+        $('#aesEncryptBtn').on('click', function(){
+          var $btn = $(this).button('loading');
+          
+          var mode = $("#aesMode").val();
+          var keySize = $("#aesKeySize").val();
+          var password = $("#aesSecretKey").val();
+          var plainText = $("#aesPlainText").val();
+          var cipher = crypto.createCipher('aes-'+keySize+'-'+mode, password);
+          var encoding = $("#aesEncoding").val();
+          var result = cipher.update(plainText, 'utf8', encoding);
+          result += cipher.final(encoding);
+          $("#aesCipherText").val(result);
+          
+          $btn.button('reset');
+        });
+        
+        $('#aesDecryptBtn').on('click', function(){
+          var $btn = $(this).button('loading');
+          
+          var mode = $("#aesMode").val();
+          var keySize = $("#aesKeySize").val();
+          var password = $("#aesSecretKey").val();
+          var cipherText = $("#aesCipherText").val();
+          var encoding = $("#aesEncoding").val();
+          try{
+            var decipher = crypto.createDecipher('aes-'+keySize+'-'+mode, password);
+            var result = decipher.update(cipherText, encoding, 'utf8');
+            result += decipher.final('utf8');
+          }catch(e){
+            alert(e.message);
+          }
+          $("#aesPlainText").val(result);
+          
+          $btn.button('reset');
+        });
+        
+        $('#randomBtn').on('click', function(){
+          var $btn = $(this).button('loading');
+          
+          var size = parseInt($("#randomSize").val());
+          var encoding = $("#randomEncoding").val();
+          
+          crypto.randomBytes(size, function(err, buf){
+            $("#randomOutput").val(buf.toString(encoding));
+            $btn.button('reset');
+          });
+          
+        });
+        
+      });
+    </script>
+  </body>
+</html>
