@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,nofollow">
+    <title>스크래퍼</title>
+    <meta name="description" content="RSS 리더 / 웹 크롤링(크롬/웨일 확장 프로그램)">
+    
+    <link rel="canonical" href="https://wepplication.github.io/tools/scrapper/">
+    
+    <!-- 소셜 미디어로 공유 활용 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="스크래퍼">
+    <meta property="og:description" content="RSS 리더 / 웹 크롤링(크롬/웨일 확장 프로그램)">
+    <meta property="og:url" content="https://wepplication.github.io/tools/scrapper/">
+    <meta property="og:image" content="https://wepplication.github.io/tools/image/screenshot/scrapper.png">
+    
+    <meta name="theme-color" content="#000000"><!-- Chrome, Firefox OS and Opera -->
+    <meta name="msapplication-navbutton-color" content="#000000"><!-- Windows Phone -->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><!-- iOS Safari -->
+    <meta name="mobile-web-app-capable" content="yes"><!-- Add to homescreen for Chrome on Android -->
+    <link rel="icon" sizes="192x192" href="/tools/android-icon-192x192.png"><!-- Add to homescreen for Chrome on Android -->
+    <meta name="apple-mobile-web-app-title" content="Push Messaging and Notifications Sample"><!-- Add to homescreen for Safari on iOS -->
+    <link rel="apple-touch-icon-precomposed" href="/tools/apple-touch-icon-precomposed.png">
+    <meta name="msapplication-TileImage" content="/tools/ms-icon-144x144-precomposed.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <link rel="shortcut icon" href="/tools/favicon.ico">
+    
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel='stylesheet' href='/tools/css/common.css' />
+  </head>
+  <body>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
+    
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="title">
+              <h1><b>스크래퍼</b></h1>
+              RSS 리더 / 웹 크롤링(크롬/웨일 확장 프로그램)<br>
+              - 웹 사이트 URL입력을 통해 RSS/Atom 주소 찾기<br>
+              - 키워드 등록으로 특정 글 알림 표시<br>
+              - RSS를 지원하지 않는 사이트 웹 크롤러 만들기<br>
+              - 다른 사람들이 만든 웹 크롤러 보기
+            </div>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div id="carousel-generic" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#carousel-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-generic" data-slide-to="3"></li>
+                <li data-target="#carousel-generic" data-slide-to="4"></li>
+                <li data-target="#carousel-generic" data-slide-to="5"></li>
+                <li data-target="#carousel-generic" data-slide-to="6"></li>
+              </ol>
+            
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                  <img src="/tools/scrapper/screenshot/whale1.png" alt="웨일 확장앱 스크린샷 1">
+                  <div class="carousel-caption">
+                    <h3>웨일 확장앱</h3>
+                    <p>키워드 등록으로 특정 글 알림 표시</p>
+                  </div>
+                </div>
+                <div class="item">
+                  <img src="/tools/scrapper/screenshot/whale2.png" alt="웨일 확장앱 스크린샷 2">
+                  <div class="carousel-caption">
+                    <h3>웨일 확장앱</h3>
+                    <p>웹 사이트 URL입력을 통해 RSS/Atom 주소 찾기</p>
+                  </div>
+                </div>
+                <div class="item">
+                  <img src="/tools/scrapper/screenshot/whale3.png" alt="웨일 확장앱 스크린샷 3">
+                  <div class="carousel-caption">
+                    <h3>웨일 확장앱</h3>
+                    <p>RSS를 지원하지 않는 사이트 웹 크롤러 만들기</p>
+                    <p>다른 사람들이 만든 웹 크롤러 보기</p>
+                  </div>
+                </div>
+                <div class="item">
+                  <img src="/tools/scrapper/screenshot/whale4.png" alt="웨일 확장앱 스크린샷 4">
+                  <div class="carousel-caption">
+                    <h3>웨일 확장앱</h3>
+                    <p>백업 및 검색 기능</p>
+                  </div>
+                </div>
+                <div class="item">
+                  <img src="/tools/scrapper/screenshot/chrome1.png" alt="크롬 확장프로그램 스크린샷 1">
+                  <div class="carousel-caption">
+                    <h3>크롬 확장프로그램</h3>
+                    <p>키워드 등록으로 특정 글 알림 표시</p>
+                  </div>
+                </div>
+                <div class="item">
+                  <img src="/tools/scrapper/screenshot/chrome2.png" alt="크롬 확장프로그램 스크린샷 2">
+                  <div class="carousel-caption">
+                    <h3>크롬 확장프로그램</h3>
+                    <p>웹 사이트 URL입력을 통해 RSS/Atom 주소 찾기</p>
+                  </div>
+                </div>
+                <div class="item">
+                  <img src="/tools/scrapper/screenshot/chrome3.png" alt="크롬 확장프로그램 스크린샷 3">
+                  <div class="carousel-caption">
+                    <h3>크롬 확장프로그램</h3>
+                    <p>자동 피드 검색 기능</p>
+                  </div>
+                </div>
+              </div>
+            
+              <!-- Controls -->
+              <a class="left carousel-control" href="#carousel-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#carousel-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <br/>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1 text-center">
+            <a href="https://chrome.google.com/webstore/detail/scrapper/caijpifkkcjfejgmcgahalhgdbalinof" target="_blank" class="btn btn-info btn-lg" role="button"><i class="fab fa-chrome"></i> Chrome 웹 스토어</a>&nbsp;&nbsp;
+            <a href="https://store.whale.naver.com/detail/aedaipehjajemieojanafodleefcgbaf" target="_blank" class="btn btn-info btn-lg" role="button"><i class="fas fa-fish"></i> Whale 스토어</a>
+          </div>
+        </div>
+        
+        <hr/>
+        
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <!-- 댓글 -->
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <div id="disqus_thread"></div>
+                <script>
+                var disqus_config = function () {
+                  this.page.url = "https://wepplication.github.io/tools/scrapper/";  // Replace PAGE_URL with your page's canonical URL variable
+                  this.page.identifier = "/tools/scrapper/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://wepplication.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            </div>
+            <!-- /댓글 -->
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer w3-include-html="/tools/includes/footer.html"></footer>
+    
+    <!-- 아날리틱스 -->
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128075739-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-128075739-1');
+    </script>
+    
+    <!-- Naver Analytics -->
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+    <script type="text/javascript">
+      if(!wcs_add) var wcs_add = {};
+      wcs_add["wa"] = "2b27e8a158b290";
+      wcs_do();
+    </script>
+    
+    <!-- !아날리틱스 -->
+    
+    <script src="/tools/js/include.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/common.js"></script>
+    <script>
+      $(document).ready(function(){
+      });
+    </script>
+  </body>
+</html>
