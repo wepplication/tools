@@ -306,3 +306,7 @@
     -webkit-transform: scale(1.0);
   }
 }
+
+iframe[src*="ads-iframe"] {
+	display: none;
+}
