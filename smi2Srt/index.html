@@ -225,6 +225,10 @@
           var syncTime = $("#syncTime").val();
           if(syncTime == 0 || syncTime == ""){
             alert("싱크 조절할 시간을 입력해주세요.");
+          
+			//file change 이벤트라서 같은 파일 올리면 안올라가는 현상으로 초기화 해줌
+			var input = $("#syncFileupload");
+			input.replaceWith(input.val('').clone(true));
             return;
           }else{
             var file     = this.files[0];
