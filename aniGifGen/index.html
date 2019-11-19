@@ -312,8 +312,6 @@
             
             var img = new Image;
             img.src = dataUrl;
-            imgWidth = img.width;
-            imgHeight = img.height;
             var divElement = $('<div>',{class:"col-xs-3 col-md-2"});
             var aElement = $('<a>',{href:"#", class:"thumbnail", "data-toggle":"modal", "data-target":"#lightbox"});
             var imgElement = $('<img>',{src:dataUrl});
@@ -347,6 +345,9 @@
           var repeat = $("#repeat input:radio:checked").val();
           var bgColor = $("#bgColor input:radio:checked").val();
           
+		  imgWidth = $("#thumbnails img").get(0).naturalWidth;
+		  imgHeight = $("#thumbnails img").get(0).naturalWidth;
+			
           var option = new Object();
           option.workers = 2;
           option.quality = 1;
@@ -359,7 +360,6 @@
           }else{
             option.background = bgColor;
           }
-          
           var gif = new GIF(option);
           var frameDelay = $("#delay").val()*1000;
           $("#thumbnails img").each(function(i){
