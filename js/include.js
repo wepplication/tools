@@ -11,7 +11,7 @@ function includeHTML() {
       xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4) {
-          if (this.status == 200) {elmnt.innerHTML = this.responseText + " " + elmnt.innerHTML;}
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
           /*remove the attribute, and call this function once more:*/
           elmnt.removeAttribute("w3-include-html");
           includeHTML();
