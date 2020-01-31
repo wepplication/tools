@@ -30,6 +30,7 @@
     <link rel="shortcut icon" href="/tools/favicon.ico">
     
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/tools/css/jquery.scrolling-tabs.css' />
     <link rel='stylesheet' href='/tools/css/common.css' />
     
     <link rel="stylesheet" href="/tools/js/jqueryFileupload/css/jquery.fileupload.css">
@@ -149,9 +150,9 @@
           <div class="row">
             <div class="col-md-10 col-md-offset-1">
               <!-- Nav tabs -->
-              <ul id="myTabs" class="nav nav-tabs nav-tabs-responsive" role="tablist">
+              <ul id="myTabs" class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#textTab" aria-controls="textTab" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">텍스트</span></a></li>
-                <li role="presentation" class="next"><a href="#urlTab" aria-controls="urlTab" role="tab" data-toggle="tab"><span class="text">URL</span></a></li>
+                <li role="presentation"><a href="#urlTab" aria-controls="urlTab" role="tab" data-toggle="tab"><span class="text">URL</span></a></li>
                 <li role="presentation"><a href="#atchTab" aria-controls="atchTab" role="tab" data-toggle="tab"><span class="text">첨부</span></a></li>
                 <li role="presentation"><a href="#drawTab" aria-controls="drawTab" role="tab" data-toggle="tab"><span class="text">그리기</span></a></li>
               </ul>
@@ -359,6 +360,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/jquery.scrolling-tabs.js"></script>
     <script src="/tools/js/common.js"></script>
     
     <script src="/tools/js/magiceye/magiceye.min.js"></script>
@@ -367,6 +369,7 @@
     <script src="/tools/js/magiceye/depthmappers/CanvasDepthMapper.js"></script>
   	<script src="/tools/js/FileSaver.js"></script>
     <script>
+		
       $(document).ready(function(){
         var blackAndWhite = false;
         var input = document.querySelector('input#fileupload');
