@@ -31,7 +31,17 @@
     
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
     <link rel='stylesheet' href='/tools/css/jquery.scrolling-tabs.css' />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css">
     <link rel='stylesheet' href='/tools/css/common.css' />
+	
+	<!--
+	<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/gnu-unifont" type="text/css"/>
+	<link href="//db.onlinewebfonts.com/c/30d28c780c3a46858351c9323421f25a?family=Code2000" rel="stylesheet" type="text/css"/>
+	<style>
+	  #body{font-family: 'UnifontMedium';}
+	  body{font-family: 'Code2000';}
+	</style>
+	-->
 	
 	<script data-ad-client="ca-pub-2077999268380568" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   </head>
@@ -56,25 +66,364 @@
         <div>
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001</span></a></li>
-            <li role="presentation"><a href="#uniCodeMap" aria-controls="uniCodeMap" role="tab" data-toggle="tab"><span class="text">유니코드 표</span></a></li>
-            <li role="presentation"><a href="#uniCodeKrMap" aria-controls="uniCodeKrMap" role="tab" data-toggle="tab"><span class="text">유니코드(한글) 표</span></a></li>
-            <li role="presentation"><a href="#uniCodeCnMap" aria-controls="uniCodeCnMap" role="tab" data-toggle="tab"><span class="text">유니코드(한자) 표</span></a></li>
+            <li role="presentation" class="active"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지</span></a></li>
+            <li role="presentation"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드</span></a></li>
+            <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자</span></a></li>
             <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자</span></a></li>
             <li role="presentation"><a href="#fontChange" aria-controls="fontChange" role="tab" data-toggle="tab"><span class="text">글꼴변환</span></a></li>
           </ul>
         
           <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="ksx1001CharMap"></div>
-            <div role="tabpanel" class="tab-pane fade" id="uniCodeMap"></div>
-            <div role="tabpanel" class="tab-pane fade" id="uniCodeKrMap"></div>
-            <div role="tabpanel" class="tab-pane fade" id="uniCodeCnMap"></div>
+            <div role="tabpanel" class="tab-pane fade in active" id="emoji">
+				<br/>
+				<form id="combineForm" class="form-horizontal">
+				  <div class="form-group">
+					<label class="col-sm-1 control-label">최근 사용</label>
+					<div id="recentlyEmoji" class="col-sm-10 text-center">
+						
+					</div>
+				  </div>
+				  <hr/>
+				  <div class="form-group">
+					<div id="emojiOutput" class="text-center">
+					
+				    </div>
+				  </div>
+				</form>
+			</div>
+			  
+            <div role="tabpanel" class="tab-pane fade" id="ksx1001CharMap"></div>
+			  
+            <div role="tabpanel" class="tab-pane fade" id="unicode">
+				<br/>
+				<form id="form" class="form-horizontal">
+				  <div class="form-group">
+					<label class="col-sm-1 control-label">최근 사용</label>
+					<div id="recentlyUnicode" class="col-sm-10 text-center">
+						
+					</div>
+				  </div>
+				  <hr/>
+				  <div class="form-group">
+					<label for="unicodeBlock" class="col-sm-1 control-label">코드영역</label>
+					<div class="col-sm-10 form-inline">
+					  <select id="unicodeBlock" class="form-control selectpicker" data-live-search="true">
+						<option value="0000-007F">제어 문자와 라틴 기본</option> <!-- Basic Latin -->
+						<option value="0080-00FF">제어 문자와 라틴 보충</option> <!-- Latin-1 Supplement -->
+						<option value="0100-017F">라틴 확장-A</option> <!-- Latin Extended-A -->
+						<option value="0180-024F">라틴 확장-B</option> <!-- Latin Extended-B -->
+						<option value="0250-02AF">국제 음성 기호 확장</option> <!-- IPA Extensions -->
+						<option value="02B0-02FF">조정 문자</option> <!-- Spacing Modifier Letters -->
+						<option value="0300-036F">조합 분음 기호(악센트)</option> <!-- Combining Diacritical Marks -->
+						<option value="0370-03FF">그리스어와 콥트어</option> <!-- Greek and Coptic -->
+						<option value="0400-04FF">키릴 문자</option> <!-- Cyrillic -->
+						<option value="0500-052F">키릴 문자 보충</option> <!-- Cyrillic Supplement -->
+						<option value="0530-058F">아르메니아어</option> <!-- Armenian -->
+						<option value="0590-05FF">히브리어</option> <!-- Hebrew -->
+						<option value="0600-06FF">아랍어</option> <!-- Arabic -->
+						<option value="0700-074F">시리아어</option> <!-- Syriac -->
+						<option value="0750-077F">아랍어 보충</option> <!-- Arabic Supplement -->
+						<option value="0780-07BF">타아나어</option> <!-- Thaana -->
+						<option value="07C0-07FF">응코 문자</option> <!-- NKo -->
+						<option value="0800-083F">사마리아 문자</option> <!-- Samaritan -->
+						<option value="0840-085F">만다 문자</option> <!-- Mandaic -->
+						<option value="0860-086F">사마리아 문자 보충</option> <!-- Syriac Supplement -->
+						<option value="08A0-08FF">아랍어 확장-A</option> <!-- Arabic Extended-A -->
+						<option value="0900-097F">데바나가리어</option> <!-- Devanagari -->
+						<option value="0980-09FF">벵골 문자</option> <!-- Bengali -->
+						<option value="0A00-0A7F">구르무키 문자</option> <!-- Gurmukhi -->
+						<option value="0A80-0AFF">구자라트 문자</option> <!-- Gujarati -->
+						<option value="0B00-0B7F">오리야 문자</option> <!-- Oriya -->
+						<option value="0B80-0BFF">타밀 문자</option> <!-- Tamil -->
+						<option value="0C00-0C7F">텔루구 문자</option> <!-- Telugu -->
+						<option value="0C80-0CFF">칸나다 문자</option> <!-- Kannada -->
+						<option value="0D00-0D7F">말라얄람 문자</option> <!-- Malayalam -->
+						<option value="0D80-0DFF">싱할라 문자</option> <!-- Sinhala -->
+						<option value="0E00-0E7F">태국 문자</option> <!-- Thai -->
+						<option value="0E80-0EFF">라오 문자</option> <!-- Lao -->
+						<option value="0F00-0FFF">티베트 문자</option> <!-- Tibetan -->
+						<option value="1000-109F">미얀마 문자</option> <!-- Myanmar -->
+						<option value="10A0-10FF">조지아 문자</option> <!-- Georgian -->
+						<option value="1100-11FF">한글 낱자</option> <!-- Hangul Jamo -->
+						<option value="1200-137F">에티오피아 문자</option> <!-- Ethiopic -->
+						<option value="1380-139F">에티오피아 문자 보충</option> <!-- Ethiopic Supplement -->
+						<option value="13A0-13FF">체로키 문자</option> <!-- Cherokee -->
+						<option value="1400-167F">통합 캐나다 원주민 글자</option> <!-- Unified Canadian Aboriginal Syllabics -->
+						<option value="1680-169F">오검 문자</option> <!-- Ogham -->
+						<option value="16A0-16FF">룬 문자</option> <!-- Runic -->
+						<option value="1700-171F">타갈로그어</option> <!-- Tagalog -->
+						<option value="1720-173F">하누누어</option> <!-- Hanunoo -->
+						<option value="1740-175F">부히드어</option> <!-- Buhid -->
+						<option value="1760-177F">타그반와어</option> <!-- Tagbanwa -->
+						<option value="1780-17FF">크메르어(캄보디아어)</option> <!-- Khmer -->
+						<option value="1800-18AF">몽골어</option> <!-- Mongolian -->
+						<option value="18B0-18FF">통합 캐나다 원주민 글자 확장</option> <!-- Unified Canadian Aboriginal Syllabics Extended -->
+						<option value="1900-194F">림부</option> <!-- Limbu -->
+						<option value="1950-197F">타이 레 문자</option> <!-- Tai Le -->
+						<option value="1980-19DF">새 타이 루에</option> <!-- New Tai Lue -->
+						<option value="19E0-19FF">크메르 기호</option> <!-- Khmer Symbols -->
+						<option value="1A00-1A1F">부기어</option> <!-- Buginese -->
+						<option value="1A20-1AAF">타이 탐 문자</option> <!-- Tai Tham -->
+						<option value="1AB0-1AFF">조합 분음 부호 보충</option> <!-- Combining Diacritical Marks Extended -->
+						<option value="1B00-1B7F">발리어</option> <!-- Balinese -->
+						<option value="1B80-1BBF">순다어</option> <!-- Sundanese -->
+						<option value="1BC0-1BFF">바타크어</option> <!-- Batak -->
+						<option value="1C00-1C4F">렙차어</option> <!-- Lepcha -->
+						<option value="1C50-1C7F">올치키 문자</option> <!-- Ol Chiki -->
+						<option value="1C80-1C8F">키릴 문자 확장-C</option> <!-- Cyrillic Extended-C -->
+						<option value="1C90-1CBF">조지아 문자 확장</option> <!-- Georgian Extended -->
+						<option value="1CC0-1CCF">순다어 보충</option> <!-- Sundanese Supplement -->
+						<option value="1CD0-1CFF">베다 문자 확장</option> <!-- Vedic Extensions -->
+						<option value="1D00-1D7F">음성 부호 확장</option> <!-- Phonetic Extensions -->
+						<option value="1D80-1DBF">음성 부호 확장 보충</option> <!-- Phonetic Extensions Supplement -->
+						<option value="1DC0-1DFF">조합 분음 부호 보충</option> <!-- Combining Diacritical Marks Supplement -->
+						<option value="1E00-1EFF">라틴어 추가 확장</option> <!-- Latin Extended Additional -->
+						<option value="1F00-1FFF">그리스어 확장</option> <!-- Greek Extended -->
+						<option value="2000-206F">일반 구두점</option> <!-- General Punctuation -->
+						<option value="2070-209F">위 첨자와 아래 첨자</option> <!-- Superscripts and Subscripts -->
+						<option value="20A0-20CF">화폐 기호</option> <!-- Currency Symbols -->
+						<option value="20D0-20FF">조합 분음 부호(기호)</option> <!-- Combining Diacritical Marks for Symbols -->
+						<option value="2100-214F">글자를 변형한 기호</option> <!-- Letterlike Symbols -->
+						<option value="2150-218F">여러 가지 수</option> <!-- Number Forms -->
+						<option value="2190-21FF">화살표</option> <!-- Arrows -->
+						<option value="2200-22FF">수학 연산자</option> <!-- Mathematical Operators -->
+						<option value="2300-23FF" data-tokens="이모지">여러 가지 기술 기호</option> <!-- Miscellaneous Technical -->
+						<option value="2400-243F">제어 문자 기호</option> <!-- Control Pictures -->
+						<option value="2440-245F">문자 인식(OCR) 기호</option> <!-- Optical Character Recognition -->
+						<option value="2460-24FF">괄호 문자</option> <!-- Enclosed Alphanumerics -->
+						<option value="2500-257F">상자 그리기 기호</option> <!-- Box Drawing -->
+						<option value="2580-259F">네모 기호</option> <!-- Block Elements -->
+						<option value="25A0-25FF">도형 기호</option> <!-- Geometric Shapes -->
+						<option value="2600-26FF" data-tokens="이모지">여러 가지 기호</option> <!-- Miscellaneous Symbols -->
+						<option value="2700-27BF" data-tokens="이모지">딩뱃 기호</option> <!-- Dingbats -->
+						<option value="27C0-27EF">여러 가지 수학 기호-A</option> <!-- Miscellaneous Mathematical Symbols-A -->
+						<option value="27F0-27FF">화살표 보충-A</option> <!-- Supplemental Arrows-A -->
+						<option value="2800-28FF">점자</option> <!-- Braille Patterns -->
+						<option value="2900-297F">화살표 보충-B</option> <!-- Supplemental Arrows-B -->
+						<option value="2980-29FF">여러 가지 수학 기호-B</option> <!-- Miscellaneous Mathematical Symbols-B -->
+						<option value="2A00-2AFF">수학 연산자 보충</option> <!-- Supplemental Mathematical Operators -->
+						<option value="2B00-2BFF" data-tokens="이모지">여러 가지 기호와 화살표</option> <!-- Miscellaneous Symbols and Arrows -->
+						<option value="2C00-2C5F">글라골리틱 문자</option> <!-- Glagolitic -->
+						<option value="2C60-2C7F">라틴 확장-C</option> <!-- Latin Extended-C -->
+						<option value="2C80-2CFF">콥트어</option> <!-- Coptic -->
+						<option value="2D00-2D2F">그루지야어 보충</option> <!-- Georgian Supplement -->
+						<option value="2D30-2D7F">티피나그</option> <!-- Tifinagh -->
+						<option value="2D80-2DDF">에티오피아어 확장</option> <!-- Ethiopic Extended -->
+						<option value="2DE0-2DFF">키릴 문자 확장-A</option> <!-- Cyrillic Extended-A -->
+						<option value="2E00-2E7F">구두점 보충</option> <!-- Supplemental Punctuation -->
+						<option value="2E80-2EFF">한중일 부수 보충</option> <!-- CJK Radicals Supplement -->
+						<option value="2F00-2FDF">강희자전 부수</option> <!-- Kangxi Radicals -->
+						<option value="2FF0-2FFF">한자 모양 설명 문자</option> <!-- Ideographic Description Characters -->
+						<option value="3000-303F">한중일 기호 및 구두점</option> <!-- CJK Symbols and Punctuation -->
+						<option value="3040-309F">히라가나</option> <!-- Hiragana -->
+						<option value="30A0-30FF">가타카나</option> <!-- Katakana -->
+						<option value="3100-312F">주음 부호</option> <!-- Bopomofo -->
+						<option value="3130-318F">호환용 한글 자모</option> <!-- Hangul Compatibility Jamo -->
+						<option value="3190-319F">훈독 순서 지시 부호</option> <!-- Kanbun -->
+						<option value="31A0-31BF">주음 부호 확장</option> <!-- Bopomofo Extended -->
+						<option value="31C0-31EF">한중일 한자 획</option> <!-- CJK Strokes -->
+						<option value="31F0-31FF">가타카나 음성 확장</option> <!-- Katakana Phonetic Extensions -->
+						<option value="3200-32FF">한중일 괄호 문자</option> <!-- Enclosed CJK Letters and Months -->
+						<option value="3300-33FF">한중일 호환용</option> <!-- CJK Compatibility -->
+						<option value="3400-4DBF">한중일 통합 한자 확장-A</option> <!-- CJK Unified Ideographs Extension A -->
+						<option value="4DC0-4DFF">역경 6줄 기호</option> <!-- Yijing Hexagram Symbols -->
+						<option value="4E00-9FFF">한중일 통합 한자</option> <!-- CJK Unified Ideographs -->
+						<option value="A000-A48F">이(Yi) 문자 글자 마디</option> <!-- Yi Syllables -->
+						<option value="A490-A4CF">이(Yi) 문자 부수</option> <!-- Yi Radicals -->
+						<option value="A4D0-A4FF">어조 조정 문자</option> <!-- Lisu -->
+						<option value="A500-A63F">바이 문자</option> <!-- Vai -->
+						<option value="A640-A69F">키릴 문자 확장-B</option> <!-- Cyrillic Extended-B -->
+						<option value="A6A0-A6FF">바뭄 문자</option> <!-- Bamum -->
+						<option value="A700-A71F">어조 조정 문자</option> <!-- Modifier Tone Letters -->
+						<option value="A720-A7FF">라틴 확장-D</option> <!-- Latin Extended-D -->
+						<option value="A800-A82F">실헤티 나가리</option> <!-- Syloti Nagri -->
+						<option value="A830-A83F">인도 숫자 꼴</option> <!-- Common Indic Number Forms -->
+						<option value="A840-A87F">파스파 문자</option> <!-- Phags-pa -->
+						<option value="A880-A8DF">사우라슈트라 문자</option> <!-- Saurashtra -->
+						<option value="A8E0-A8FF">데바나가리어 확장</option> <!-- Devanagari Extended -->
+						<option value="A900-A92F">카야 리 문자</option> <!-- Kayah Li -->
+						<option value="A930-A95F">레장 문자</option> <!-- Rejang -->
+						<option value="A960-A97F">한글 낱자 확장-A</option> <!-- Hangul Jamo Extended-A -->
+						<option value="A980-A9DF">자바 문자</option> <!-- Javanese -->
+						<option value="A9E0-A9FF">미얀마 문자 확장-B</option> <!-- Myanmar Extended-B -->
+						<option value="AA00-AA5F">참 문자</option> <!-- Cham -->
+						<option value="AA60-AA7F">미얀마 문자 확장-A</option> <!-- Myanmar Extended-A -->
+						<option value="AA80-AADF">타이담어</option> <!-- Tai Viet -->
+						<option value="AAE0-AAFF">메이테이 문자 확장</option> <!-- Meetei Mayek Extensions -->
+						<option value="AB00-AB2F">에티오피아어 확장-A</option> <!-- Ethiopic Extended-A -->
+						<option value="AB30-AB6F">라틴 확장-E</option> <!-- Latin Extended-E -->
+						<option value="AB70-ABBF">체로키 문자 확장</option> <!-- Cherokee Supplement -->
+						<option value="ABC0-ABFF">메이테이 문자</option> <!-- Meetei Mayek -->
+						<option value="AC00-D7AF">한글 음절</option> <!-- Hangul Syllables -->
+						<option value="D7B0-D7FF">한글 낱자 확장-B</option> <!-- Hangul Jamo Extended-B -->
+						<option value="D800-DB7F">상위 대체 영역</option> <!-- High Surrogates -->
+						<option value="DB80-DBFF">상위 대체 사용자 영역</option> <!-- High Private Use Surrogates -->
+						<option value="DC00-DFFF">하위 대체 영역</option> <!-- Low Surrogates -->
+						<option value="E000-F8FF">사용자 영역</option> <!-- Private Use Area -->
+						<option value="F900-FAFF">한중일 호환용 한자</option> <!-- CJK Compatibility Ideographs -->
+						<option value="FB00-FB4F">영문 표현꼴</option> <!-- Alphabetic Presentation Forms -->
+						<option value="FB50-FDFF">아랍어 표현꼴-A</option> <!-- Arabic Presentation Forms-A -->
+						<option value="FE00-FE0F">모양 구별 문자</option> <!-- Variation Selectors -->
+						<option value="FE10-FE1F">세로쓰기 모양</option> <!-- Vertical Forms -->
+						<option value="FE20-FE2F">조합용 반쪽 기호</option> <!-- Combining Half Marks -->
+						<option value="FE30-FE4F">한중일 호환용 꼴</option> <!-- CJK Compatibility Forms -->
+						<option value="FE50-FE6F">작은꼴 변형</option> <!-- Small Form Variants -->
+						<option value="FE70-FEFF">아랍어 표현꼴-B</option> <!-- Arabic Presentation Forms-B -->
+						<option value="FF00-FFEF">전각/반각 모양</option> <!-- Halfwidth and Fullwidth Forms -->
+						<option value="FFF0-FFFF">특수 제어 문자</option> <!-- Specials -->
+						<option value="10000-1007F">선형 B 음절 문자</option> <!-- Linear B Syllabary -->
+						<option value="10080-100FF">선형 B 표의 문자</option> <!-- Linear B Ideograms -->
+						<option value="10100-1013F">에게(Aegean) 숫자</option> <!-- Aegean Numbers -->
+						<option value="10140-1018F">고대 그리스 숫자</option> <!-- Ancient Greek Numbers -->
+						<option value="10190-101CF">고대 기호</option> <!-- Ancient Symbols -->
+						<option value="101D0-101FF">파이스토스 원반 기호</option> <!-- Phaistos Disc -->
+						<option value="10280-1029F">리키아어</option> <!-- Lycian -->
+						<option value="102A0-102DF">카리아어</option> <!-- Carian -->
+						<option value="102E0-102FF">콥트어 이팩트 번호</option> <!-- Coptic Epact Numbers -->
+						<option value="10300-1032F">옛 이탈리아 문자</option> <!-- Old Italic -->
+						<option value="10330-1034F">옛 고딕체 알파벳</option> <!-- Gothic -->
+						<option value="10350-1037F">아부르 문자</option> <!-- Old Permic -->
+						<option value="10380-1039F">우가리트 문자</option> <!-- Ugaritic -->
+						<option value="103A0-103DF">옛 페르시아 문자</option> <!-- Old Persian -->
+						<option value="10400-1044F">데저렛 문자</option> <!-- Deseret -->
+						<option value="10450-1047F">샤우 문자</option> <!-- Shavian -->
+						<option value="10480-104AF">오스마니아 문자</option> <!-- Osmanya -->
+						<option value="104B0-104FF">오세이지 문자</option> <!-- Osage -->
+						<option value="10500-1052F">엘바산 문자</option> <!-- Elbasan -->
+						<option value="10530-1056F">캅카스 알바니아 문자</option> <!-- Caucasian Albanian -->
+						<option value="10600-1077F">선형 A</option> <!-- Linear A -->
+						<option value="10800-1083F">키프로스 음절 문자</option> <!-- Cypriot Syllabary -->
+						<option value="10840-1085F">아람 문자</option> <!-- Imperial Aramaic -->
+						<option value="10860-1087F">팔미라 문자</option> <!-- Palmyrene -->
+						<option value="10880-108AF">나바테아인 문자</option> <!-- Nabataean -->
+						<option value="108E0-108FF">하트 란 문자</option> <!-- Hatran -->
+						<option value="10900-1091F">페니키아 문자</option> <!-- Phoenician -->
+						<option value="10920-1093F">리디아어</option> <!-- Lydian -->
+						<option value="10980-1099F">메로에 상형문자</option> <!-- Meroitic Hieroglyphs -->
+						<option value="109A0-109FF">메로에 필기체</option> <!-- Meroitic Cursive -->
+						<option value="10A00-10A5F">카로슈티</option> <!-- Kharoshthi -->
+						<option value="10A60-10A7F">옛 남아라비아 문자</option> <!-- Old South Arabian -->
+						<option value="10A80-10A9F">옛 북아라비아 문자</option> <!-- Old North Arabian -->
+						<option value="10AC0-10AFF">마니 문자</option> <!-- Manichaean -->
+						<option value="10B00-10B3F">아베스타 문자</option> <!-- Avestan -->
+						<option value="10B40-10B5F">파르티아 새김 문자</option> <!-- Inscriptional Parthian -->
+						<option value="10B60-10B7F">팔레비 새김 문자</option> <!-- Inscriptional Pahlavi -->
+						<option value="10B80-10BAF">시편 팔레비어 문자</option> <!-- Psalter Pahlavi -->
+						<option value="10C00-10C4F">돌궐 문자</option> <!-- Old Turkic -->
+						<option value="10C80-10CFF">옛 헝가리 문자</option> <!-- Old Hungarian -->
+						<option value="10D00-10D3F">하니피 로힝야 문자</option> <!-- Hanifi Rohingya -->
+						<option value="10E60-10E7F">루미 숫자 기호</option> <!-- Rumi Numeral Symbols -->
+						<option value="10F00-10F2F">옛 소그드 문자</option> <!-- Old Sogdian -->
+						<option value="10F30-10F6F">소그드 문자</option> <!-- Sogdian -->
+						<option value="10FE0-10FFF">엘리마이스 문자</option> <!-- Elymaic -->
+						<option value="11000-1107F">브라흐미 문자</option> <!-- Brahmi -->
+						<option value="11080-110CF">카이티 문자</option> <!-- Kaithi -->
+						<option value="110D0-110FF">소라어</option> <!-- Sora Sompeng -->
+						<option value="11100-1114F">차크마 문자</option> <!-- Chakma -->
+						<option value="11150-1117F">마하자니 문자</option> <!-- Mahajani -->
+						<option value="11180-111DF">샤라다 문자</option> <!-- Sharada -->
+						<option value="111E0-111FF">신할라 고대 숫자</option> <!-- Sinhala Archaic Numbers -->
+						<option value="11200-1124F">코즈키 문자</option> <!-- Khojki -->
+						<option value="11280-112AF">물타니 문자</option> <!-- Multani -->
+						<option value="112B0-112FF">쿠다와디 문자</option> <!-- Khudawadi -->
+						<option value="11300-1137F">그랜사 문자</option> <!-- Grantha -->
+						<option value="11400-1147F">네와 문자</option> <!-- Newa -->
+						<option value="11480-114DF">티르후타 문자</option> <!-- Tirhuta -->
+						<option value="11580-115FF">시드햄 문자</option> <!-- Siddham -->
+						<option value="11600-1165F">모디 문자</option> <!-- Modi -->
+						<option value="11660-1167F">몽골어 보충</option> <!-- Mongolian Supplement -->
+						<option value="11680-116CF">타크리 문자</option> <!-- Takri -->
+						<option value="11700-1173F">아홈 문자</option> <!-- Ahom -->
+						<option value="11800-1184F">도그라 문자</option> <!-- Dogra -->
+						<option value="118A0-118FF">바랑 크시티 문자</option> <!-- Warang Citi -->
+						<option value="119A0-119FF">난디나가리 문자</option> <!-- Nandinagari -->
+						<option value="11A00-11A4F">자나바자르 정방형 문자</option> <!-- Zanabazar Square -->
+						<option value="11A50-11AAF">소욤보 문자</option> <!-- Soyombo -->
+						<option value="11AC0-11AFF">파우 킨 하우 문자</option> <!-- Pau Cin Hau -->
+						<option value="11C00-11C6F">바이크수키 문자</option> <!-- Bhaiksuki -->
+						<option value="11C70-11CBF">메르헨 문자</option> <!-- Marchen -->
+						<option value="11D00-11D5F">마사람 곤디 문자</option> <!-- Masaram Gondi -->
+						<option value="11D60-11DAF">건잘라 곤디 문자</option> <!-- Gunjala Gondi -->
+						<option value="11EE0-11EFF">마카사르 문자</option> <!-- Makasar -->
+						<option value="11FC0-11FFF">타밀 문자 보충</option> <!-- Tamil Supplement -->
+						<option value="12000-123FF">쐐기 문자</option> <!-- Cuneiform -->
+						<option value="12400-1247F">쐐기 문자 숫자·문장 부호</option> <!-- Cuneiform Numbers and Punctuation -->
+						<option value="12480-1254F">고대 왕조 쐐기문자</option> <!-- Early Dynastic Cuneiform -->
+						<option value="13000-1342F">이집트 상형문자</option> <!-- Egyptian Hieroglyphs -->
+						<option value="13430-1343F">이집트 상형문자 형식 제어 문자</option> <!-- Egyptian Hieroglyph Format Controls -->
+						<option value="14400-1467F">아나톨리아 상형문자</option> <!-- Anatolian Hieroglyphs -->
+						<option value="16800-16A3F">바뭄 문자 보충</option> <!-- Bamum Supplement -->
+						<option value="16A40-16A6F">므로 문자</option> <!-- Mro -->
+						<option value="16AD0-16AFF">바사바흐 문자</option> <!-- Bassa Vah -->
+						<option value="16B00-16B8F">파하우 몽 문자</option> <!-- Pahawh Hmong -->
+						<option value="16E40-16E9F">메데파이드린 문자</option> <!-- Medefaidrin -->
+						<option value="16F00-16F9F">몽어</option> <!-- Miao -->
+						<option value="16FE0-16FFF">표의문자용 기호 및 구두 기호</option> <!-- Ideographic Symbols and Punctuation -->
+						<option value="17000-187FF">서하 문자</option> <!-- Tangut -->
+						<option value="18800-18AFF">서하 문자 구성요소</option> <!-- Tangut Components -->
+						<option value="1B000-1B0FF">가나 보충</option> <!-- Kana Supplement -->
+						<option value="1B100-1B12F">가나 확장-A</option> <!-- Kana Extended-A -->
+						<option value="1B130-1B16F">작은 가나꼴 확장영역</option> <!-- Small Kana Extension -->
+						<option value="1B170-1B2FF">뉘수 문자</option> <!-- Nushu -->
+						<option value="1BC00-1BC9F">듀플로이언 속기 문자</option> <!-- Duployan -->
+						<option value="1BCA0-1BCAF">속기 형식 컨트롤 문자</option> <!-- Shorthand Format Controls -->
+						<option value="1D000-1D0FF">비잔틴 시대의 악보용 기호</option> <!-- Byzantine Musical Symbols -->
+						<option value="1D100-1D1FF">악보용 기호</option> <!-- Musical Symbols -->
+						<option value="1D200-1D24F">고대 그리스 시대의 악보용 기호</option> <!-- Ancient Greek Musical Notation -->
+						<option value="1D2E0-1D2FF">마야 숫자</option> <!-- Mayan Numerals -->
+						<option value="1D300-1D35F">태현경 기호</option> <!-- Tai Xuan Jing Symbols -->
+						<option value="1D360-1D37F">산가지</option> <!-- Counting Rod Numerals -->
+						<option value="1D400-1D7FF">수학식 영숫자 기호</option> <!-- Mathematical Alphanumeric Symbols -->
+						<option value="1D800-1DAAF">서튼 수화 표기</option> <!-- Sutton SignWriting -->
+						<option value="1E000-1E02F">글라골리틱 문자 보충</option> <!-- Glagolitic Supplement -->
+						<option value="1E100-1E14F">창세기 몽족 문자</option> <!-- Nyiakeng Puachue Hmong -->
+						<option value="1E2C0-1E2FF">완초 문자</option> <!-- Wancho -->
+						<option value="1E800-1E8DF">멘데어 키카쿠이 문자</option> <!-- Mende Kikakui -->
+						<option value="1E900-1E95F">애들램 문자</option> <!-- Adlam -->
+						<option value="1EC70-1ECBF">인도 시야크 숫자</option> <!-- Indic Siyaq Numbers -->
+						<option value="1ED00-1ED4F">오스만 시야크 숫자</option> <!-- Ottoman Siyaq Numbers -->
+						<option value="1EE00-1EEFF">수학식 아랍 문자</option> <!-- Arabic Mathematical Alphabetic Symbols -->
+						<option value="1F000-1F02F" data-tokens="이모지">마작 타일</option> <!-- Mahjong Tiles -->
+						<option value="1F030-1F09F">도미노 타일</option> <!-- Domino Tiles -->
+						<option value="1F0A0-1F0FF" data-tokens="이모지">플레잉 카드</option> <!-- Playing Cards -->
+						<option value="1F100-1F1FF" data-tokens="이모지">괄호 문자 보충</option> <!-- Enclosed Alphanumeric Supplement -->
+						<option value="1F200-1F2FF" data-tokens="이모지">괄호 한자 보충</option> <!-- Enclosed Ideographic Supplement -->
+						<option value="1F300-1F5FF" data-tokens="이모지">여러가지 기호 및 그림 문자</option> <!-- Miscellaneous Symbols and Pictographs -->
+						<option value="1F600-1F64F" data-tokens="이모지">이모티콘</option> <!-- Emoticons -->
+						<option value="1F650-1F67F">장식용 딩뱃 기호</option> <!-- Ornamental Dingbats -->
+						<option value="1F680-1F6FF" data-tokens="이모지">교통 및 지도 기호</option> <!-- Transport and Map Symbols -->
+						<option value="1F700-1F77F">연금술 기호</option> <!-- Alchemical Symbols -->
+						<option value="1F780-1F7FF" data-tokens="이모지">도형 확장</option> <!-- Geometric Shapes Extended -->
+						<option value="1F800-1F8FF">화살표 보충-C</option> <!-- Supplemental Arrows-C -->
+						<option value="1F900-1F9FF" data-tokens="이모지">기호 및 그림 문자 보충</option> <!-- Supplemental Symbols and Pictographs -->
+						<option value="1FA00-1FA6F">체스 기호</option> <!-- Chess Symbols -->
+						<option value="1FA70-1FAFF" data-tokens="이모지">기호 및 그림 문자 확장-A</option> <!-- Symbols and Pictographs Extended-A -->
+						<option value="20000-2A6DF">한중일 통합 한자 확장 B</option> <!-- CJK Unified Ideographs Extension B -->
+						<option value="2A700-2B73F">한중일 통합 한자 확장 C</option> <!-- CJK Unified Ideographs Extension C -->
+						<option value="2B740-2B81F">한중일 통합 한자 확장 D</option> <!-- CJK Unified Ideographs Extension D -->
+						<option value="2B820-2CEAF">한중일 통합 한자 확장 E</option> <!-- CJK Unified Ideographs Extension E -->
+						<option value="2CEB0-2EBEF">한중일 통합 한자 확장 F</option> <!-- CJK Unified Ideographs Extension F -->
+						<option value="2F800-2FA1F">한중일 호환용 한자 보충</option> <!-- CJK Compatibility Ideographs Supplement -->
+						<option value="E0000-E007F">태그</option> <!-- Tags -->
+						<option value="E0100-E01EF">모양 구별 문자 보충</option> <!-- Variation Selectors Supplement -->
+					  </select>
+					</div>
+				  </div>
+					
+				  <div class="form-group">
+					<div id="unicodeOutput" class="text-center">
+
+					</div>
+				  </div>
+				</form>
+			</div>
+			  
             <div role="tabpanel" class="tab-pane fade" id="combCharGen">
 				<br/>
 				<form id="combineForm" class="form-horizontal">
 				  <div class="form-group">
-					<label for="orgCharacter" class="col-sm-1 control-label">원본</label>
+					<label for="orgCharacter" class="col-sm-1 control-label">입력</label>
 					<div class="col-sm-3">
 					  <div class="input-group">
 						<input id="orgCharacter" type="text" class="form-control">
@@ -87,11 +436,8 @@
 				  </div><!-- /.row -->
 
 				  <div class="form-group">
-					<label for="combinedCharacter" class="col-sm-1 control-label">결과</label>
-					<div class="col-sm-10">
-						<div id="combinedCharacter" name="combinedCharacter">
-							
-						</div>
+					<div id="combinedCharacter" class="text-center">
+
 					</div>
 				  </div>
 				</form>
@@ -100,7 +446,7 @@
 				<br/>
 				<form id="fontForm" class="form-horizontal">
 				  <div class="form-group">
-					<label for="orgText" class="col-sm-1 control-label">원본</label>
+					<label for="orgText" class="col-sm-1 control-label">입력</label>
 					<div class="col-sm-10">
 					  <div class="input-group">
 						<input hidden="hidden" />
@@ -114,22 +460,20 @@
 				  </div><!-- /.row -->
 
 				  <div class="form-group">
-					<label for="changedText" class="col-sm-1 control-label">결과</label>
-					<div class="col-sm-10">
-						<div id="changedText" name="changedText">
-							
-						</div>
+					<div id="changedText" class="col-sm-10 col-sm-offset-1">
+
 					</div>
 				  </div>
 				</form>
 				
 			</div>
+			  
+			  
           </div>
         </div>
       
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-            <hr/>
             <hr/>
           </div>
         </div>
@@ -156,6 +500,39 @@
           </div>
         </div>
       </div>
+
+		<div id="charModal" class="modal fade">
+		  <div class="modal-dialog modal-sm">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">상세 정보</h4>
+			  </div>
+			  <div class="modal-body">
+				  <form class="form-horizontal">
+				 	  <div id="charView" class="text-center" style="font-size:100px;"></div>
+					  <hr/>
+					  <div class="form-group">
+						<label for="unicodeNo" class="col-sm-5">유니코드 번호:</label>
+						<div class="col-sm-7">
+							<div id="unicodeNo">
+
+							</div>
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label for="htmlCode" class="col-sm-5">HTML 코드:</label>
+						<div class="col-sm-7">
+							<div id="htmlCode" class="textover">
+
+							</div>
+						</div>
+					  </div>
+				  </form>
+			  </div>
+			</div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
     </main>
     
     <footer w3-include-html="/tools/includes/footer.html"></footer>
@@ -183,90 +560,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/tools/js/jquery.scrolling-tabs.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js"></script>
     <script src="/tools/js/common.js"></script>
+	  
 	<script src="/tools/js/clipboard.min.js"></script>
+	<script src="/tools/charMap/emojiUnicode.js"></script>
+	<script src="/tools/charMap/combiningText.js"></script>
+	<script src="/tools/charMap/fontList.js"></script>
+	<script src="/tools/charMap/ksx1001spChar.js"></script>
+	<script src="/tools/charMap/emoji.js"></script>
     
     <script>
-		var fontList = [["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9"],["𝐚","𝐛","𝐜","𝐝","𝐞","𝐟","𝐠","𝐡","𝐢","𝐣","𝐤","𝐥","𝐦","𝐧","𝐨","𝐩","𝐪","𝐫","𝐬","𝐭","𝐮","𝐯","𝐰","𝐱","𝐲","𝐳","𝟎","𝟏","𝟐","𝟑","𝟒","𝟓","𝟔","𝟕","𝟖","𝟗"],
-["𝐀","𝐁","𝐂","𝐃","𝐄","𝐅","𝐆","𝐇","𝐈","𝐉","𝐊","𝐋","𝐌","𝐍","𝐎","𝐏","𝐐","𝐑","𝐒","𝐓","𝐔","𝐕","𝐖","𝐗","𝐘","𝐙","𝟎","𝟏","𝟐","𝟑","𝟒","𝟓","𝟔","𝟕","𝟖","𝟗"],
-["𝗮","𝗯","𝗰","𝗱","𝗲","𝗳","𝗴","𝗵","𝗶","𝗷","𝗸","𝗹","𝗺","𝗻","𝗼","𝗽","𝗾","𝗿","𝘀","𝘁","𝘂","𝘃","𝘄","𝘅","𝘆","𝘇","𝟬","𝟭","𝟮","𝟯","𝟰","𝟱","𝟲","𝟳","𝟴","𝟵"],
-["𝗔","𝗕","𝗖","𝗗","𝗘","𝗙","𝗚","𝗛","𝗜","𝗝","𝗞","𝗟","𝗠","𝗡","𝗢","𝗣","𝗤","𝗥","𝗦","𝗧","𝗨","𝗩","𝗪","𝗫","𝗬","𝗭","𝟬","𝟭","𝟮","𝟯","𝟰","𝟱","𝟲","𝟳","𝟴","𝟵"],
-["𝕒","𝕓","𝕔","𝕕","𝕖","𝕗","𝕘","𝕙","𝕚","𝕛","𝕜","𝕝","𝕞","𝕟","𝕠","𝕡","𝕢","𝕣","𝕤","𝕥","𝕦","𝕧","𝕨","𝕩","𝕪","𝕫","𝟘","𝟙","𝟚","𝟛","𝟜","𝟝","𝟞","𝟟","𝟠","𝟡"],
-["𝔸","𝔹","ℂ","𝔻","𝔼","𝔽","𝔾","ℍ","𝕀","𝕁","𝕂","𝕃","𝕄","ℕ","𝕆","ℙ","ℚ","ℝ","𝕊","𝕋","𝕌","𝕍","𝕎","𝕏","𝕐","ℤ","𝟘","𝟙","𝟚","𝟛","𝟜","𝟝","𝟞","𝟟","𝟠","𝟡"],
-["ａ","ｂ","ｃ","ｄ","ｅ","ｆ","ｇ","ｈ","ｉ","ｊ","ｋ","ｌ","ｍ","ｎ","ｏ","ｐ","ｑ","ｒ","ｓ","ｔ","ｕ","ｖ","ｗ","ｘ","ｙ","ｚ","０","１","２","３","４","５","６","７","８","９"],
-["𝘢","𝘣","𝘤","𝘥","𝘦","𝘧","𝘨","𝘩","𝘪","𝘫","𝘬","𝘭","𝘮","𝘯","𝘰","𝘱","𝘲","𝘳","𝘴","𝘵","𝘶","𝘷","𝘸","𝘹","𝘺","𝘻"],
-["𝘈","𝘉","𝘊","𝘋","𝘌","𝘍","𝘎","𝘏","𝘐","𝘑","𝘒","𝘓","𝘔","𝘕","𝘖","𝘗","𝘘","𝘙","𝘚","𝘛","𝘜","𝘝","𝘞","𝘟","𝘠","𝘡"],
-["𝙖","𝙗","𝙘","𝙙","𝙚","𝙛","𝙜","𝙝","𝙞","𝙟","𝙠","𝙡","𝙢","𝙣","𝙤","𝙥","𝙦","𝙧","𝙨","𝙩","𝙪","𝙫","𝙬","𝙭","𝙮","𝙯"],
-["𝘼","𝘽","𝘾","𝘿","𝙀","𝙁","𝙂","𝙃","𝙄","𝙅","𝙆","𝙇","𝙈","𝙉","𝙊","𝙋","𝙌","𝙍","𝙎","𝙏","𝙐","𝙑","𝙒","𝙓","𝙔","𝙕"],
-["𝒂","𝒃","𝒄","𝒅","𝒆","𝒇","𝒈","𝒉","𝒊","𝒋","𝒌","𝒍","𝒎","𝒏","𝒐","𝒑","𝒒","𝒓","𝒔","𝒕","𝒖","𝒗","𝒘","𝒙","𝒚","𝒛"],
-["𝑨","𝑩","𝑪","𝑫","𝑬","𝑭","𝑮","𝑯","𝑰","𝑱","𝑲","𝑳","𝑴","𝑵","𝑶","𝑷","𝑸","𝑹","𝑺","𝑻","𝑼","𝑽","𝑾","𝑿","𝒀","𝒁"],
-["𝚊","𝚋","𝚌","𝚍","𝚎","𝚏","𝚐","𝚑","𝚒","𝚓","𝚔","𝚕","𝚖","𝚗","𝚘","𝚙","𝚚","𝚛","𝚜","𝚝","𝚞","𝚟","𝚠","𝚡","𝚢","𝚣"],
-["𝙰","𝙱","𝙲","𝙳","𝙴","𝙵","𝙶","𝙷","𝙸","𝙹","𝙺","𝙻","𝙼","𝙽","𝙾","𝙿","𝚀","𝚁","𝚂","𝚃","𝚄","𝚅","𝚆","𝚇","𝚈","𝚉"],
-["ⓐ","ⓑ","ⓒ","ⓓ","ⓔ","ⓕ","ⓖ","ⓗ","ⓘ","ⓙ","ⓚ","ⓛ","ⓜ","ⓝ","ⓞ","ⓟ","ⓠ","ⓡ","ⓢ","ⓣ","ⓤ","ⓥ","ⓦ","ⓧ","ⓨ","ⓩ","⓪","①","②","③","④","⑤","⑥","⑦","⑧","⑨"],
-["🅐","🅑","🅒","🅓","🅔","🅕","🅖","🅗","🅘","🅙","🅚","🅛","🅜","🅝","🅞","🅟","🅠","🅡","🅢","🅣","🅤","🅥","🅦","🅧","🅨","🅩","⓿","➊","➋","➌","➍","➎","➏","➐","➑","➒"],
-["🄰","🄱","🄲","🄳","🄴","🄵","🄶","🄷","🄸","🄹","🄺","🄻","🄼","🄽","🄾","🄿","🅀","🅁","🅂","🅃","🅄","🅅","🅆","🅇","🅈","🅉"],
-["🅰","🅱","🅲","🅳","🅴","🅵","🅶","🅷","🅸","🅹","🅺","🅻","🅼","🅽","🅾","🅿","🆀","🆁","🆂","🆃","🆄","🆅","🆆","🆇","🆈","🆉"],
-["🇦","🇧","🇨","🇩","🇪","🇫","🇬","🇭","🇮","🇯","🇰","🇱","🇲","🇳","🇴","🇵","🇶","🇷","🇸","🇹","🇺","🇻","🇼","🇽","🇾","🇿"],
-["𝔞","𝔟","𝔠","𝔡","𝔢","𝔣","𝔤","𝔥","𝔦","𝔧","𝔨","𝔩","𝔪","𝔫","𝔬","𝔭","𝔮","𝔯","𝔰","𝔱","𝔲","𝔳","𝔴","𝔵","𝔶","𝔷"],
-["𝔄","𝔅","ℭ","𝔇","𝔈","𝔉","𝔊","ℌ","ℑ","𝔍","𝔎","𝔏","𝔐","𝔑","𝔒","𝔓","𝔔","ℜ","𝔖","𝔗","𝔘","𝔙","𝔚","𝔛","𝔜","ℨ"],
-["𝓪","𝓫","𝓬","𝓭","𝓮","𝓯","𝓰","𝓱","𝓲","𝓳","𝓴","𝓵","𝓶","𝓷","𝓸","𝓹","𝓺","𝓻","𝓼","𝓽","𝓾","𝓿","𝔀","𝔁","𝔂","𝔃"],
-["𝓐","𝓑","𝓒","𝓓","𝓔","𝓕","𝓖","𝓗","𝓘","𝓙","𝓚","𝓛","𝓜","𝓝","𝓞","𝓟","𝓠","𝓡","𝓢","𝓣","𝓤","𝓥","𝓦","𝓧","𝓨","𝓩"],
-["ᗩ","ᗷ","ᑕ","ᗪ","E","ᖴ","G","ᕼ","I","ᒍ","K","ᒪ","ᗰ","ᑎ","O","ᑭ","ᑫ","ᖇ","ᔕ","T","ᑌ","ᐯ","ᗯ","᙭","Y","ᘔ"],
-["ᵃ","ᵇ","ᶜ","ᵈ","ᵉ","ᶠ","ᵍ","ʰ","ⁱ","ʲ","ᵏ","ˡ","ᵐ","ⁿ","ᵒ","ᵖ","q","ʳ","ˢ","ᵗ","ᵘ","ᵛ","ʷ","ˣ","ʸ","ᶻ","⁰","¹","²","³","⁴","⁵","⁶","⁷","⁸","⁹"],
-["ᴬ","ᴮ","ᶜ","ᴰ","ᴱ","ᶠ","ᴳ","ᴴ","ᴵ","ᴶ","ᴷ","ᴸ","ᴹ","ᴺ","ᴼ","ᴾ","Q","ᴿ","ˢ","ᵀ","ᵁ","ⱽ","ᵂ","ˣ","ʸ","ᶻ","⁰","¹","²","³","⁴","⁵","⁶","⁷","⁸","⁹"]];
-		
-		var combiningText = [
-			0x0300, 0x0301, 0x0302, 0x0303, 0x0304, 0x0305, 0x0306, 0x0307, 0x0308, 0x0309, 0x030A, 0x030B, 0x030C, 0x030D, 0x030E, 0x030F,
-			0x0310, 0x0311, 0x0312, 0x0313, 0x0314, 0x0315, 0x0316, 0x0317, 0x0318, 0x0319, 0x031A, 0x031B, 0x031C, 0x031D, 0x031E, 0x031F,
-			0x0320, 0x0321, 0x0322, 0x0323, 0x0324, 0x0325, 0x0326, 0x0327, 0x0328, 0x0329, 0x032A, 0x032B, 0x032C, 0x032D, 0x032E, 0x032F,
-			0x0330, 0x0331, 0x0332, 0x0333, 0x0334, 0x0335, 0x0336, 0x0337, 0x0338, 0x0339, 0x033A, 0x033B, 0x033C, 0x033D, 0x033E, 0x033F,
-			0x0340, 0x0341, 0x0342, 0x0343, 0x0344, 0x0345, 0x0346, 0x0347, 0x0348, 0x0349, 0x034A, 0x034B, 0x034C, 0x034D, 0x034E, 0x034F,
-			0x0350, 0x0351, 0x0352, 0x0353, 0x0354, 0x0355, 0x0356, 0x0357, 0x0358, 0x0359, 0x035A, 0x035B, 0x035C, 0x035D, 0x035E, 0x035F,
-			0x0360, 0x0361, 0x0362, 0x0363, 0x0364, 0x0365, 0x0366, 0x0367, 0x0368, 0x0369, 0x036A, 0x036B, 0x036C, 0x036D, 0x036E, 0x036F,
-			0x1AB0, 0x1AB1, 0x1AB2, 0x1AB3, 0x1AB4, 0x1AB5, 0x1AB6, 0x1AB7, 0x1AB8, 0x1AB9, 0x1ABA, 0x1ABB, 0x1ABC, 0x1ABD, 0x1ABE,
-			0x1DC0, 0x1DC1, 0x1DC2, 0x1DC3, 0x1DC4, 0x1DC5, 0x1DC6, 0x1DC7, 0x1DC8, 0x1DC9, 0x1DCA, 0x1DCB, 0x1DCC, 0x1DCD, 0x1DCE, 0x1DCF,
-			0x1DD0, 0x1DD1, 0x1DD2, 0x1DD3, 0x1DD4, 0x1DD5, 0x1DD6, 0x1DD7, 0x1DD8, 0x1DD9, 0x1DDA, 0x1DDB, 0x1DDC, 0x1DDD, 0x1DDE, 0x1DDF,
-			0x1DE0, 0x1DE1, 0x1DE2, 0x1DE3, 0x1DE4, 0x1DE5, 0x1DE6, 0x1DE7, 0x1DE8, 0x1DE9, 0x1DEA, 0x1DEB, 0x1DEC, 0x1DED, 0x1DEE, 0x1DEF,
-			0x1DF0, 0x1DF1, 0x1DF2, 0x1DF3, 0x1DF4, 0x1DF5, 0x1DF6, 0x1DF7, 0x1DF8, 0x1DF9,         0x1DFB, 0x1DFC, 0x1DFD, 0x1DFE, 0x1DFF,
-			0x20D0, 0x20D1, 0x20D2, 0x20D3, 0x20D4, 0x20D5, 0x20D6, 0x20D7, 0x20D8, 0x20D9, 0x20DA, 0x20DB, 0x20DC, 0x20DD, 0x20DE, 0x20DF,
-			0x20E0, 0x20E1, 0x20E2, 0x20E3, 0x20E4, 0x20E5, 0x20E6, 0x20E7, 0x20E8, 0x20E9, 0x20EA, 0x20EB, 0x20EC, 0x20ED, 0x20EE, 0x20EF,
-			0x20F0,
-			0xFE20, 0xFE21, 0xFE22, 0xFE23, 0xFE24, 0xFE25, 0xFE26, 0xFE27, 0xFE28, 0xFE29, 0xFE2A, 0xFE2B, 0xFE2C, 0xFE2D, 0xFE2E, 0xFE2F,
-			0x0F89,
-			[0x0306, 0x0308], [0x0306, 0x030E], [0xA67C, 0x0308], [0x0310, 0x0308], [0x0310, 0x030E], [0x0304, 0x0308], [0x0304, 0x030E], [0x030A, 0x0308], [0x030A, 0x030E], [0x0311, 0x0308], [0x0311, 0x030E], [0x0324, 0x032E], [0x0348, 0x032E], [0x0324, 0x0325], [0x0348, 0x0325], [0x0324, 0x033B], [0x0348, 0x033B], [0x0324, 0x032B], [0x0348, 0x032B], [0x0324, 0x032F], [0x0348, 0x032F], [0x0324, 0x0331], [0x0348, 0x0331], [0x0324, 0x032B, 0x035A], [0x0348, 0x032B, 0x035A]
-		];
-		
       $(document).ready(function(){
-        $("#ksx1001CharMap").load("/tools/charMap/ksx1001CharMap.html");
-        $("#uniCodeMap").load("/tools/charMap/uniCodeMap.html");
-        $("#uniCodeKrMap").load("/tools/charMap/uniCodeKrMap.html");
-        $("#uniCodeCnMap").load("/tools/charMap/uniCodeCnMap.html");
-        
-        // 모바일 동적 탭
-        $(document).on('show.bs.tab', '.nav-tabs-responsive [data-toggle="tab"]', function(e) {
-          var $target = $(e.target);
-          var $tabs = $target.closest('.nav-tabs-responsive');
-          var $current = $target.closest('li');
-          var $parent = $current.closest('li.dropdown');
-      		$current = $parent.length > 0 ? $parent : $current;
-          var $next = $current.next();
-          var $prev = $current.prev();
-          var updateDropdownMenu = function($el, position){
-            $el
-            	.find('.dropdown-menu')
-              .removeClass('pull-xs-left pull-xs-center pull-xs-right')
-            	.addClass( 'pull-xs-' + position );
-          };
-      
-          $tabs.find('>li').removeClass('next prev');
-          $prev.addClass('prev');
-          $next.addClass('next');
-          
-          updateDropdownMenu( $prev, 'left' );
-          updateDropdownMenu( $current, 'center' );
-          updateDropdownMenu( $next, 'right' );
-        });
+		var emojiOutput = "";
+		for(var i in emoji){
+			emojiOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+emoji[i]+"'/>"
+		}
+		$("#emojiOutput").html(emojiOutput);
 		  
+		var ksx1001CharOutput = "";
+		for(var key in ksx1001spChar){
+			ksx1001CharOutput += "<h3><strong>"+key+"</strong></h3>";
+			var charList = ksx1001spChar[key];
+			for(var idx in charList){
+				var char = charList[idx];
+				ksx1001CharOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+char+"'/>"
+			}
+		}
+		$("#ksx1001CharMap").html(ksx1001CharOutput);
+		  
+		var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
+		var output = "";
+		for(var i in recentlyList){
+			output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+		}
+		$("#recentlyEmoji").html(output);
+		  
+		recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
+		output = "";
+		for(var i in recentlyList){
+			output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+		}
+		$("#recentlyUnicode").html(output);
+        
 		$("#combineForm").on("submit", function(){
 			$('#conbineBtn').trigger("click");
 			event.preventDefault();
@@ -286,19 +622,10 @@
 					args.push(codePoint);
 				}
 				combinedCharacter += String.fromCodePoint.apply(null, args.concat(combiningText[i]));
-				$("#combinedCharacter").append($("<input>").addClass("btn btn-default").attr("type", "button").attr("value", combinedCharacter));
+				$("#combinedCharacter").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combinedCharacter));
 			}
 			$btn.button('reset');
 		}); // !결합문자 생성 버튼
-		  
-		new ClipboardJS('#combinedCharacter .btn', {
-			text: function(trigger) {
-		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
-				$(trigger).tooltip('show');
-				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
-				return trigger.getAttribute('value');
-			}
-		});
 		  
 		// 폰트변환 생성 버튼
 		$('#changeBtn').on('click', function(){
@@ -323,11 +650,96 @@
 					
 					
 				}
-				$("#changedText").append($("<p>").text(changedText));
+				
+				$("#changedText").append('<div class="input-group"><input type="text" class="form-control" value="'+changedText+'"><span class="input-group-btn"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-copy"></span></button></span></div>');
 			}
 			
 			$btn.button('reset');
 		}); // !폰트변환 생성 버튼
+		  
+		
+		// 유니코드 블럭 선택
+		$('#unicodeBlock').on('change', function(){
+			document.getElementById("unicodeOutput").innerHTML = "";
+			var from = parseInt("0x"+$(this).val().split("-")[0]);
+			var to = parseInt("0x"+$(this).val().split("-")[1]);
+			var output = "";
+			for(var i=from; i <= to; i++){
+				output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+i+"'/>"
+			}
+			
+			document.getElementById("unicodeOutput").innerHTML = output;
+		}); // !유니코드 블럭 선택
+		  
+		$("#unicodeBlock").val("2700-27BF");
+		$('#unicodeBlock').trigger("change");
+		  
+		
+		// 클릭 복사
+		new ClipboardJS('#emoji .btn, #unicode .btn, #ksx1001CharMap .btn, #combinedCharacter .btn', {
+			text: function(trigger) {
+				var parentId = $(trigger).parent()[0].id;
+				if(parentId == "emojiOutput"){
+					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
+					recentlyList.push(trigger.getAttribute('value'));
+					if(recentlyList.length > 16){
+						recentlyList.shift();
+					}
+					localStorage.setItem("charMap-recentlyEmoji", JSON.stringify(recentlyList));
+					var output = "";
+					for(var i in recentlyList){
+						output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+					}
+					$("#recentlyEmoji").html(output);
+				}else if(parentId == "unicodeOutput"){
+					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
+					recentlyList.push(trigger.getAttribute('value'));
+					if(recentlyList.length > 16){
+						recentlyList.shift();
+					}
+					localStorage.setItem("charMap-recentlyUnicode", JSON.stringify(recentlyList));
+					var output = "";
+					for(var i in recentlyList){
+						output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+					}
+					$("#recentlyUnicode").html(output);
+				}
+		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+				$(trigger).tooltip('show');
+				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
+				return trigger.getAttribute('value');
+			}
+		});
+		  
+		// 글꼴변환 복사
+		new ClipboardJS('#changedText .btn', {
+			target: function(trigger) {
+		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+				$(trigger).tooltip('show');
+				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
+				return trigger.parentElement.previousSibling;
+			}
+		});
+		  
+		$("#emoji, #unicodeOutput, #ksx1001CharMap, #combinedCharacter").on("contextmenu",".btn",function(event){
+			var text = $(this).val();
+			showModal(text);
+			return false;
+		});
+		  
+		function showModal(text){
+			var unicodeList = emojiUnicode(text).split(" ");
+			$("#charView").text(text);
+			var unicodeText = "";
+			var htmlCodeText = "";
+			for(var i in unicodeList){
+				unicodeText += "U+"+unicodeList[i].toUpperCase().padStart(4, "0")+" ";
+				htmlCodeText += "&#"+unicodeList[i]+";"
+			}
+			$("#unicodeNo").text(unicodeText);
+			$("#htmlCode").text(htmlCodeText);
+			$('#charModal').modal('show');	
+		}
       });
     </script>
   </body>
