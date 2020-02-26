@@ -423,8 +423,8 @@
 				<br/>
 				<form id="combineForm" class="form-horizontal">
 				  <div class="form-group">
-					<label for="orgCharacter" class="col-sm-1 control-label">입력</label>
-					<div class="col-sm-3">
+					<label for="orgCharacter" class="col-xs-2 col-sm-1" style="padding-top: 7px; margin-bottom: 0; text-align: right;">입력</label>
+					<div class="col-xs-8" style="width:200px;">
 					  <div class="input-group">
 						<input id="orgCharacter" type="text" class="form-control">
 						<span class="input-group-btn">
@@ -571,38 +571,59 @@
 	<script src="/tools/charMap/emoji.js"></script>
     
     <script>
-      $(document).ready(function(){
-		var emojiOutput = "";
-		for(var i in emoji){
-			emojiOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+emoji[i]+"'/>"
-		}
-		$("#emojiOutput").html(emojiOutput);
-		  
-		var ksx1001CharOutput = "";
-		for(var key in ksx1001spChar){
-			ksx1001CharOutput += "<h3><strong>"+key+"</strong></h3>";
-			var charList = ksx1001spChar[key];
-			for(var idx in charList){
-				var char = charList[idx];
-				ksx1001CharOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+char+"'/>"
+		function init(){
+			// 이모지 출력
+			var emojiOutput = "";
+			for(var i in emoji){
+				emojiOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+emoji[i]+"'/>"
+			}
+			$("#emojiOutput").html(emojiOutput);
+			
+			// KS X 1001 출력
+			var ksx1001CharOutput = "";
+			for(var key in ksx1001spChar){
+				ksx1001CharOutput += "<h3><strong>"+key+"</strong></h3>";
+				var charList = ksx1001spChar[key];
+				for(var idx in charList){
+					var char = charList[idx];
+					ksx1001CharOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+char+"'/>"
+				}
+			}
+			$("#ksx1001CharMap").html(ksx1001CharOutput);
+
+			// 최근 사용 출력
+			var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
+			var output = "";
+			for(var i in recentlyList){
+				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+			}
+			$("#recentlyEmoji").html(output);
+
+			recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
+			output = "";
+			for(var i in recentlyList){
+				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+			}
+			$("#recentlyUnicode").html(output);
+			
+		  	// 유니코드 출력
+			$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
+			appendUnicodeCharacter("2700-27BF");
+			
+			// 해쉬 태그 이동
+			var hashVal = window.location.hash;
+			if(hashVal != ""){
+				if(hashVal.indexOf("#unicode") > -1){
+					$('a[href="#unicode"]').tab("show");
+					$("#unicodeBlock").val(hashVal.replace("#unicode-", ""));
+					$("#unicodeBlock").trigger("change");
+				}else{
+					$('a[href="'+hashVal+'"]').tab("show");
+				}
 			}
 		}
-		$("#ksx1001CharMap").html(ksx1001CharOutput);
-		  
-		var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
-		var output = "";
-		for(var i in recentlyList){
-			output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
-		}
-		$("#recentlyEmoji").html(output);
-		  
-		recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
-		output = "";
-		for(var i in recentlyList){
-			output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
-		}
-		$("#recentlyUnicode").html(output);
-        
+		
+      $(document).ready(function(){
 		$("#combineForm").on("submit", function(){
 			$('#conbineBtn').trigger("click");
 			event.preventDefault();
@@ -660,19 +681,9 @@
 		
 		// 유니코드 블럭 선택
 		$('#unicodeBlock').on('change', function(){
-			document.getElementById("unicodeOutput").innerHTML = "";
-			var from = parseInt("0x"+$(this).val().split("-")[0]);
-			var to = parseInt("0x"+$(this).val().split("-")[1]);
-			var output = "";
-			for(var i=from; i <= to; i++){
-				output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+i+"'/>"
-			}
-			
-			document.getElementById("unicodeOutput").innerHTML = output;
+			appendUnicodeCharacter($(this).val());
+			location.href="#unicode-"+$(this).val();
 		}); // !유니코드 블럭 선택
-		  
-		$("#unicodeBlock").val("2700-27BF");
-		$('#unicodeBlock').trigger("change");
 		  
 		
 		// 클릭 복사
@@ -740,7 +751,30 @@
 			$("#htmlCode").text(htmlCodeText);
 			$('#charModal').modal('show');	
 		}
+		  
+		$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+			if(e.target.href.indexOf("#unicode") > -1){
+				location.href = "#unicode-"+$('#unicodeBlock').val();
+			}else{
+				location.href = e.target.href;
+			}
+		})
+		  
+		init();
+        
       });
+		  
+		function appendUnicodeCharacter(codeRange){
+			document.getElementById("unicodeOutput").innerHTML = "";
+			var from = parseInt("0x"+codeRange.split("-")[0]);
+			var to = parseInt("0x"+codeRange.split("-")[1]);
+			var output = "";
+			for(var i=from; i <= to; i++){
+				output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+i+"'/>"
+			}
+			
+			document.getElementById("unicodeOutput").innerHTML = output;
+		}
     </script>
   </body>
 </html>
