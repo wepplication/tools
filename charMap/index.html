@@ -734,7 +734,7 @@
 			var htmlCodeText = "";
 			for(var i in unicodeList){
 				unicodeText += "U+"+unicodeList[i].toUpperCase().padStart(4, "0")+" ";
-				htmlCodeText += "&#"+unicodeList[i]+";"
+				htmlCodeText += "&#"+parseInt("0x"+unicodeList[i])+";"
 			}
 			$("#unicodeNo").text(unicodeText);
 			$("#htmlCode").text(htmlCodeText);
