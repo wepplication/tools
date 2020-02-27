@@ -1736,8 +1736,10 @@ $('.nav-tabs').scrollingTabs({
 	$('.tab-content').show();
 	var $nextMenuBtn = $(".scrtabs-tab-scroll-arrow-right");
 	if($nextMenuBtn.is(":visible") == true){
-		$nextMenuBtn.tooltip({title: 'Click!', trigger: 'manual'});
-		$nextMenuBtn.tooltip('show');
-		setTimeout(function(){$nextMenuBtn.tooltip('hide');}, 3000);
+		setTimeout(function(){
+			$nextMenuBtn.tooltip({title: 'more tabs!', trigger: 'manual'});
+			$nextMenuBtn.tooltip('show');
+			setTimeout(function(){$nextMenuBtn.tooltip('hide');}, 3000);
+		}, 1000);
 	}
 });
