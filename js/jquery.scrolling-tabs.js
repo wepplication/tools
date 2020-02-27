@@ -1734,4 +1734,10 @@ $('.nav-tabs').scrollingTabs({
 	enableSwiping: true
 }).on('ready.scrtabs', function() {
 	$('.tab-content').show();
+	var $nextMenuBtn = $(".scrtabs-tab-scroll-arrow-right");
+	if($nextMenuBtn.is(":visible") == true){
+		$nextMenuBtn.tooltip({title: 'Click!', trigger: 'manual'});
+		$nextMenuBtn.tooltip('show');
+		setTimeout(function(){$nextMenuBtn.tooltip('hide');}, 3000);
+	}
 });
