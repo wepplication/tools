@@ -1739,7 +1739,7 @@ $('.nav-tabs').scrollingTabs({
 		setTimeout(function(){
 			$nextMenuBtn.tooltip({title: 'more tabs!', trigger: 'manual'});
 			$nextMenuBtn.tooltip('show');
-			setTimeout(function(){$nextMenuBtn.tooltip('hide');}, 5000);
+			setTimeout(function(){$nextMenuBtn.tooltip('hide');}, 3000);
 		}, 2000);
 	}
 });
