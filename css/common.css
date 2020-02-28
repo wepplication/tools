@@ -87,6 +87,10 @@
   border: 0px solid white;
 }
 
+.btn-emoticon {
+  margin: 2px;
+}
+
 /**
  * Responsive Bootstrap Button Group vertical (https://github.com/twbs/bootstrap/issues/9235)
  */

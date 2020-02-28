@@ -619,7 +619,7 @@
 			// 이모티콘 출력
 			var emoticonOutput = "";
 			for(var i in emoticon){
-				emoticonOutput += "<input type='button' class='btn btn-default' value='"+emoticon[i]+"'/>"
+				emoticonOutput += "<input type='button' class='btn btn-emoticon btn-default' value='"+emoticon[i]+"'/>"
 			}
 			$("#emoticonOutput").html(emoticonOutput);
 			
@@ -627,7 +627,7 @@
 			var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
 			var output = "";
 			for(var i in recentlyList){
-				output += "<input type='button' class='btn btn-default' value='"+recentlyList[i]+"'/>"
+				output += "<input type='button' class='btn-emoticon btn-default' value='"+recentlyList[i]+"'/>"
 			}
 			$("#recentlyEmoticon").html(output);
 			
@@ -805,7 +805,7 @@
 					localStorage.setItem("charMap-recentlyEmoticon", JSON.stringify(recentlyList));
 					var output = "";
 					for(var i in recentlyList){
-						output += "<input type='button' class='btn btn-default' value='"+recentlyList[i]+"'/>"
+						output += "<input type='button' class='btn btn-emoticon btn-default' value='"+recentlyList[i]+"'/>"
 					}
 					$("#recentlyEmoticon").html(output);
 				}else if(parentId == "unicodeOutput"){
