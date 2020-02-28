@@ -67,6 +67,7 @@
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지</span></a></li>
+            <li role="presentation"><a href="#emoticon" aria-controls="emoticon" role="tab" data-toggle="tab"><span class="text">이모티콘</span></a></li>
             <li role="presentation"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드</span></a></li>
             <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자</span></a></li>
             <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자</span></a></li>
@@ -87,6 +88,24 @@
 				  <hr/>
 				  <div class="form-group">
 					<div id="emojiOutput" class="text-center">
+					
+				    </div>
+				  </div>
+				</form>
+			</div>
+			  
+            <div role="tabpanel" class="tab-pane fade" id="emoticon">
+				<br/>
+				<form id="emoticonForm" class="form-horizontal">
+				  <div class="form-group">
+					<label class="col-sm-1 control-label">최근 사용</label>
+					<div id="recentlyEmoticon" class="col-sm-10 text-center">
+						
+					</div>
+				  </div>
+				  <hr/>
+				  <div class="form-group">
+					<div id="emoticonOutput" class="text-center">
 					
 				    </div>
 				  </div>
@@ -578,6 +597,7 @@
 	<script src="/tools/charMap/fontList.js"></script>
 	<script src="/tools/charMap/ksx1001spChar.js"></script>
 	<script src="/tools/charMap/emoji.js"></script>
+	<script src="/tools/charMap/emoticon.js"></script>
     
     <script>
 		function init(){
@@ -595,6 +615,21 @@
 				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
 			}
 			$("#recentlyEmoji").html(output);
+			
+			// 이모티콘 출력
+			var emoticonOutput = "";
+			for(var i in emoticon){
+				emoticonOutput += "<input type='button' class='btn btn-default' value='"+emoticon[i]+"'/>"
+			}
+			$("#emoticonOutput").html(emoticonOutput);
+			
+			// 최근 사용한 이모티콘 출력
+			var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
+			var output = "";
+			for(var i in recentlyList){
+				output += "<input type='button' class='btn btn-default' value='"+recentlyList[i]+"'/>"
+			}
+			$("#recentlyEmoticon").html(output);
 			
 			// KS X 1001 출력
 			var ksx1001CharOutput = "";
@@ -746,7 +781,7 @@
 		}); // !폰트변환 생성 버튼
 		  
 		// 특수문자 좌클릭 복사
-		new ClipboardJS('#emoji .btn, #unicode .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
+		new ClipboardJS('#emoji .btn, #emoticon .btn, #unicode .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
 			text: function(trigger) {
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
@@ -761,6 +796,18 @@
 						output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
 					}
 					$("#recentlyEmoji").html(output);
+				}else if(parentId == "emoticonOutput"){
+					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
+					recentlyList.push(trigger.getAttribute('value'));
+					if(recentlyList.length > 10){
+						recentlyList.shift();
+					}
+					localStorage.setItem("charMap-recentlyEmoticon", JSON.stringify(recentlyList));
+					var output = "";
+					for(var i in recentlyList){
+						output += "<input type='button' class='btn btn-default' value='"+recentlyList[i]+"'/>"
+					}
+					$("#recentlyEmoticon").html(output);
 				}else if(parentId == "unicodeOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
 					recentlyList.push(trigger.getAttribute('value'));
