@@ -1734,12 +1734,4 @@ $('.nav-tabs').scrollingTabs({
 	enableSwiping: true
 }).on('ready.scrtabs', function() {
 	$('.tab-content').show();
-	var $nextMenuBtn = $(".scrtabs-tab-scroll-arrow-right");
-	if($nextMenuBtn.is(":visible") == true){
-		setTimeout(function(){
-			$nextMenuBtn.tooltip({title: 'more tabs!', trigger: 'manual'});
-			$nextMenuBtn.tooltip('show');
-			setTimeout(function(){$nextMenuBtn.tooltip('hide');}, 3000);
-		}, 2000);
-	}
 });

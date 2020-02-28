@@ -417,7 +417,15 @@
 				</form>
 			</div>
 			  
-            <div role="tabpanel" class="tab-pane fade" id="ksx1001CharMap"></div>
+            <div role="tabpanel" class="tab-pane fade" id="ksx1001CharMap">
+				<form id="combineForm" class="form-horizontal">
+					<div class="form-group">
+						<div id="ksx1001Output" class="text-center">
+
+						</div>
+					</div>
+				</form>
+			</div>
 			  
             <div role="tabpanel" class="tab-pane fade" id="combCharGen">
 				<br/>
@@ -598,7 +606,7 @@
 					ksx1001CharOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+char+"'/>"
 				}
 			}
-			$("#ksx1001CharMap").html(ksx1001CharOutput);
+			$("#ksx1001Output").html(ksx1001CharOutput);
 			
 		  	// 유니코드 출력
 			$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
@@ -636,6 +644,32 @@
 		}
 		
       $(document).ready(function(){
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			// 탭 선택 시 메뉴 더 있다고 안내
+			var $prevMenuBtn = $(".scrtabs-tab-scroll-arrow-left");
+			var $nextMenuBtn = $(".scrtabs-tab-scroll-arrow-right");
+			if($nextMenuBtn.is(":visible") == true){
+				var fullWidth = parseInt($(".scrtabs-tabs-movable-container").prop("style").width);
+				var fixedWidth = parseInt($(".scrtabs-tabs-fixed-container").prop("style").width);
+				var tabPosition = parseInt($(".scrtabs-tabs-movable-container").prop("style").left.replace("-", "").replace("px", "")||0);
+				var scrollPosition = parseInt($(".scrtabs-tabs-fixed-container").scrollLeft());
+				
+				if(tabPosition+scrollPosition < fullWidth-fixedWidth){
+					$nextMenuBtn.tooltip({title: '더보기', trigger: 'manual'});
+					$nextMenuBtn.tooltip('show');
+					setTimeout(function(){$nextMenuBtn.tooltip('hide');}, 1000);
+				}
+				
+				if(0 < tabPosition+scrollPosition){
+					$prevMenuBtn.tooltip({title: '더보기', trigger: 'manual'});
+					$prevMenuBtn.tooltip('show');
+					setTimeout(function(){$prevMenuBtn.tooltip('hide');}, 1000);
+				}
+				
+			}
+		})
+		  
+		// 모바일에서는 유니코드 블럭 검색창 포커스 하지 않음
 		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 			$(document).on('focusin', 'input[type=search]', function(e){
 				if(e.relatedTarget){
@@ -712,7 +746,7 @@
 		}); // !폰트변환 생성 버튼
 		  
 		// 특수문자 좌클릭 복사
-		new ClipboardJS('#emoji .btn, #unicode .btn, #ksx1001CharMap .btn, #combinedCharacter .btn', {
+		new ClipboardJS('#emoji .btn, #unicode .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
 			text: function(trigger) {
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
@@ -758,7 +792,7 @@
 		});
 		  
 		// 특수문자 우클릭
-		$("#emoji, #unicodeOutput, #ksx1001CharMap, #combinedCharacter").on("contextmenu",".btn",function(event){
+		$("#emoji, #unicodeOutput, #ksx1001Output, #combinedCharacter").on("contextmenu",".btn",function(event){
 			var text = $(this).val();
 			showModal(text);
 			return false;
