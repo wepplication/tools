@@ -69,6 +69,7 @@
             <li role="presentation" class="active"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지</span></a></li>
             <li role="presentation"><a href="#emoticon" aria-controls="emoticon" role="tab" data-toggle="tab"><span class="text">이모티콘</span></a></li>
             <li role="presentation"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드</span></a></li>
+            <li role="presentation"><a href="#unicodeMap" aria-controls="unicodeMap" role="tab" data-toggle="tab"><span class="text">유니코드표</span></a></li>
             <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자</span></a></li>
             <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자</span></a></li>
             <li role="presentation"><a href="#fontChange" aria-controls="fontChange" role="tab" data-toggle="tab"><span class="text">글꼴변환</span></a></li>
@@ -435,6 +436,8 @@
 				  </div>
 				</form>
 			</div>
+			
+            <div role="tabpanel" class="tab-pane fade" id="unicodeMap"></div>
 			  
             <div role="tabpanel" class="tab-pane fade" id="ksx1001CharMap">
 				<form id="combineForm" class="form-horizontal">
@@ -655,6 +658,9 @@
 			}
 			$("#recentlyUnicode").html(output);
 			
+			// 유니코드표
+			$("#unicodeMap").load("/tools/charMap/uniCodeMap.html");
+			
 			// 결합문자 출력
 			$("#orgCharacter").val("A");
 			$("#conbineBtn").trigger("click");
@@ -668,7 +674,9 @@
 			// 해쉬 태그 이동
 			var hashVal = window.location.hash;
 			if(hashVal != ""){
-				if(hashVal.indexOf("#unicode") > -1){
+				if(hashVal.indexOf("#unicodeMap") > -1){
+					$('a[href="'+hashVal+'"]').tab("show");
+				}else if(hashVal.indexOf("#unicode") > -1){
 					$('a[href="#unicode"]').tab("show");
 					$("#unicodeBlock").val(hashVal.replace("#unicode-", ""));
 					$("#unicodeBlock").trigger("change");
@@ -862,7 +870,9 @@
 		
 		// 탭 이동
 		$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-			if(e.target.href.indexOf("#unicode") > -1){
+			if(e.target.href.indexOf("#unicodeMap") > -1){
+				location.href = e.target.href;
+			}else if(e.target.href.indexOf("#unicode") > -1){
 				location.href = "#unicode-"+$('#unicodeBlock').val();
 			}else{
 				location.href = e.target.href;
