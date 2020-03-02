@@ -976,7 +976,7 @@
 		$('#unicodeBlock').on('change', function(){
 			$('#unicodeBlock').next().attr("data-original-title", $(this).find("option:selected").text());
 			$('#unicodeBlock').selectpicker('val', $(this).val());
-			location.href="#unicode-"+$(this).val();
+			location.replace="#unicode-"+$(this).val();
 			appendUnicodeCharacter($(this).val());
 			if($("#unicodeBlock option:selected").prev().length == 0){
 				$("#prevUnicodeBtn").hide();
@@ -1142,9 +1142,9 @@
 		// 탭 이동
 		$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 			if(e.target.href.indexOf("#unicode") > -1){
-				location.href = "#unicode-"+$('#unicodeBlock').val();
+				location.replace = "#unicode-"+$('#unicodeBlock').val();
 			}else{
-				location.href = e.target.href;
+				location.replace = "#"+e.target.href.split("#")[1];
 			}
 		});
 		  
@@ -1154,6 +1154,7 @@
 		// 유니코드 출력
 		function appendUnicodeCharacter(codeRange){
 			$("#unicodeOutput").hide();
+			$('html, body').animate({ scrollTop: $("#unicodeBlock").offset().top });
 			$(".loader").show();
 			setTimeout(function(){
 				document.getElementById("unicodeOutput").innerHTML = "";
