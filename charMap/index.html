@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="robots" content="index,follow">
     <meta name="Mediapartners-Google" content="index, nofollow">
-    <title>특수문자 모음</title>
+    <title>특수문자 이모티콘 모음</title>
     <meta name="description" content="특수문자, 유니코드, 이모티콘, 아이폰 텍스트 대치, 인스타그램 특수기호, 인싸티콘(글씨체, 폰트)">
     
     <link rel="canonical" href="https://wepplication.github.io/tools/charMap/">
     
     <!-- 소셜 미디어로 공유 활용 정보 -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="특수문자표 모음">
+    <meta property="og:title" content="특수문자표 이모티콘 모음">
     <meta property="og:description" content="특수문자, 유니코드, 이모티콘, 아이폰 텍스트 대치, 인스타그램 특수기호, 인싸티콘(글씨체, 폰트)">
     <meta property="og:url" content="https://wepplication.github.io/tools/charMap/">
     <meta property="og:image" content="https://wepplication.github.io/tools/charMap/emoji.png">
@@ -27,12 +27,172 @@
     <link rel="apple-touch-icon-precomposed" href="/tools/charMap/apple-icon-precomposed.png">
     <meta name="msapplication-TileImage" content="/tools/charMap/ms-icon-144x144.png"><!-- Tile icon for Win8 (144x144 + tile color) -->
     <meta name="msapplication-TileColor" content="#4285f4">
-    <link rel="shortcut icon" href="/tools/favicon-96x96.png">
+    <link rel="shortcut icon" href="/tools/charMap/favicon-96x96.png">
     
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
     <link rel='stylesheet' href='/tools/css/jquery.scrolling-tabs.css' />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css">
     <link rel='stylesheet' href='/tools/css/common.css' />
+	  
+	<style>
+		.loader {
+		  margin: 35px auto;
+		  width: 130px;
+		  height: 170px;
+		  position: relative;
+		}
+		.loader::before, .loader::after {
+		  content: "";
+		  width: 0;
+		  height: 0;
+		  position: absolute;
+		  bottom: 30px;
+		  left: 15px;
+		  z-index: 1;
+		  transform: scale(0);
+		  transition: all 0.2s ease;
+		}
+		.loader .txt {
+		  width: 120%;
+		  text-align: center;
+		  position: absolute;
+		  bottom: -30px;
+		  left: -7%;
+		 font-family: 'Abel', sans-serif;
+		  font-size: 12px;
+		  letter-spacing: 2px;
+		  color: black;
+		}
+		.loader .code {
+		  position: absolute;
+		  z-index: 99;
+		  bottom: -3px;
+		  -webkit-animation-name: spaceboots;
+		  -webkit-animation-duration: 0.8s;
+		  -webkit-transform-origin: 50% 50%;
+		  -webkit-animation-iteration-count: infinite;
+		  -webkit-animation-timing-function: linear;
+		}
+		.loader .box {
+		  width: 100%;
+		  height: 140px;
+		  display: block;
+		  color: black;
+		  position: absolute;
+		  top: -70px;
+		  z-index: 2;
+		  overflow: hidden;
+		}
+		.loader .box::before, .loader .box::after {
+		  display: inline-block;
+		  font: normal normal normal 14px/1;
+		  font-size: inherit;
+		  text-rendering: auto;
+		  -webkit-font-smoothing: antialiased;
+		  -moz-osx-font-smoothing: grayscale;
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  opacity: 0;
+		}
+		.loader .box:nth-child(1)::before {
+		  font-size: 20px;
+		  content: "🔯";
+		  animation: a 1.1s linear infinite;
+		}
+		.loader .box:nth-child(1)::after {
+		  content: "💙";
+		  animation: b 1.3s linear infinite;
+		}
+		.loader .box:nth-child(2)::before {
+		  content: "😁";
+		  font-size: 25px;
+		  animation: c 0.9s linear infinite;
+		}
+		.loader .box:nth-child(2)::after {
+		  content: "💹";
+		  animation: d 0.7s linear infinite;
+		}
+		.loader.amit::before, .loader.amit::after {
+		  transform: scale(1);
+		}
+
+		@keyframes a {
+		  0% {
+			transform: translate(30px, 0) rotate(30deg);
+			opacity: 0;
+		  }
+		  100% {
+			transform: translate(30px, 150px) rotate(-50deg);
+			opacity: 1;
+		  }
+		}
+		@keyframes b {
+		  0% {
+			transform: translate(50px, 0) rotate(-40deg);
+			opacity: 0;
+		  }
+		  100% {
+			transform: translate(40px, 150px) rotate(80deg);
+			opacity: 1;
+		  }
+		}
+		@keyframes c {
+		  0% {
+			transform: translate(70px, 0) rotate(10deg);
+			opacity: 0;
+		  }
+		  100% {
+			transform: translate(60px, 150px) rotate(70deg);
+			opacity: 1;
+		  }
+		}
+		@keyframes d {
+		  0% {
+			transform: translate(30px, 0) rotate(-50deg);
+			opacity: 0;
+		  }
+		  100% {
+			transform: translate(45px, 150px) rotate(30deg);
+			opacity: 1;
+		  }
+		}
+		@-webkit-keyframes spaceboots {
+		  0% {
+			-webkit-transform: translate(2px, 1px) rotate(0deg);
+		  }
+		  10% {
+			-webkit-transform: translate(-1px, -2px) rotate(-1deg);
+		  }
+		  20% {
+			-webkit-transform: translate(-3px, 0px) rotate(1deg);
+		  }
+		  30% {
+			-webkit-transform: translate(0px, 2px) rotate(0deg);
+		  }
+		  40% {
+			-webkit-transform: translate(1px, -1px) rotate(1deg);
+		  }
+		  50% {
+			-webkit-transform: translate(-1px, 2px) rotate(-1deg);
+		  }
+		  60% {
+			-webkit-transform: translate(-3px, 1px) rotate(0deg);
+		  }
+		  70% {
+			-webkit-transform: translate(2px, 1px) rotate(-1deg);
+		  }
+		  80% {
+			-webkit-transform: translate(-1px, -1px) rotate(1deg);
+		  }
+		  90% {
+			-webkit-transform: translate(2px, 2px) rotate(0deg);
+		  }
+		  100% {
+			-webkit-transform: translate(1px, -2px) rotate(-1deg);
+		  }
+		}
+	</style>
 	
 	<!--
 	<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/gnu-unifont" type="text/css"/>
@@ -69,7 +229,7 @@
             <li role="presentation" class="active"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지</span></a></li>
             <li role="presentation"><a href="#emoticon" aria-controls="emoticon" role="tab" data-toggle="tab"><span class="text">이모티콘</span></a></li>
             <li role="presentation"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드</span></a></li>
-            <li role="presentation"><a href="#unicodeMap" aria-controls="unicodeMap" role="tab" data-toggle="tab"><span class="text">유니코드표</span></a></li>
+            <li role="presentation"><a href="#compatibleCode" aria-controls="compatibleCode" role="tab" data-toggle="tab"><span class="text">유니코드표</span></a></li>
             <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자</span></a></li>
             <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자</span></a></li>
             <li role="presentation"><a href="#fontChange" aria-controls="fontChange" role="tab" data-toggle="tab"><span class="text">글꼴변환</span></a></li>
@@ -417,7 +577,10 @@
 						<option value="1F900-1F9FF" data-tokens="이모지">기호 및 그림 문자 보충</option> <!-- Supplemental Symbols and Pictographs -->
 						<option value="1FA00-1FA6F">체스 기호</option> <!-- Chess Symbols -->
 						<option value="1FA70-1FAFF" data-tokens="이모지">기호 및 그림 문자 확장-A</option> <!-- Symbols and Pictographs Extended-A -->
-						<option value="20000-2A6DF">한중일 통합 한자 확장 B</option> <!-- CJK Unified Ideographs Extension B -->
+						<option value="20000-2270F">한중일 통합 한자 확장 B (1/4)</option> <!-- CJK Unified Ideographs Extension B -->
+						<option value="22710-24E2F">한중일 통합 한자 확장 B (2/4)</option> <!-- CJK Unified Ideographs Extension B -->
+						<option value="24E30-2753F">한중일 통합 한자 확장 B (3/4)</option> <!-- CJK Unified Ideographs Extension B -->
+						<option value="27540-2A6DF">한중일 통합 한자 확장 B (4/4)</option> <!-- CJK Unified Ideographs Extension B -->
 						<option value="2A700-2B73F">한중일 통합 한자 확장 C</option> <!-- CJK Unified Ideographs Extension C -->
 						<option value="2B740-2B81F">한중일 통합 한자 확장 D</option> <!-- CJK Unified Ideographs Extension D -->
 						<option value="2B820-2CEAF">한중일 통합 한자 확장 E</option> <!-- CJK Unified Ideographs Extension E -->
@@ -430,6 +593,14 @@
 				  </div>
 					
 				  <div class="form-group">
+					<div class="loader">   
+						<span class="box"></span>   
+						<span class="box"></span>  
+						<div class="code"> 
+							<img src="/tools/charMap/favicon-96x96.png" width="120px">
+						</div>    
+						<span class="txt">LOADING UNICODE...</span>
+					</div>
 					<div id="unicodeOutput" class="text-center">
 
 					</div>
@@ -437,7 +608,7 @@
 				</form>
 			</div>
 			
-            <div role="tabpanel" class="tab-pane fade" id="unicodeMap"></div>
+            <div role="tabpanel" class="tab-pane fade" id="compatibleCode"></div>
 			  
             <div role="tabpanel" class="tab-pane fade" id="ksx1001CharMap">
 				<form id="combineForm" class="form-horizontal">
@@ -646,10 +817,6 @@
 			}
 			$("#ksx1001Output").html(ksx1001CharOutput);
 			
-		  	// 유니코드 출력
-			$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
-			appendUnicodeCharacter("2700-27BF");
-			
 			// 최근 사용한 유니코드 출력
 			recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
 			output = "";
@@ -659,7 +826,7 @@
 			$("#recentlyUnicode").html(output);
 			
 			// 유니코드표
-			$("#unicodeMap").load("/tools/charMap/uniCodeMap.html");
+			$("#compatibleCode").load("/tools/charMap/uniCodeMap.html");
 			
 			// 결합문자 출력
 			$("#orgCharacter").val("A");
@@ -674,15 +841,20 @@
 			// 해쉬 태그 이동
 			var hashVal = window.location.hash;
 			if(hashVal != ""){
-				if(hashVal.indexOf("#unicodeMap") > -1){
-					$('a[href="'+hashVal+'"]').tab("show");
-				}else if(hashVal.indexOf("#unicode") > -1){
+				if(hashVal.indexOf("#unicode") > -1){
 					$('a[href="#unicode"]').tab("show");
 					$("#unicodeBlock").val(hashVal.replace("#unicode-", ""));
 					$("#unicodeBlock").trigger("change");
 				}else{
 					$('a[href="'+hashVal+'"]').tab("show");
+					// 유니코드 출력
+					$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
+					appendUnicodeCharacter("2700-27BF");
 				}
+			}else{
+				// 유니코드 출력
+				$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
+				appendUnicodeCharacter("2700-27BF");
 			}
 		}
 		
@@ -725,8 +897,8 @@
 		$('#unicodeBlock').on('change', function(){
 			$('#unicodeBlock').next().attr("data-original-title", $(this).find("option:selected").text());
 			$('#unicodeBlock').selectpicker('val', $(this).val());
-			appendUnicodeCharacter($(this).val());
 			location.href="#unicode-"+$(this).val();
+			appendUnicodeCharacter($(this).val());
 		}); // !유니코드 블럭 선택
 		  
 		// 결합문자 입력 후 엔터
@@ -870,9 +1042,7 @@
 		
 		// 탭 이동
 		$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-			if(e.target.href.indexOf("#unicodeMap") > -1){
-				location.href = e.target.href;
-			}else if(e.target.href.indexOf("#unicode") > -1){
+			if(e.target.href.indexOf("#unicode") > -1){
 				location.href = "#unicode-"+$('#unicodeBlock').val();
 			}else{
 				location.href = e.target.href;
@@ -880,21 +1050,28 @@
 		});
 		  
 		init();
-        
       });
 		  
 		// 유니코드 출력
 		function appendUnicodeCharacter(codeRange){
-			document.getElementById("unicodeOutput").innerHTML = "";
-			var from = parseInt("0x"+codeRange.split("-")[0]);
-			var to = parseInt("0x"+codeRange.split("-")[1]);
-			var output = "";
-			for(var i=from; i <= to; i++){
-				output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+i+"'/>"
-			}
+			$("#unicodeOutput").hide();
+			$(".loader").show();
+			setTimeout(function(){
+				document.getElementById("unicodeOutput").innerHTML = "";
+				var from = parseInt("0x"+codeRange.split("-")[0]);
+				var to = parseInt("0x"+codeRange.split("-")[1]);
+				var output = "";
+				for(var i=from; i <= to; i++){
+					output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+i+"'/>";
+				}
 			
-			document.getElementById("unicodeOutput").innerHTML = output;
+				$("#unicodeOutput").append(output);
+
+				$(".loader").hide();
+				$("#unicodeOutput").show();
+			}, 500)
 		}
+		
     </script>
   </body>
 </html>
