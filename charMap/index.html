@@ -671,6 +671,7 @@
 					</div>
 					  
 				  </div>
+				</form>
 					
 				  <div class="form-group">
 					  <div class="col-md-5 col-md-offset-1 col-xs-6">
@@ -683,8 +684,7 @@
 							<input id="nextUnicodeBtn" type="button" class="btn btn-primary" value="next" style="display:none;"/>
 						  </div>
 					  </div>
-					</div>
-				</form>
+				  </div>
 			</div>
 			
             <div role="tabpanel" class="tab-pane fade" id="compatibleCode"></div>
@@ -864,6 +864,7 @@
 			// 최근 사용한 이모지 출력
 			var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
 			var output = "";
+			$("#recentlyEmoji").html("");
 			for(var i in recentlyList){
 				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
 			}
@@ -871,18 +872,18 @@
 			
 			// 이모티콘 출력
 			var emoticonOutput = "";
+			$("#emoticonOutput").html("");
 			for(var i in emoticon){
-				emoticonOutput += "<input type='button' class='btn btn-emoticon btn-default' value='"+emoticon[i]+"'/>"
+				$("#emoticonOutput").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(emoticon[i]));
 			}
-			$("#emoticonOutput").html(emoticonOutput);
 			
 			// 최근 사용한 이모티콘 출력
 			var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
 			var output = "";
+			$("#recentlyEmoticon").html("");
 			for(var i in recentlyList){
-				output += "<input type='button' class='btn-emoticon btn-default' value='"+recentlyList[i]+"'/>"
+				$("#recentlyEmoticon").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(recentlyList[i]));
 			}
-			$("#recentlyEmoticon").html(output);
 			
 			// KS X 1001 출력
 			var ksx1001CharOutput = "";
@@ -900,7 +901,7 @@
 			recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
 			output = "";
 			for(var i in recentlyList){
-				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+				output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+recentlyList[i].codePointAt(0)+"'/>"
 			}
 			$("#recentlyUnicode").html(output);
 			
@@ -1046,7 +1047,7 @@
 		}); // !폰트변환 생성 버튼
 		  
 		// 특수문자 좌클릭 복사
-		new ClipboardJS('#emojiOutput .btn, #emoticonOutput .btn, #unicodeOutput .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
+		new ClipboardJS('#emoji .btn, #emoticon .btn, #unicodeForm .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
 			text: function(trigger) {
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
@@ -1104,7 +1105,7 @@
 		});
 		  
 		// 특수문자 우클릭
-		$("#emoji, #unicodeOutput, #ksx1001Output, #combinedCharacter").on("contextmenu",".btn",function(event){
+		$("#emoji, #unicodeForm, #ksx1001Output, #combinedCharacter").on("contextmenu",".btn",function(event){
 			var text = $(this).val();
 			showModal(text);
 			return false;
