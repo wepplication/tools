@@ -35,6 +35,72 @@
     <link rel='stylesheet' href='/tools/css/common.css' />
 	  
 	<style>
+		/* navbar */
+		.navbar-custom {
+			background-color: #4285f4;
+			border-color: #3870ce;
+		}
+		.navbar-custom .navbar-brand {
+			color: #ffffff;
+		}
+		/* navbar top level text and links */
+		.navbar-custom .navbar-nav > li, .navbar-custom .navbar-nav > li > a {
+			color: #ffffff;
+		}
+		/* top level link when mouse is hovering */
+		.navbar-custom .navbar-nav > li > a:hover, .navbar-custom .navbar-nav > li > a:focus {
+			color: #ffffff;
+			background-color: #4285f4;
+		}
+
+		/* top level parent link when the drop down is open */
+		.navbar-custom .navbar-nav > .open > a, .navbar-custom .navbar-nav > .open > a:hover, .navbar-custom .navbar-nav > .open > a:focus {
+			background-color: #3870ce;
+			color: #ffffff;
+		}
+
+		/* level 1 menu bar */
+		.navbar-custom .dropdown-menu {
+			background-color: #3870ce;
+			border-color: #3870ce;
+			color: #ffffff;
+		}
+		/* level 1 menu bar text and links*/
+		.navbar-custom .dropdown-menu > li, .navbar-custom .dropdown-menu > li > a {
+			color: #ffffff;
+		}
+		/* level 1 menu bar hovering */
+		.navbar-custom .dropdown-menu > li > a:hover, .navbar-custom .dropdown-menu > li > a:focus {
+			color: #ffffff;
+			background-color: #4285f4;
+		}
+		/* mobile toggle button formatting */
+		.navbar-custom .navbar-toggle {
+			border-color: #3870ce;
+		}
+
+		/* mobile toggle button mouse hover */
+		.navbar-custom .navbar-toggle:focus, .navbar-custom .navbar-toggle:hover {
+			background-color: #3870ce;
+		}
+
+		/* mobile toggle button icon bar tower */
+		.navbar-custom .navbar-toggle .icon-bar {
+			background-color: #ffffff;
+		}
+
+		/* mobile 2nd level menu hover */
+		.navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus, .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover {
+			background-color: #3870ce;
+			color: #ffffff;
+		}
+		/* mobile 2nd level link */
+		.navbar-custom .navbar-nav .open .dropdown-menu > li > a {
+			color: #ffffff;
+		}
+	</style>
+	  
+	<style>
 		.loader {
 		  margin: 35px auto;
 		  width: 130px;
@@ -206,8 +272,7 @@
 	<script data-ad-client="ca-pub-2077999268380568" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   </head>
   <body>
-    <header w3-include-html="/tools/includes/navbar.html">
-	</header>
+    <header w3-include-html="/tools/includes/navbar.html"></header>
     
     <main>
       <div class="container">
