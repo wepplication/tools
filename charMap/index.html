@@ -669,7 +669,21 @@
 					<div id="unicodeOutput" class="text-center">
 
 					</div>
+					  
 				  </div>
+					
+				  <div class="form-group">
+					  <div class="col-md-5 col-md-offset-1 col-xs-6">
+						  <div>
+							<input id="prevUnicodeBtn" type="button" class="btn btn-primary" value="prev" style="display:none;"/>
+						  </div>
+					  </div>
+					  <div class="col-md-5 col-xs-6">
+						  <div class="pull-right">
+							<input id="nextUnicodeBtn" type="button" class="btn btn-primary" value="next" style="display:none;"/>
+						  </div>
+					  </div>
+					</div>
 				</form>
 			</div>
 			
@@ -964,7 +978,27 @@
 			$('#unicodeBlock').selectpicker('val', $(this).val());
 			location.href="#unicode-"+$(this).val();
 			appendUnicodeCharacter($(this).val());
+			if($("#unicodeBlock option:selected").prev().length == 0){
+				$("#prevUnicodeBtn").hide();
+			}else{
+				$("#prevUnicodeBtn").val("< "+$("#unicodeBlock option:selected").prev().text());
+				$("#prevUnicodeBtn").data("code",$("#unicodeBlock option:selected").prev().val());
+				$("#prevUnicodeBtn").show();
+			}
+			if($("#unicodeBlock option:selected").next().length == 0){
+				$("#nextUnicodeBtn").hide();
+			}else{
+				$("#nextUnicodeBtn").val($("#unicodeBlock option:selected").next().text()+" >");
+				$("#nextUnicodeBtn").data("code",$("#unicodeBlock option:selected").next().val());
+				$("#nextUnicodeBtn").show();
+			}
 		}); // !유니코드 블럭 선택
+		  
+		$("#prevUnicodeBtn, #nextUnicodeBtn").on("click", function(){
+			$("#unicodeBlock").val($(this).data("code"));
+			$("#unicodeBlock").trigger("change");
+		});
+		  
 		  
 		// 결합문자 입력 후 엔터
 		$("#orgCharacter").on("keypress", function(e){
