@@ -928,12 +928,12 @@
 					$('a[href="'+hashVal+'"]').tab("show");
 					// 유니코드 출력
 					$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
-					$("#unicodeBlock").trigger("change");
+					appendUnicodeCharacter("2700-27BF");
 				}
 			}else{
 				// 유니코드 출력
 				$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
-				$("#unicodeBlock").trigger("change");
+				appendUnicodeCharacter("2700-27BF");
 			}
 		}
 		
@@ -978,20 +978,6 @@
 			$('#unicodeBlock').selectpicker('val', $(this).val());
 			location.hash="#unicode-"+$(this).val();
 			appendUnicodeCharacter($(this).val());
-			if($("#unicodeBlock option:selected").prev().length == 0){
-				$("#prevUnicodeBtn").hide();
-			}else{
-				$("#prevUnicodeBtn").val("< "+$("#unicodeBlock option:selected").prev().text());
-				$("#prevUnicodeBtn").data("code",$("#unicodeBlock option:selected").prev().val());
-				$("#prevUnicodeBtn").show();
-			}
-			if($("#unicodeBlock option:selected").next().length == 0){
-				$("#nextUnicodeBtn").hide();
-			}else{
-				$("#nextUnicodeBtn").val($("#unicodeBlock option:selected").next().text()+" >");
-				$("#nextUnicodeBtn").data("code",$("#unicodeBlock option:selected").next().val());
-				$("#nextUnicodeBtn").show();
-			}
 		}); // !유니코드 블럭 선택
 		  
 		$("#prevUnicodeBtn, #nextUnicodeBtn").on("click", function(){
@@ -1169,6 +1155,20 @@
 
 				$(".loader").hide();
 				$("#unicodeOutput").show();
+				if($("#unicodeBlock option:selected").prev().length == 0){
+					$("#prevUnicodeBtn").hide();
+				}else{
+					$("#prevUnicodeBtn").val("< "+$("#unicodeBlock option:selected").prev().text());
+					$("#prevUnicodeBtn").data("code",$("#unicodeBlock option:selected").prev().val());
+					$("#prevUnicodeBtn").show();
+				}
+				if($("#unicodeBlock option:selected").next().length == 0){
+					$("#nextUnicodeBtn").hide();
+				}else{
+					$("#nextUnicodeBtn").val($("#unicodeBlock option:selected").next().text()+" >");
+					$("#nextUnicodeBtn").data("code",$("#unicodeBlock option:selected").next().val());
+					$("#nextUnicodeBtn").show();
+				}
 			}, 500)
 		}
 		
