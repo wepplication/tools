@@ -928,12 +928,12 @@
 					$('a[href="'+hashVal+'"]').tab("show");
 					// 유니코드 출력
 					$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
-					appendUnicodeCharacter("2700-27BF");
+					$("#unicodeBlock").trigger("change");
 				}
 			}else{
 				// 유니코드 출력
 				$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
-				appendUnicodeCharacter("2700-27BF");
+				$("#unicodeBlock").trigger("change");
 			}
 		}
 		
@@ -1060,7 +1060,7 @@
 		}); // !폰트변환 생성 버튼
 		  
 		// 특수문자 좌클릭 복사
-		new ClipboardJS('#emoji .btn, #emoticon .btn, #unicode .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
+		new ClipboardJS('#emojiOutput .btn, #emoticonOutput .btn, #unicodeOutput .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
 			text: function(trigger) {
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
