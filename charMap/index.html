@@ -35,6 +35,32 @@
     <link rel='stylesheet' href='/tools/css/common.css' />
 	  
 	<style>
+		.btn-character-sm {
+		  width: 40px !important;
+		  height: 40px !important;
+		  font-size: 20px;
+		  margin: 2px;
+		  padding: 6px 6px;
+		}
+		.btn-character-sm:hover {
+		  border: 0px solid white;
+		}
+
+		.btn-emoticon {
+		  margin: 2px;
+		}
+
+		.btn-asciiart {
+		  margin: 2px;
+		  padding: 0px;
+		}
+		
+		.pre-asciiart{
+			margin: 0px;
+			background-color: inherit;
+		}
+	</style>
+	<style>
 		/* navbar */
 		.navbar-custom {
 			background-color: #4285f4;
@@ -293,6 +319,7 @@
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지</span></a></li>
             <li role="presentation"><a href="#emoticon" aria-controls="emoticon" role="tab" data-toggle="tab"><span class="text">이모티콘</span></a></li>
+            <li role="presentation"><a href="#asciiArt" aria-controls="asciiArt" role="tab" data-toggle="tab"><span class="text">아스키아트</span></a></li>
             <li role="presentation"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드</span></a></li>
             <li role="presentation"><a href="#compatibleCode" aria-controls="compatibleCode" role="tab" data-toggle="tab"><span class="text">유니코드표</span></a></li>
             <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자</span></a></li>
@@ -332,6 +359,17 @@
 				  <hr/>
 				  <div class="form-group">
 					<div id="emoticonOutput" class="text-center">
+					
+				    </div>
+				  </div>
+				</form>
+			</div>
+			  
+            <div role="tabpanel" class="tab-pane fade" id="asciiArt">
+				<br/>
+				<form id="asciiArtForm" class="form-horizontal">
+				  <div class="form-group">
+					<div id="asciiArtOutput" class="text-center">
 					
 				    </div>
 				  </div>
@@ -851,6 +889,7 @@
 	<script src="/tools/charMap/ksx1001spChar.js"></script>
 	<script src="/tools/charMap/emoji.js"></script>
 	<script src="/tools/charMap/emoticon.js"></script>
+	<script src="/tools/charMap/asciiArt.js"></script>
     
     <script>
 		function init(){
@@ -885,6 +924,13 @@
 				$("#recentlyEmoticon").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(recentlyList[i]));
 			}
 			
+			// 아스키아트 출력
+			var asciiArtOutput = "";
+			$("#asciiArtOutput").html("");
+			for(var i in asciiArt){
+				var aaTag = $("<pre class='pre-asciiart'>").text(asciiArt[i]);
+				$("#asciiArtOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(aaTag));
+			}
 			// KS X 1001 출력
 			var ksx1001CharOutput = "";
 			for(var key in ksx1001spChar){
@@ -1048,7 +1094,7 @@
 		}); // !폰트변환 생성 버튼
 		  
 		// 특수문자 좌클릭 복사
-		new ClipboardJS('#emoji .btn, #emoticon .btn, #unicodeForm .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
+		new ClipboardJS('#emoji .btn, #emoticon .btn, #recentlyUnicode .btn, #unicodeOutput .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
 			text: function(trigger) {
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
@@ -1098,7 +1144,17 @@
 			}
 		});
 		  
-		// 글꼴변환 복사
+		// 아스키아트 클릭 복사
+		new ClipboardJS('#asciiArt .btn', {
+			text: function(trigger) {
+		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+				$(trigger).tooltip('show');
+				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
+				return trigger.innerText;
+			}
+		});
+		  
+		// 글꼴변환 클릭 복사
 		new ClipboardJS('#changedText .btn', {
 			text: function(trigger) {
 		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
@@ -1109,7 +1165,7 @@
 		});
 		  
 		// 특수문자 우클릭
-		$("#emoji, #unicodeForm, #ksx1001Output, #combinedCharacter").on("contextmenu",".btn",function(event){
+		$("#emoji, #recentlyUnicode, #unicodeOutput, #ksx1001Output, #combinedCharacter").on("contextmenu",".btn",function(event){
 			var text = $(this).val();
 			showModal(text);
 			return false;
