@@ -977,7 +977,8 @@
 		$('#unicodeBlock').on('change', function(){
 			$('#unicodeBlock').next().attr("data-original-title", $(this).find("option:selected").text());
 			$('#unicodeBlock').selectpicker('val', $(this).val());
-			location.hash="#unicode-"+$(this).val();
+			// location.hash="#unicode-"+$(this).val();
+			window.history.replaceState({}, "", "#unicode-"+$(this).val());
 			appendUnicodeCharacter($(this).val());
 		}); // !유니코드 블럭 선택
 		  
@@ -1053,6 +1054,7 @@
 				if(parentId == "emojiOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
 					recentlyList.push(trigger.getAttribute('value'));
+					recentlyList = Array.from(new Set(recentlyList.reverse())).reverse();
 					if(recentlyList.length > 16){
 						recentlyList.shift();
 					}
@@ -1065,6 +1067,7 @@
 				}else if(parentId == "emoticonOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
 					recentlyList.push(trigger.getAttribute('value'));
+					recentlyList = Array.from(new Set(recentlyList.reverse())).reverse();
 					if(recentlyList.length > 10){
 						recentlyList.shift();
 					}
@@ -1077,6 +1080,7 @@
 				}else if(parentId == "unicodeOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
 					recentlyList.push(trigger.getAttribute('value'));
+					recentlyList = Array.from(new Set(recentlyList.reverse())).reverse();
 					if(recentlyList.length > 16){
 						recentlyList.shift();
 					}
@@ -1129,9 +1133,11 @@
 		// 탭 이동
 		$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 			if(e.target.href.indexOf("#unicode") > -1){
-				location.hash = "#unicode-"+$('#unicodeBlock').val();
+				//location.hash = "#unicode-"+$('#unicodeBlock').val();
+				window.history.replaceState({}, "", "#unicode-"+$('#unicodeBlock').val());
 			}else{
-				location.hash = "#"+e.target.href.split("#")[1];
+				//location.hash = "#"+e.target.href.split("#")[1];
+				window.history.replaceState({}, "", "#"+e.target.href.split("#")[1]);
 			}
 		});
 		  
