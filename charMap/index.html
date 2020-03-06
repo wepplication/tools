@@ -327,6 +327,7 @@
             <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자 ㉠</span></a></li>
             <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자 v̆̈</span></a></li>
             <li role="presentation"><a href="#fontChange" aria-controls="fontChange" role="tab" data-toggle="tab"><span class="text">글꼴변환 ℜ</span></a></li>
+            <li role="presentation"><a href="#charInfo" aria-controls="charInfo" role="tab" data-toggle="tab"><span class="text">문자정보</span></a></li>
           </ul>
         
           <!-- Tab panes -->
@@ -335,7 +336,7 @@
 				<br/>
 				<form id="emojiForm" class="form-horizontal">
 				  <div class="form-group">
-					<label class="col-sm-1 control-label">최근 사용</label>
+					<label class="col-sm-1 control-label">최근</label>
 					<div id="recentlyEmoji" class="col-sm-10 text-center">
 						
 					</div>
@@ -353,7 +354,7 @@
 				<br/>
 				<form id="emoticonForm" class="form-horizontal">
 				  <div class="form-group">
-					<label class="col-sm-1 control-label">최근 사용</label>
+					<label class="col-sm-1 control-label">최근</label>
 					<div id="recentlyEmoticon" class="col-sm-10 text-center">
 						
 					</div>
@@ -382,7 +383,7 @@
 				<br/>
 				<form id="unicodeForm" class="form-horizontal">
 				  <div class="form-group">
-					<label class="col-sm-1 control-label">최근 사용</label>
+					<label class="col-sm-1 control-label">최근</label>
 					<div id="recentlyUnicode" class="col-sm-10 text-center">
 						
 					</div>
@@ -712,7 +713,7 @@
 					  
 				  </div>
 				</form>
-					
+        		<div class="row">
 				  <div class="form-group">
 					  <div class="col-md-5 col-md-offset-1 col-xs-6">
 						  <div>
@@ -725,6 +726,7 @@
 						  </div>
 					  </div>
 				  </div>
+				</div>
 			</div>
 			
             <div role="tabpanel" class="tab-pane fade" id="compatibleCode"></div>
@@ -789,12 +791,54 @@
 				
 			</div>
 			  
+            <div role="tabpanel" class="tab-pane fade" id="charInfo">
+				<br/>
+				<form id="fontForm" class="form-horizontal">
+				  <div class="form-group">
+					<label for="char" class="col-sm-1 control-label">입력</label>
+					<div class="col-sm-10">
+					  <div class="input-group">
+						<input hidden="hidden" />
+						<input id="char" type="text" class="form-control" placeholder="">
+						<span class="input-group-btn">
+						  <button type="button" id="infoBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">조회</button>
+						</span>
+					  </div><!-- /input-group -->
+					</div><!-- /.col-lg-12 -->
+
+				  </div><!-- /.row -->
+
+				</form>
+				
+			</div>
+			  
 			  
           </div>
         </div>
+		  
       
         <div class="row">
-          <div class="col-md-10 col-md-offset-1">
+          <div class="col-xs-12">
+            <hr/>
+          </div>
+        </div>
+		  
+		<form class="form-horizontal">
+		  <label class="col-sm-1 control-label">최근</label>
+          <div class="col-sm-10">
+			<div class="input-group" id="multiCopy">
+				<input type="text" class="form-control">
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default">
+						<span class="glyphicon glyphicon-copy"></span>
+					</button>
+				</span>
+			</div>
+          </div>
+        </form>
+      
+        <div class="row">
+          <div class="col-xs-12">
             <hr/>
           </div>
         </div>
@@ -845,6 +889,14 @@
 						<label for="htmlCode" class="col-sm-5">HTML 코드:</label>
 						<div class="col-sm-7">
 							<div id="htmlCode" class="textover">
+
+							</div>
+						</div>
+					  </div>
+					  <div class="row">
+						<div class="col-xs-12">
+							<hr/>
+							<div id="charOutput">
 
 							</div>
 						</div>
@@ -1095,8 +1147,18 @@
 			$btn.button('reset');
 		}); // !폰트변환 생성 버튼
 		  
+		$("#char").on("keypress", function(e){
+			if (e.which == 13){
+				$('#infoBtn').trigger("click");
+			}
+		});
+		
+		$("#infoBtn").on("click", function(){
+			 showModal($("#char").val());
+		});
+		  
 		// 특수문자 좌클릭 복사
-		new ClipboardJS('#emoji .btn, #emoticon .btn, #recentlyUnicode .btn, #unicodeOutput .btn, #ksx1001Output .btn, #combinedCharacter .btn', {
+		new ClipboardJS('#emoji .btn, #emoticon .btn, #recentlyUnicode .btn, #unicodeOutput .btn, #ksx1001Output .btn, #combinedCharacter .btn, #charOutput .btn', {
 			text: function(trigger) {
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
@@ -1139,6 +1201,7 @@
 					}
 					$("#recentlyUnicode").html(output);
 				}
+				$("#multiCopy input").val($("#multiCopy input").val()+trigger.getAttribute('value')+" ");
 		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
@@ -1156,13 +1219,14 @@
 			}
 		});
 		  
-		// 글꼴변환 클릭 복사
-		new ClipboardJS('#changedText .btn', {
+		// 글꼴변환, 하단 글자 클릭 복사
+		new ClipboardJS('#changedText .btn, #multiCopy .btn', {
 			text: function(trigger) {
 		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
-				return trigger.parentElement.previousSibling.value;
+				//return trigger.parentElement.previousSibling.value;
+				return $(trigger).parent().prev().val();
 			}
 		});
 		  
@@ -1179,17 +1243,25 @@
 			$("#charView").text(text);
 			var unicodeText = "";
 			var htmlCodeText = "";
+			var output = "";
 			for(var i in unicodeList){
 				unicodeText += "U+"+unicodeList[i].toUpperCase().padStart(4, "0")+" ";
 				htmlCodeText += "&#"+parseInt("0x"+unicodeList[i])+";"
+				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+String.fromCodePoint(parseInt("0x"+unicodeList[i]))+"'/>";
 			}
 			$("#unicodeNo").text(unicodeText);
 			$("#htmlCode").text(htmlCodeText);
-			$('#charModal').modal('show');	
+			if(unicodeList.length > 1){
+				$("#charOutput").html(output);
+			}else{
+				$("#charOutput").html("");
+			}
+			$('#charModal').modal('show');
 		}
 		
 		// 탭 이동
 		$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+			$('.nav-tabs').scrollingTabs('refresh');
 			if(e.target.href.indexOf("#unicode") > -1){
 				//location.hash = "#unicode-"+$('#unicodeBlock').val();
 				window.history.replaceState({}, "", "#unicode-"+$('#unicodeBlock').val());
