@@ -1261,7 +1261,6 @@
 		
 		// 탭 이동
 		$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-			$('.nav-tabs').scrollingTabs('refresh');
 			if(e.target.href.indexOf("#unicode") > -1){
 				//location.hash = "#unicode-"+$('#unicodeBlock').val();
 				window.history.replaceState({}, "", "#unicode-"+$('#unicodeBlock').val());
