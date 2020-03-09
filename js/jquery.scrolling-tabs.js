@@ -700,7 +700,8 @@
       var smv = this,
           stc = smv.stc;
   
-      return (stc.movableContainerLeftPos === 0) ? '0' : stc.movableContainerLeftPos + 'px';
+      // return (stc.movableContainerLeftPos === 0) ? '0' : stc.movableContainerLeftPos + 'px';
+      return stc.movableContainerLeftPos * -1;
     };
   
     p.incrementMovableContainerLeft = function () {
@@ -850,7 +851,8 @@
   
       smv.performingSlideAnim = true;
   
-      stc.$movableContainer.stop().animate({ left: leftVal }, 'slow', function __slideAnimComplete() {
+      // stc.$movableContainer.stop().animate({ left: leftVal }, 'slow', function __slideAnimComplete() {
+      stc.$fixedContainer.stop().animate({ scrollLeft: leftVal }, 'slow', function __slideAnimComplete() {
         var newMinPos = smv.getMinPos();
   
         smv.performingSlideAnim = false;
@@ -859,7 +861,8 @@
         // quickly--move back into position
         if (stc.movableContainerLeftPos < newMinPos) {
           smv.decrementMovableContainerLeftPos(newMinPos);
-          stc.$movableContainer.stop().animate({ left: smv.getMovableContainerCssLeftVal() }, 'fast', function() {
+          // stc.$movableContainer.stop().animate({ left: smv.getMovableContainerCssLeftVal() }, 'fast', function() {
+          stc.$fixedContainer.stop().animate({ scrollLeft: leftVal }, 'fast', function() {
             smv.refreshScrollArrowsDisabledState();
           });
         } else {
