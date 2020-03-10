@@ -339,16 +339,16 @@
 				<br/>
 				<form id="emojiForm" class="form-horizontal">
 				  <div class="form-group">
+					<div id="emojiOutput" class="text-center">
+					
+				    </div>
+				  </div>
+				  <hr/>
+				  <div class="form-group">
 					<label class="col-sm-1 control-label">최근</label>
 					<div id="recentlyEmoji" class="col-sm-10 text-center">
 						
 					</div>
-				  </div>
-				  <hr/>
-				  <div class="form-group">
-					<div id="emojiOutput" class="text-center">
-					
-				    </div>
 				  </div>
 				</form>
 			</div>
@@ -357,16 +357,16 @@
 				<br/>
 				<form id="emoticonForm" class="form-horizontal">
 				  <div class="form-group">
+					<div id="emoticonOutput" class="text-center">
+					
+				    </div>
+				  </div>
+				  <hr/>
+				  <div class="form-group">
 					<label class="col-sm-1 control-label">최근</label>
 					<div id="recentlyEmoticon" class="col-sm-10 text-center">
 						
 					</div>
-				  </div>
-				  <hr/>
-				  <div class="form-group">
-					<div id="emoticonOutput" class="text-center">
-					
-				    </div>
 				  </div>
 				</form>
 			</div>
@@ -385,13 +385,6 @@
             <div role="tabpanel" class="tab-pane fade" id="unicode">
 				<br/>
 				<form id="unicodeForm" class="form-horizontal">
-				  <div class="form-group">
-					<label class="col-sm-1 control-label">최근</label>
-					<div id="recentlyUnicode" class="col-sm-10 text-center">
-						
-					</div>
-				  </div>
-				  <hr/>
 				  <div class="form-group">
 					<label for="unicodeBlock" class="col-sm-1 control-label">코드영역</label>
 					<div class="col-sm-10 form-inline">
@@ -730,6 +723,15 @@
 					  </div>
 				  </div>
 				</div>
+				<form class="form-horizontal">
+				  <hr/>
+				  <div class="form-group">
+					<label class="col-sm-1 control-label">최근</label>
+					<div id="recentlyUnicode" class="col-sm-10 text-center">
+						
+					</div>
+				  </div>
+				</form>
 			</div>
 			
             <div role="tabpanel" class="tab-pane fade" id="compatibleCode"></div>
@@ -827,17 +829,19 @@
         </div>
 		  
 		<form class="form-horizontal">
-		  <label class="col-sm-1 control-label">최근</label>
-          <div class="col-sm-10">
-			<div class="input-group" id="multiCopy">
-				<input type="text" class="form-control">
-				<span class="input-group-btn">
-					<button type="button" class="btn btn-default">
-						<span class="glyphicon glyphicon-copy"></span>
-					</button>
-				</span>
+			<div class="form-group">
+			  <label class="col-sm-1 control-label">최근</label>
+			  <div class="col-sm-10">
+				<div class="input-group" id="multiCopy">
+					<input type="text" class="form-control">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-copy"></span>
+						</button>
+					</span>
+				</div>
+			  </div>
 			</div>
-          </div>
         </form>
       
         <div class="row">
@@ -1246,21 +1250,45 @@
 			$("#charView").text(text);
 			var unicodeText = "";
 			var htmlCodeText = "";
-			var output = "";
+			var output = "<ul class='list-group'>";
+			
+
 			for(var i in unicodeList){
+				var codePoint = parseInt("0x"+unicodeList[i]);
 				unicodeText += "U+"+unicodeList[i].toUpperCase().padStart(4, "0")+" ";
-				htmlCodeText += "&#"+parseInt("0x"+unicodeList[i])+";"
-				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+String.fromCodePoint(parseInt("0x"+unicodeList[i]))+"'/>";
+				htmlCodeText += "&#"+codePoint+";"
+				var unicodeBlock = "";
+				var unicodeBlockTag = "";
+				$("#unicodeBlock option").each(function(){
+					var codeRange = $(this).val().split("-");
+					if(parseInt("0x"+codeRange[0]) <= codePoint && codePoint <= parseInt("0x"+codeRange[1])){
+						unicodeBlockTag = "<span>"+$(this).text()+"</span>";
+						unicodeBlock = $(this).val();
+						return false;
+					}
+				});
+				output += "<li class='list-group-item' data-code='"+unicodeBlock+"'>"
+				output += "<button type='button' class='btn btn-character-sm btn-default'>";
+				output += String.fromCodePoint(parseInt("0x"+unicodeList[i]));
+				output += "</button>";
+				output += unicodeBlockTag;
+				output += "</li>";
 			}
+			output += "</ul>";
 			$("#unicodeNo").text(unicodeText);
 			$("#htmlCode").text(htmlCodeText);
-			if(unicodeList.length > 1){
-				$("#charOutput").html(output);
-			}else{
-				$("#charOutput").html("");
-			}
+			$("#charOutput").html(output);
 			$('#charModal').modal('show');
 		}
+		  
+		  $("#charOutput").on("click", "li", function(){
+			var code = $(this).data("code");
+			window.history.replaceState({}, "", "#unicode-"+code);
+			$('a[href="#unicode"]').tab("show");
+			$("#unicodeBlock").val(code);
+			$("#unicodeBlock").trigger("change");
+			$('#charModal').modal('hide');
+		  });
 		
 		// 탭 이동
 		$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
