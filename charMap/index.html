@@ -1096,7 +1096,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				var to = parseInt("0x"+codeRange.split("-")[1]);
 				var output = "";
 				for(var i=from; i <= to; i++){
-					output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+i+"'/>";
+					output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+i+";'/>";
 				}
 			
 				$("#unicodeOutput").append(output);
