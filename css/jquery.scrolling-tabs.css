@@ -20,7 +20,8 @@
   width: 100%; }
 
 .scrtabs-allow-scrollbar .scrtabs-tabs-fixed-container {
-  overflow-x: auto; }
+  overflow-x: auto;
+  -ms-overflow-style: none; }
   .scrtabs-allow-scrollbar .scrtabs-tabs-fixed-container::-webkit-scrollbar {
     display: none; }
 
