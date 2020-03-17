@@ -1072,9 +1072,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					}
 				});
 				output += "<li class='list-group-item' data-code='"+unicodeBlock+"'>"
-				output += "<button type='button' class='btn btn-character-sm btn-default'>";
-				output += String.fromCodePoint(parseInt("0x"+unicodeList[i]));
-				output += "</button>";
+				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+String.fromCodePoint(parseInt("0x"+unicodeList[i]))+"'/>"
 				output += unicodeBlockTag;
 				output += "</li>";
 			}
