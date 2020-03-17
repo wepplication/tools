@@ -99,7 +99,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
             <li role="presentation" class="active"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지 😀</span></a></li>
             <li role="presentation"><a href="#emoticon" aria-controls="emoticon" role="tab" data-toggle="tab"><span class="text">이모티콘 ٩(ˊᗜˋ*)و</span></a></li>
             <li role="presentation"><a href="#asciiArt" aria-controls="asciiArt" role="tab" data-toggle="tab"><span class="text">༺아스키아트༻</span></a></li>
-            <li role="presentation"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드 ꫛꫀꪝ</span></a></li>
+            <li role="presentation"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드 𝓝𝓮𝔀</span></a></li>
             <li role="presentation"><a href="#compatibleCode" aria-controls="compatibleCode" role="tab" data-toggle="tab"><span class="text">유니코드 old</span></a></li>
             <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자 ㉠</span></a></li>
             <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자 v̆̈</span></a></li>
@@ -470,7 +470,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				  </div>
 					
 				  <div class="form-group">
-					<div class="loader">   
+					<div class="loader" style="display:none;">   
 						<span class="box"></span>   
 						<span class="box"></span>  
 						<div class="code"> 
@@ -509,7 +509,11 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				</form>
 			</div>
 			
-            <div role="tabpanel" class="tab-pane fade" id="compatibleCode"></div>
+            <div role="tabpanel" class="tab-pane fade" id="compatibleCode">
+				<div id="compatibleCodeOutput">
+					
+				</div>
+			</div>
 			  
             <div role="tabpanel" class="tab-pane fade" id="ksx1001CharMap">
 				<form id="combineForm" class="form-horizontal">
@@ -539,7 +543,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				  </div><!-- /.row -->
 
 				  <div class="form-group">
-					<div id="combinedCharacter" class="text-center">
+					<div id="combCharOutput" class="text-center">
 
 					</div>
 				  </div>
@@ -563,7 +567,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				  </div><!-- /.row -->
 
 				  <div class="form-group">
-					<div id="changedText" class="col-sm-10 col-sm-offset-1">
+					<div id="fontChangeOutput" class="col-sm-10 col-sm-offset-1">
 
 					</div>
 				  </div>
@@ -720,6 +724,8 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
       wcs_add["wa"] = "2b27e8a158b290";
       wcs_do();
     </script>
+	<script src="/tools/js/polyfill/Array.from.js"></script>
+	<script src="/tools/js/polyfill/codePointAt.js"></script>
     
     <script src="/tools/js/include.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -730,6 +736,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
     <script src="/tools/js/common.js"></script>
 	  
 	<script src="/tools/js/clipboard.min.js"></script>
+	<script src="/tools/js/polyfill/fromCodePoint.js"></script>
 	<script src="/tools/charMap/js/emojiUnicode.js"></script>
 	<script src="/tools/charMap/js/combiningText.js"></script>
 	<script src="/tools/charMap/js/fontList.js"></script>
@@ -747,95 +754,100 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 	  
     <script>
 		function init(){
-			// 이모지 출력
-			var emojiOutput = "";
-			for(var i in emoji){
-				emojiOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+emoji[i]+"'/>"
-			}
-			$("#emojiOutput").html(emojiOutput);
-			
-			// 최근 사용한 이모지 출력
-			var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
-			var output = "";
-			$("#recentlyEmoji").html("");
-			for(var i in recentlyList){
-				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
-			}
-			$("#recentlyEmoji").html(output);
-			
-			// 이모티콘 출력
-			var emoticonOutput = "";
-			$("#emoticonOutput").html("");
-			for(var i in emoticon){
-				$("#emoticonOutput").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(emoticon[i]));
-			}
-			
-			// 최근 사용한 이모티콘 출력
-			var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
-			var output = "";
-			$("#recentlyEmoticon").html("");
-			for(var i in recentlyList){
-				$("#recentlyEmoticon").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(recentlyList[i]));
-			}
-			
-			// 아스키아트 출력
-			var asciiArtOutput = "";
-			$("#asciiArtOutput").html("");
-			for(var i in asciiArt){
-				var aaTag = $("<pre class='pre-asciiart'>").text(asciiArt[i]);
-				$("#asciiArtOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(aaTag));
-			}
-			// KS X 1001 출력
-			var ksx1001CharOutput = "";
-			for(var key in ksx1001spChar){
-				ksx1001CharOutput += "<h3><strong>"+key+"</strong></h3>";
-				var charList = ksx1001spChar[key];
-				for(var idx in charList){
-					var char = charList[idx];
-					ksx1001CharOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+char+"'/>"
-				}
-			}
-			$("#ksx1001Output").html(ksx1001CharOutput);
-			
-			// 최근 사용한 유니코드 출력
-			recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
-			output = "";
-			for(var i in recentlyList){
-				output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+recentlyList[i].codePointAt(0)+"'/>"
-			}
-			$("#recentlyUnicode").html(output);
-			
-			// 유니코드표
-			$("#compatibleCode").load("/tools/charMap/uniCodeMap.html");
-			
-			// 결합문자 출력
-			$("#orgCharacter").val("A");
-			$("#conbineBtn").trigger("click");
-			$("#orgCharacter").val("");
-			
-			// 글꼴변환 출력
-			$("#orgText").val("abcdefghijklmnopqrstuvwxyz0123456789");
-			$("#changeBtn").trigger("click");
-			$("#orgText").val("");
-			
 			// 해쉬 태그 이동
 			var hashVal = window.location.hash;
-			if(hashVal != ""){
-				if(hashVal.indexOf("#unicode") > -1){
-					$('a[href="#unicode"]').tab("show");
-					$("#unicodeBlock").val(hashVal.replace("#unicode-", ""));
+			initData(hashVal);
+			if(hashVal.indexOf("#unicode") > -1){
+				hashVal = "#unicode";
+			}
+			$('a[href="'+hashVal+'"]').tab("show");
+		}
+		
+		function initData(tabId){
+			if(tabId == ""){
+				tabId = "#emoji";
+			}
+			if(tabId.indexOf("#emoji") > -1){
+				// 이모지 출력
+				var emojiOutput = "";
+				for(var i in emoji){
+					emojiOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+emoji[i]+"'/>"
+				}
+				$("#emojiOutput").html(emojiOutput);
+				// 최근 사용한 이모지 출력
+				var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
+				var output = "";
+				$("#recentlyEmoji").html("");
+				for(var i in recentlyList){
+					output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+				}
+				$("#recentlyEmoji").html(output);
+			}else if(tabId.indexOf("#emoticon") > -1){
+				// 이모티콘 출력
+				var emoticonOutput = "";
+				$("#emoticonOutput").html("");
+				for(var i in emoticon){
+					$("#emoticonOutput").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(emoticon[i]));
+				}
+				// 최근 사용한 이모티콘 출력
+				var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
+				var output = "";
+				$("#recentlyEmoticon").html("");
+				for(var i in recentlyList){
+					$("#recentlyEmoticon").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(recentlyList[i]));
+				}
+			}else if(tabId.indexOf("#asciiArt") > -1){
+				// 아스키아트 출력
+				var asciiArtOutput = "";
+				$("#asciiArtOutput").html("");
+				for(var i in asciiArt){
+					var aaTag = $("<pre class='pre-asciiart'>").text(asciiArt[i]);
+					$("#asciiArtOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(aaTag));
+				}
+			}else if(tabId.indexOf("#unicode") > -1){
+				if(tabId.indexOf("#unicode-") > -1){
+					$("#unicodeBlock").val(tabId.replace("#unicode-", ""));
 					$("#unicodeBlock").trigger("change");
 				}else{
-					$('a[href="'+hashVal+'"]').tab("show");
 					// 유니코드 출력
 					$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
 					appendUnicodeCharacter("2700-27BF");
 				}
-			}else{
-				// 유니코드 출력
-				$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
-				appendUnicodeCharacter("2700-27BF");
+				// 최근 사용한 유니코드 출력
+				recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
+				output = "";
+				for(var i in recentlyList){
+					output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+recentlyList[i].codePointAt(0)+"'/>"
+				}
+				$("#recentlyUnicode").html(output);
+				tabId = "#unicode";
+			}else if(tabId.indexOf("#compatibleCode") > -1){
+				// 유니코드표
+				$("#compatibleCodeOutput").load("/tools/charMap/uniCodeMap.html");
+			}else if(tabId.indexOf("#ksx1001CharMap") > -1){
+				// KS X 1001 출력
+				var ksx1001CharOutput = "";
+				for(var key in ksx1001spChar){
+					ksx1001CharOutput += "<h3><strong>"+key+"</strong></h3>";
+					var charList = ksx1001spChar[key];
+					for(var idx in charList){
+						var char = charList[idx];
+						ksx1001CharOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+char+"'/>"
+					}
+				}
+				$("#ksx1001Output").html(ksx1001CharOutput);
+			}else if(tabId.indexOf("#combCharGen") > -1){
+				// 결합문자 출력
+				$("#orgCharacter").val("A");
+				$("#conbineBtn").trigger("click");
+				$("#orgCharacter").val("");
+			}else if(tabId.indexOf("#fontChange") > -1){
+				// 글꼴변환 출력
+				$("#orgText").val("abcdefghijklmnopqrstuvwxyz0123456789");
+				$("#changeBtn").trigger("click");
+				$("#orgText").val("");
 			}
+			$('a[href="'+tabId+'"]').data("initiate", true);
 		}
 		
       $(document).ready(function(){
@@ -897,17 +909,17 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 결합문자 생성 버튼
 		$('#conbineBtn').on('click', function(){
 			var orgCharacter = $("#orgCharacter").val();
-			$("#combinedCharacter").children().remove();
+			$("#combCharOutput").children().remove();
 			var $btn = $(this).button('loading');
 			for(var i=0; i<combiningText.length; i++){
-				var combinedCharacter = "";
+				var combCharOutput = "";
 				var args = [];
 				for(var j=0; j<orgCharacter.length; j++){
 					var codePoint = orgCharacter.codePointAt(j); // 0~1114111
 					args.push(codePoint);
 				}
-				combinedCharacter += String.fromCodePoint.apply(null, args.concat(combiningText[i]));
-				$("#combinedCharacter").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combinedCharacter));
+				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningText[i]));
+				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
 			}
 			$btn.button('reset');
 		}); // !결합문자 생성 버튼
@@ -921,28 +933,28 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 폰트변환 생성 버튼
 		$('#changeBtn').on('click', function(){
 			var orgText = $("#orgText").val().toLowerCase();
-			$("#changedText").children().remove();
+			$("#fontChangeOutput").children().remove();
 			var $btn = $(this).button('loading');
 			for(var i=1; i < fontList.length; i++){
-				var changedText = "";
+				var fontChangeOutput = "";
 				var font = fontList[i];
 				for(var j in orgText){
 					var isExists = false;
 					for(var k in fontList[0]){
 						if(orgText[j] == fontList[0][k]){
 							isExists = true;
-							changedText += font[k]||orgText[j];
+							fontChangeOutput += font[k]||orgText[j];
 						}
 					}
 					if(isExists){
 					}else{
-						changedText += orgText[j];
+						fontChangeOutput += orgText[j];
 					}
 					
 					
 				}
 				
-				$("#changedText").append('<div class="input-group"><input type="text" class="form-control" value="'+changedText+'"><span class="input-group-btn"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-copy"></span></button></span></div>');
+				$("#fontChangeOutput").append('<div class="input-group"><input type="text" class="form-control" value="'+fontChangeOutput+'"><span class="input-group-btn"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-copy"></span></button></span></div>');
 			}
 			$btn.button('reset');
 		}); // !폰트변환 생성 버튼
@@ -958,7 +970,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		  
 		// 특수문자 좌클릭 복사
-		new ClipboardJS('#emoji .btn, #emoticon .btn, #recentlyUnicode .btn, #unicodeOutput .btn, #ksx1001Output .btn, #combinedCharacter .btn, #charOutput .btn', {
+		new ClipboardJS('#emoji .btn, #emoticon .btn, #recentlyUnicode .btn, #unicodeOutput .btn, #ksx1001Output .btn, #combCharOutput .btn, #charOutput .btn', {
 			text: function(trigger) {
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
@@ -1020,7 +1032,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		  
 		// 글꼴변환, 하단 글자 클릭 복사
-		new ClipboardJS('#changedText .btn, #multiCopy .btn', {
+		new ClipboardJS('#fontChangeOutput .btn, #multiCopy .btn', {
 			text: function(trigger) {
 		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
 				$(trigger).tooltip('show');
@@ -1031,7 +1043,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		  
 		// 특수문자 우클릭
-		$("#emoji, #recentlyUnicode, #unicodeOutput, #ksx1001Output, #combinedCharacter").on("contextmenu",".btn",function(event){
+		$("#emoji, #recentlyUnicode, #unicodeOutput, #ksx1001Output, #combCharOutput").on("contextmenu",".btn",function(event){
 			var text = $(this).val();
 			showModal(text);
 			return false;
@@ -1045,7 +1057,6 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 			var htmlCodeText = "";
 			var output = "<ul class='list-group'>";
 			
-
 			for(var i in unicodeList){
 				var codePoint = parseInt("0x"+unicodeList[i]);
 				unicodeText += "U+"+unicodeList[i].toUpperCase().padStart(4, "0")+" ";
@@ -1085,12 +1096,19 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		
 		// 탭 이동
 		$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+			var hashVal = "";
 			if(e.target.href.indexOf("#unicode") > -1){
-				//location.hash = "#unicode-"+$('#unicodeBlock').val();
-				window.history.replaceState({}, "", "#unicode-"+$('#unicodeBlock').val());
+				hashVal = "#unicode-"+$('#unicodeBlock').val();
+				window.history.replaceState({}, "", hashVal);
+				hashVal = "#unicode";
 			}else{
-				//location.hash = "#"+e.target.href.split("#")[1];
-				window.history.replaceState({}, "", "#"+e.target.href.split("#")[1]);
+				hashVal = "#"+e.target.href.split("#")[1];
+				window.history.replaceState({}, "", hashVal);
+			}
+				
+			if($('a[href="'+hashVal+'"]').data("initiate")){
+			}else{
+				initData(hashVal);
 			}
 		});
 		  

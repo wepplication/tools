@@ -9,7 +9,7 @@
  * @returns {String} The base 16 unicode code.
  */
 function emojiUnicode (input) {
-    return emojiUnicode.raw(input).split(' ').map(val => parseInt(val).toString(16)).join(' ')
+    return emojiUnicode.raw(input).split(' ').map(function(val){return parseInt(val).toString(16);}).join(' ')
 }
 
 /**
