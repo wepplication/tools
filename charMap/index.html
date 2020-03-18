@@ -105,7 +105,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
             <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자 v̆̈</span></a></li>
             <li role="presentation"><a href="#fontChange" aria-controls="fontChange" role="tab" data-toggle="tab"><span class="text">글꼴변환 ℜ</span></a></li>
             <li role="presentation"><a href="#charInfo" aria-controls="charInfo" role="tab" data-toggle="tab"><span class="text">문자정보</span></a></li>
-            <li role="presentation"><a href="#etc" aria-controls="etc" role="tab" data-toggle="tab"><span class="text">기타</span></a></li>
+            <li role="presentation"><a href="#kor" aria-controls="kor" role="tab" data-toggle="tab"><span class="text">한글</span></a></li>
           </ul>
         
           <!-- Tab panes -->
@@ -596,12 +596,12 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				
 			</div>
 			  
-            <div role="tabpanel" class="tab-pane fade" id="etc">
+            <div role="tabpanel" class="tab-pane fade" id="kor">
 				<br/>
-				<form id="etcForm" class="form-horizontal">
+				<form id="korForm" class="form-horizontal">
 				  <div class="form-group">
-					<div id="etcOutput" class="text-center">
-						준비중입니다.
+					<div id="korOutput" class="text-center">
+						
 				    </div>
 				  </div>
 				</form>
@@ -744,6 +744,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 	<script src="/tools/charMap/js/emoji.js"></script>
 	<script src="/tools/charMap/js/emoticon.js"></script>
 	<script src="/tools/charMap/js/asciiArt.js"></script>
+	<script src="/tools/charMap/js/korean.js"></script>
     
     <script type="text/javascript">
     	if(window.console!=undefined){
@@ -846,6 +847,14 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				$("#orgText").val("abcdefghijklmnopqrstuvwxyz0123456789");
 				$("#changeBtn").trigger("click");
 				$("#orgText").val("");
+			}else if(tabId.indexOf("#kor") > -1){
+				// 한글 출력
+				var korOutput = "";
+				$("#korOutput").html("");
+				for(var i in korean){
+					var aaTag = $("<pre class='pre-asciiart'>").text(korean[i]);
+					$("#korOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(aaTag));
+				}
 			}
 			$('a[href="'+tabId+'"]').data("initiate", true);
 		}
@@ -1107,6 +1116,16 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 			if($('a[href="'+hashVal+'"]').data("initiate")){
 			}else{
 				initData(hashVal);
+			}
+		});
+		  
+		// 한글 클릭 복사
+		new ClipboardJS('#kor .btn', {
+			text: function(trigger) {
+		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+				$(trigger).tooltip('show');
+				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
+				return trigger.innerText;
 			}
 		});
 		  
