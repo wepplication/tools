@@ -811,7 +811,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				}else{
 					// 유니코드 출력
 					$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
-					appendUnicodeCharacter("2700-27BF");
+					$("#unicodeBlock").trigger("change");
 				}
 				// 최근 사용한 유니코드 출력
 				recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
