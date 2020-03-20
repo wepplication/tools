@@ -100,11 +100,11 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
             <li role="presentation"><a href="#emoticon" aria-controls="emoticon" role="tab" data-toggle="tab"><span class="text">이모티콘 ٩(ˊᗜˋ*)و</span></a></li>
             <li role="presentation"><a href="#asciiArt" aria-controls="asciiArt" role="tab" data-toggle="tab"><span class="text">༺아스키아트༻</span></a></li>
             <li role="presentation"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드 𝓝𝓮𝔀</span></a></li>
-            <li role="presentation"><a href="#compatibleCode" aria-controls="compatibleCode" role="tab" data-toggle="tab"><span class="text">유니코드 old</span></a></li>
             <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자 ㉠</span></a></li>
             <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자 v̆̈</span></a></li>
             <li role="presentation"><a href="#fontChange" aria-controls="fontChange" role="tab" data-toggle="tab"><span class="text">글꼴변환 ℜ</span></a></li>
             <li role="presentation"><a href="#charInfo" aria-controls="charInfo" role="tab" data-toggle="tab"><span class="text">문자정보</span></a></li>
+            <li role="presentation"><a href="#compatibleCode" aria-controls="compatibleCode" role="tab" data-toggle="tab"><span class="text">유니코드 old</span></a></li>
             <li role="presentation"><a href="#kor" aria-controls="kor" role="tab" data-toggle="tab"><span class="text">한글</span></a></li>
           </ul>
         
@@ -508,12 +508,6 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				  </div>
 				</form>
 			</div>
-			
-            <div role="tabpanel" class="tab-pane fade" id="compatibleCode">
-				<div id="compatibleCodeOutput">
-					
-				</div>
-			</div>
 			  
             <div role="tabpanel" class="tab-pane fade" id="ksx1001CharMap">
 				<form id="combineForm" class="form-horizontal">
@@ -594,6 +588,12 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 
 				</form>
 				
+			</div>
+			
+            <div role="tabpanel" class="tab-pane fade" id="compatibleCode">
+				<div id="compatibleCodeOutput">
+					
+				</div>
 			</div>
 			  
             <div role="tabpanel" class="tab-pane fade" id="kor">
@@ -822,9 +822,6 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				}
 				$("#recentlyUnicode").html(output);
 				tabId = "#unicode";
-			}else if(tabId.indexOf("#compatibleCode") > -1){
-				// 유니코드표
-				$("#compatibleCodeOutput").load("/tools/charMap/uniCodeMap.html");
 			}else if(tabId.indexOf("#ksx1001CharMap") > -1){
 				// KS X 1001 출력
 				var ksx1001CharOutput = "";
@@ -847,6 +844,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				$("#orgText").val("abcdefghijklmnopqrstuvwxyz0123456789");
 				$("#changeBtn").trigger("click");
 				$("#orgText").val("");
+			}else if(tabId.indexOf("#compatibleCode") > -1){
+				// 유니코드표
+				$("#compatibleCodeOutput").load("/tools/charMap/uniCodeMap.html");
 			}else if(tabId.indexOf("#kor") > -1){
 				// 한글 출력
 				var korOutput = "";
