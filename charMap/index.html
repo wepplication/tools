@@ -59,9 +59,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
     <meta name="msapplication-TileColor" content="#4285f4">
     <link rel="shortcut icon" href="/tools/charMap/favicon-96x96.png">
     
-    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/tools/css/bootstrap.min.css' />
     <link rel='stylesheet' href='/tools/css/jquery.scrolling-tabs.css' />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css">
+	<link rel="stylesheet" href="/tools/css/bootstrap-select.min.css">
     <link rel='stylesheet' href='/tools/css/common.css' />
     <link rel='stylesheet' href='/tools/charMap/css/charMap.css' />
 	
@@ -77,6 +77,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 	<script data-ad-client="ca-pub-2077999268380568" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   </head>
   <body>
+  <!--body style="font-family: Apple Color Emoji;"-->
     <header w3-include-html="/tools/includes/navbar.html"></header>
     
     <main>
@@ -551,7 +552,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					<div class="col-sm-10">
 					  <div class="input-group">
 						<input hidden="hidden" />
-						<input id="orgText" type="text" class="form-control" placeholder="abcdefghijklmnopqrstuvwxyz0123456789">
+						<input id="orgText" type="text" class="form-control" placeholder="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789">
 						<span class="input-group-btn">
 						  <button type="button" id="changeBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">생성</button>
 						</span>
@@ -729,17 +730,18 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 	<script src="/tools/js/polyfill/codePointAt.js"></script>
     
     <script src="/tools/js/include.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/tools/js/jquery.min.js"></script>
+    <script src="/tools/js/bootstrap.min.js"></script>
     <script src="/tools/js/jquery.scrolling-tabs.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/bootstrap-select.min.js"></script>
+	<script src="/tools/js/bootstrap-select.min.js"></script>`
     <script src="/tools/js/common.js"></script>
+	  
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5be515b83fb9a3b1"></script>
 	  
 	<script src="/tools/js/clipboard.min.js"></script>
 	<script src="/tools/js/polyfill/fromCodePoint.js"></script>
 	<script src="/tools/charMap/js/emojiUnicode.js"></script>
+	<script src="/tools/charMap/js/combiningChar.js"></script>
 	<script src="/tools/charMap/js/combiningText.js"></script>
 	<script src="/tools/charMap/js/fontList.js"></script>
 	<script src="/tools/charMap/js/ksx1001spChar.js"></script>
@@ -843,7 +845,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				$("#orgCharacter").val("");
 			}else if(tabId.indexOf("#fontChange") > -1){
 				// 글꼴변환 출력
-				$("#orgText").val("abcdefghijklmnopqrstuvwxyz0123456789");
+				$("#orgText").val("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 				$("#changeBtn").trigger("click");
 				$("#orgText").val("");
 			}else if(tabId.indexOf("#compatibleCode") > -1){
@@ -932,6 +934,16 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningText[i]));
 				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
 			}
+			for(var i=0; i<combiningChar.length; i++){
+				var combCharOutput = "";
+				var args = [];
+				for(var j=0; j<orgCharacter.length; j++){
+					var codePoint = orgCharacter.codePointAt(j); // 0~1114111
+					args.push(codePoint);
+				}
+				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningChar[i]));
+				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
+			}
 			$btn.button('reset');
 		}); // !결합문자 생성 버튼
 		  
@@ -943,7 +955,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		// 폰트변환 생성 버튼
 		$('#changeBtn').on('click', function(){
-			var orgText = $("#orgText").val().toLowerCase();
+			var orgText = $("#orgText").val();
 			$("#fontChangeOutput").children().remove();
 			var $btn = $(this).button('loading');
 			for(var i=1; i < fontList.length; i++){
@@ -962,10 +974,19 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 						fontChangeOutput += orgText[j];
 					}
 					
-					
 				}
 				
-				$("#fontChangeOutput").append('<div class="input-group"><input type="text" class="form-control" value="'+fontChangeOutput+'"><span class="input-group-btn"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-copy"></span></button></span></div>');
+				$("#fontChangeOutput").append('<div class="input-group input-group-lg"><input type="text" class="form-control" style="line-height:2.6;" value="'+fontChangeOutput+'"><span class="input-group-btn"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-copy"></span></button></span></div>');
+			}
+			
+			for(var i=0; i<combiningText.length; i++){
+				var combCharOutput = "";
+				for(var j=0; j<orgText.length; j++){
+					var codePoint = orgText.codePointAt(j); // 0~1114111
+					combCharOutput += String.fromCodePoint.apply(null, [codePoint].concat(combiningText[i]));
+				}
+				
+				$("#fontChangeOutput").append('<div class="input-group input-group-lg"><input type="text" class="form-control" style="line-height:2.6;" value="'+combCharOutput+'"><span class="input-group-btn"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-copy"></span></button></span></div>');
 			}
 			$btn.button('reset');
 		}); // !폰트변환 생성 버튼
@@ -1042,14 +1063,26 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 			}
 		});
 		  
-		// 글꼴변환, 하단 글자 클릭 복사
-		new ClipboardJS('#fontChangeOutput .btn, #multiCopy .btn', {
+		// 글꼴변환 클릭 복사
+		new ClipboardJS('#fontChangeOutput .btn', {
 			text: function(trigger) {
 		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
 				//return trigger.parentElement.previousSibling.value;
 				return $(trigger).parent().prev().val();
+			}
+		});
+		  
+		// 하단 여러개 글자 클릭 복사
+		new ClipboardJS('#multiCopy .btn', {
+			text: function(trigger) {
+		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+				$(trigger).tooltip('show');
+				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
+				var result = $(trigger).parent().prev().val();
+				$(trigger).parent().prev().val("");
+				return result;
 			}
 		});
 		  
@@ -1094,7 +1127,10 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 			$('#charModal').modal('show');
 		}
 		  
-		  $("#charOutput").on("click", "li", function(){
+		  $("#charOutput").on("click", "li", function(e){
+			if(e.target.tagName == "INPUT"){
+				return;
+			}
 			var code = $(this).data("code");
 			window.history.replaceState({}, "", "#unicode-"+code);
 			$('a[href="#unicode"]').tab("show");
