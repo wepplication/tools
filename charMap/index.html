@@ -815,7 +815,10 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					$("#unicodeBlock").trigger("change");
 				}else{
 					// 유니코드 출력
-					$("#unicodeBlock").val("2700-27BF"); // 딩뱃기호
+					var unicodeSelectBoxSize = $("#unicodeBlock option").length;
+					var randomIndex = Math.floor(Math.random()*unicodeSelectBoxSize);
+					var randomRange = $("#unicodeBlock option").eq(randomIndex).val();
+					$("#unicodeBlock").val(randomRange); // 딩뱃기호
 					$("#unicodeBlock").trigger("change");
 				}
 				// 최근 사용한 유니코드 출력
@@ -893,7 +896,10 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 			$(document).on('focusin', 'input[type=search]', function(e){
 				if(e.relatedTarget){
-					$(this).trigger("blur");	
+					$(this).attr('disabled', true);
+					setTimeout(function(that){
+						$(that).attr('disabled', false);
+					},10 ,this);
 				}
 			});
 		}
@@ -923,6 +929,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		$('#conbineBtn').on('click', function(){
 			var orgCharacter = $("#orgCharacter").val();
 			$("#combCharOutput").children().remove();
+			
 			var $btn = $(this).button('loading');
 			for(var i=0; i<combiningText.length; i++){
 				var combCharOutput = "";
@@ -934,6 +941,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningText[i]));
 				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
 			}
+			
 			for(var i=0; i<combiningChar.length; i++){
 				var combCharOutput = "";
 				var args = [];
@@ -943,6 +951,25 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				}
 				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningChar[i]));
 				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
+			}
+			
+			var textArtList = [
+				[0x02D7, 0x02CB, 0x02CF, "?", 0x02CE, 0x02CA, 0x02D7],
+				[0x2014, 0x0333, 0x035F, 0x035E, 0x035E, "?"]
+			];
+			for(var i=0; i<textArtList.length; i++){
+				var combCharOutput = "";
+				var args = [];
+				for(var j=0; j<orgCharacter.length; j++){
+					var codePoint = orgCharacter.codePointAt(j); // 0~1114111
+					args.push(codePoint);
+				}
+				var arr = textArtList[i].slice(0, textArtList[i].indexOf("?"))
+					.concat(args).
+					concat(textArtList[i].slice(textArtList[i].indexOf("?")+1));
+				combCharOutput += String.fromCodePoint.apply(null, arr);
+				
+				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("style", "width: 65px !important").attr("value", combCharOutput));
 			}
 			$btn.button('reset');
 		}); // !결합문자 생성 버튼
@@ -988,6 +1015,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				
 				$("#fontChangeOutput").append('<div class="input-group input-group-lg"><input type="text" class="form-control" style="line-height:2.6;" value="'+combCharOutput+'"><span class="input-group-btn"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-copy"></span></button></span></div>');
 			}
+			
 			$btn.button('reset');
 		}); // !폰트변환 생성 버튼
 		  
