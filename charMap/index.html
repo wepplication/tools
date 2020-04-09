@@ -814,10 +814,11 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					$("#unicodeBlock").val(tabId.replace("#unicode-", ""));
 					$("#unicodeBlock").trigger("change");
 				}else{
-					// 유니코드 출력
-					var unicodeSelectBoxSize = $("#unicodeBlock option").length;
-					var randomIndex = Math.floor(Math.random()*unicodeSelectBoxSize);
-					var randomRange = $("#unicodeBlock option").eq(randomIndex).val();
+					// 유니코드 랜덤 출력
+					var randomBlock = ["2000-206F","2070-209F","20A0-20CF","20D0-20FF","2100-214F","2150-218F","2190-21FF","2200-22FF","2300-23FF","2460-24FF","2500-257F","2580-259F","25A0-25FF","2600-26FF","2700-27BF","27C0-27EF","27F0-27FF","2800-28FF","2900-297F","2980-29FF","2A00-2AFF","2B00-2BFF","2E00-2E7F","3000-303F","3200-32FF","3300-33FF","FE30-FE4F","FE50-FE6F","FF00-FFEF","10080-100FF","13000-1342F","16800-16A3F","1D400-1D7FF","1F000-1F02F","1F030-1F09F","1F0A0-1F0FF","1F100-1F1FF","1F700-1F77F"];
+					var randomBlockSize = randomBlock.length;
+					var randomIndex = Math.floor(Math.random()*randomBlockSize);
+					var randomRange = randomBlock[randomIndex];
 					$("#unicodeBlock").val(randomRange); // 딩뱃기호
 					$("#unicodeBlock").trigger("change");
 				}
