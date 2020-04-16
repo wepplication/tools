@@ -1075,7 +1075,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					$("#recentlyUnicode").html(output);
 				}
 				$("#multiCopy input").val($("#multiCopy input").val()+trigger.getAttribute('value')+" ");
-		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
 				return trigger.getAttribute('value');
@@ -1085,7 +1085,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 아스키아트 클릭 복사
 		new ClipboardJS('#asciiArt .btn', {
 			text: function(trigger) {
-		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
 				return trigger.innerText;
@@ -1095,7 +1095,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 글꼴변환 클릭 복사
 		new ClipboardJS('#fontChangeOutput .btn', {
 			text: function(trigger) {
-		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
 				//return trigger.parentElement.previousSibling.value;
@@ -1106,7 +1106,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 하단 여러개 글자 클릭 복사
 		new ClipboardJS('#multiCopy .btn', {
 			text: function(trigger) {
-		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
 				var result = $(trigger).parent().prev().val();
@@ -1189,7 +1189,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 한글 클릭 복사
 		new ClipboardJS('#kor .btn', {
 			text: function(trigger) {
-		  		$(trigger).tooltip({title: 'Copied!', trigger: 'manual'});
+		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
 				return trigger.innerText;
