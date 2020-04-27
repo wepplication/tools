@@ -94,7 +94,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
         
         <hr/>
         
-        <div>
+        <div id="charNav">
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드 𝓝𝓮𝔀</span></a></li>
@@ -1203,7 +1203,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 유니코드 출력
 		function appendUnicodeCharacter(codeRange){
 			$("#unicodeOutput").hide();
-			$('html, body').animate({ scrollTop: $("#unicodeBlock").offset().top });
+			$('html, body').animate({ scrollTop: $("#charNav").offset().top });
 			$(".loader").show();
 			setTimeout(function(){
 				document.getElementById("unicodeOutput").innerHTML = "";
