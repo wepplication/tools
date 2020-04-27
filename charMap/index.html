@@ -97,10 +97,10 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
         <div>
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지 😀</span></a></li>
+            <li role="presentation" class="active"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드 𝓝𝓮𝔀</span></a></li>
+            <li role="presentation"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지 😀</span></a></li>
             <li role="presentation"><a href="#emoticon" aria-controls="emoticon" role="tab" data-toggle="tab"><span class="text">이모티콘 ٩(ˊᗜˋ*)و</span></a></li>
             <li role="presentation"><a href="#asciiArt" aria-controls="asciiArt" role="tab" data-toggle="tab"><span class="text">༺아스키아트༻</span></a></li>
-            <li role="presentation"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드 𝓝𝓮𝔀</span></a></li>
             <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">KS X 1001 특수문자 ㉠</span></a></li>
             <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자 v̆̈</span></a></li>
             <li role="presentation"><a href="#fontChange" aria-controls="fontChange" role="tab" data-toggle="tab"><span class="text">글꼴변환 ℜ</span></a></li>
@@ -111,54 +111,8 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
         
           <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="emoji">
-				<br/>
-				<form id="emojiForm" class="form-horizontal">
-				  <div class="form-group">
-					<div id="emojiOutput" class="text-center">
-					
-				    </div>
-				  </div>
-				  <hr/>
-				  <div class="form-group">
-					<label class="col-sm-1 control-label">최근</label>
-					<div id="recentlyEmoji" class="col-sm-10 text-center">
-						
-					</div>
-				  </div>
-				</form>
-			</div>
 			  
-            <div role="tabpanel" class="tab-pane fade" id="emoticon">
-				<br/>
-				<form id="emoticonForm" class="form-horizontal">
-				  <div class="form-group">
-					<div id="emoticonOutput" class="text-center">
-					
-				    </div>
-				  </div>
-				  <hr/>
-				  <div class="form-group">
-					<label class="col-sm-1 control-label">최근</label>
-					<div id="recentlyEmoticon" class="col-sm-10 text-center">
-						
-					</div>
-				  </div>
-				</form>
-			</div>
-			  
-            <div role="tabpanel" class="tab-pane fade" id="asciiArt">
-				<br/>
-				<form id="asciiArtForm" class="form-horizontal">
-				  <div class="form-group">
-					<div id="asciiArtOutput" class="text-center">
-					
-				    </div>
-				  </div>
-				</form>
-			</div>
-			  
-            <div role="tabpanel" class="tab-pane fade" id="unicode">
+            <div role="tabpanel" class="tab-pane fade in active" id="unicode">
 				<br/>
 				<form id="unicodeForm" class="form-horizontal">
 				  <div class="form-group">
@@ -510,6 +464,53 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				</form>
 			</div>
 			  
+            <div role="tabpanel" class="tab-pane fade" id="emoji">
+				<br/>
+				<form id="emojiForm" class="form-horizontal">
+				  <div class="form-group">
+					<div id="emojiOutput" class="text-center">
+					
+				    </div>
+				  </div>
+				  <hr/>
+				  <div class="form-group">
+					<label class="col-sm-1 control-label">최근</label>
+					<div id="recentlyEmoji" class="col-sm-10 text-center">
+						
+					</div>
+				  </div>
+				</form>
+			</div>
+			  
+            <div role="tabpanel" class="tab-pane fade" id="emoticon">
+				<br/>
+				<form id="emoticonForm" class="form-horizontal">
+				  <div class="form-group">
+					<div id="emoticonOutput" class="text-center">
+					
+				    </div>
+				  </div>
+				  <hr/>
+				  <div class="form-group">
+					<label class="col-sm-1 control-label">최근</label>
+					<div id="recentlyEmoticon" class="col-sm-10 text-center">
+						
+					</div>
+				  </div>
+				</form>
+			</div>
+			  
+            <div role="tabpanel" class="tab-pane fade" id="asciiArt">
+				<br/>
+				<form id="asciiArtForm" class="form-horizontal">
+				  <div class="form-group">
+					<div id="asciiArtOutput" class="text-center">
+					
+				    </div>
+				  </div>
+				</form>
+			</div>
+			  
             <div role="tabpanel" class="tab-pane fade" id="ksx1001CharMap">
 				<form id="combineForm" class="form-horizontal">
 					<div class="form-group">
@@ -770,7 +771,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		
 		function initData(tabId){
 			if(tabId == ""){
-				tabId = "#emoji";
+				tabId = "#unicode";
 			}
 			if(tabId.indexOf("#emoji") > -1){
 				// 이모지 출력
