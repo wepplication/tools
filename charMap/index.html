@@ -1203,7 +1203,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 유니코드 출력
 		function appendUnicodeCharacter(codeRange){
 			$("#unicodeOutput").hide();
-			$('html, body').animate({ scrollTop: $("#charNav").offset().top });
+			if($("html").scrollTop() > $("#charNav").offset().top){
+				$('html').animate({ scrollTop: $("#charNav").offset().top });
+			}
 			$(".loader").show();
 			setTimeout(function(){
 				document.getElementById("unicodeOutput").innerHTML = "";
