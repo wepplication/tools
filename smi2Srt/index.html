@@ -72,6 +72,19 @@
             <br>
             <form id="form">
               <div class="row">
+                <label for="encoding" class="col-sm-1 control-label">인코딩</label>
+                <div class="col-sm-10 form-inline">
+                  <div class="input-group">
+					  <select id="encoding" class="form-control">
+						  <option value="">자동</option>
+						  <option value="utf-8">UTF-8</option>
+						  <option value="euc-kr">EUC-KR</option>
+					  </select>
+                  </div>
+                </div><!-- /col-sm-10 -->
+              </div>
+              <br>
+              <div class="row">
                 <label for="" class="col-sm-1 control-label">File</label>
                 <div class="col-sm-10">
                   <span id="uploadBtn" class="btn btn-success fileinput-button">
@@ -89,6 +102,19 @@
           <div role="tabpanel" class="tab-pane fade" id="syncTab">
             <br>
             <form id="syncForm">
+              <div class="row">
+                <label for="syncEncoding" class="col-sm-1 control-label">인코딩</label>
+                <div class="col-sm-10 form-inline">
+                  <div class="input-group">
+					  <select id="syncEncoding" class="form-control">
+						  <option value="">자동</option>
+						  <option value="utf-8">UTF-8</option>
+						  <option value="euc-kr">EUC-KR</option>
+					  </select>
+                  </div>
+                </div><!-- /col-sm-10 -->
+              </div>
+              <br>
               <div class="row">
                 <label for="syncTime" class="col-sm-1 control-label">싱크조정</label>
                 <div class="col-sm-10 form-inline">
@@ -209,12 +235,17 @@
           // 인코딩 찾기
           var reader   = new FileReader();
           reader.onload = function (evt) {
-            var chardet = jschardet.detect(evt.target.result);
-            var encoding = chardet.encoding;
-            var confidence = chardet.confidence;
-            if(encoding != "UTF-8" && encoding != "EUC-KR" && confidence <= 0.5){
-              encoding = "EUC-KR";
-            }
+			var encoding = "UTF-8";
+			if($("#encoding").val() == ""){
+				var chardet = jschardet.detect(evt.target.result);
+				encoding = chardet.encoding;
+				var confidence = chardet.confidence;
+				if(encoding != "UTF-8" && confidence <= 0.5){
+				  encoding = "UTF-8";
+				}
+			}else{
+				encoding = $("#encoding").val();
+			}
             textReader.readAsText(file, encoding); // 찾은 인코딩의 텍스트로 가져오기
           }
           reader.readAsBinaryString(file);
@@ -261,12 +292,17 @@
           // 인코딩 찾기
           var reader   = new FileReader();
           reader.onload = function (evt) {
-            var chardet = jschardet.detect(evt.target.result);
-            var encoding = chardet.encoding;
-            var confidence = chardet.confidence;
-            if(encoding != "UTF-8" && encoding != "EUC-KR" && confidence <= 0.5){
-              encoding = "EUC-KR";
-            }
+			var encoding = "UTF-8";
+			if($("#syncEncoding").val() == ""){
+				var chardet = jschardet.detect(evt.target.result);
+				encoding = chardet.encoding;
+				var confidence = chardet.confidence;
+				if(encoding != "UTF-8" && confidence <= 0.5){
+				  encoding = "UTF-8";
+				}
+			}else{
+				encoding = $("#syncEncoding").val();
+			}
             textReader.readAsText(file, encoding); // 찾은 인코딩의 텍스트로 가져오기
           }
           reader.readAsBinaryString(file);
