@@ -86,7 +86,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
           <div class="col-md-10 col-md-offset-1">
             <div id="title">
               <h1><b>특수문자 모음</b></h1>
-              KS X 1001, 유니코드, 이모티콘, 아이폰 텍스트 대치, 인스타그램 특수기호, 인싸티콘(글씨체, 폰트)<br>
+              유니코드, 이모티콘, 아이폰 텍스트 대치, 인스타그램 특수기호, 인싸티콘(글씨체, 폰트)<br>
               원하는 특수문자를 복사하셔서 사용하시면 됩니다.
             </div>
           </div>
@@ -97,20 +97,47 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
         <div id="charNav">
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드 𝓝𝓮𝔀</span></a></li>
-            <li role="presentation"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지 😀</span></a></li>
-            <li role="presentation"><a href="#emoticon" aria-controls="emoticon" role="tab" data-toggle="tab"><span class="text">이모티콘 ٩(ˊᗜˋ*)و</span></a></li>
-            <li role="presentation"><a href="#asciiArt" aria-controls="asciiArt" role="tab" data-toggle="tab"><span class="text">༺아스키아트༻</span></a></li>
-            <li role="presentation"><a href="#ksx1001CharMap" aria-controls="ksx1001CharMap" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">특수문자</span></a></li>
-            <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자 v̆̈</span></a></li>
-            <li role="presentation"><a href="#fontChange" aria-controls="fontChange" role="tab" data-toggle="tab"><span class="text">글꼴변환 ℜ</span></a></li>
+            <li role="presentation"><a href="#myChar" aria-controls="myChar" role="tab" data-toggle="tab"><span class="text">MY</span></a></li>
+            <li role="presentation" class="active"><a href="#unicode" aria-controls="unicode" role="tab" data-toggle="tab"><span class="text">유니코드</span></a></li>
+            <li role="presentation"><a href="#emoji" aria-controls="emoji" role="tab" data-toggle="tab"><span class="text">이모지</span></a></li>
+            <li role="presentation"><a href="#emoticon" aria-controls="emoticon" role="tab" data-toggle="tab"><span class="text">이모티콘</span></a></li>
+            <li role="presentation"><a href="#asciiArt" aria-controls="asciiArt" role="tab" data-toggle="tab"><span class="text">아스키아트</span></a></li>
+            <li role="presentation"><a href="#specialChar" aria-controls="specialChar" role="tab" data-toggle="tab" aria-expanded="true"><span class="text">기호</span></a></li>
+            <li role="presentation"><a href="#combCharGen" aria-controls="combCharGen" role="tab" data-toggle="tab"><span class="text">결합문자</span></a></li>
+            <li role="presentation"><a href="#fontChange" aria-controls="fontChange" role="tab" data-toggle="tab"><span class="text">글꼴변환</span></a></li>
             <li role="presentation"><a href="#charInfo" aria-controls="charInfo" role="tab" data-toggle="tab"><span class="text">문자정보</span></a></li>
             <li role="presentation"><a href="#kor" aria-controls="kor" role="tab" data-toggle="tab"><span class="text">한글</span></a></li>
           </ul>
         
           <!-- Tab panes -->
           <div class="tab-content">
-			  
+			  			  
+            <div role="tabpanel" class="tab-pane fade" id="myChar">
+				<br/>
+				<form id="myCharForm" class="form-horizontal">
+				  <div class="form-group">
+					<div id="myCharOutput" class="text-center">
+
+					</div>
+				  </div>
+					
+				  <div class="form-group">
+				    <label for="myCharacter" class="col-xs-2 col-sm-1" style="padding-top: 7px; margin-bottom: 0; text-align: right;">입력</label>
+				    <div class="col-xs-10">
+					  <input hidden="hidden" />
+					  <textarea class="form-control vresize" id="myCharacter" rows="1"></textarea>
+				    </div><!-- /.col-lg-12 -->
+
+				  </div><!-- /.form-group -->
+					
+				  <div class="form-group">
+					<div class="col-xs-8 col-xs-offset-1">
+				      <button type="button" id="myCharAddBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">추가</button>
+					</div>
+				  </div>
+				</form>
+					  
+			</div>
             <div role="tabpanel" class="tab-pane fade in active" id="unicode">
 				<br/>
 				<form id="unicodeForm" class="form-horizontal">
@@ -510,10 +537,10 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				</form>
 			</div>
 			  
-            <div role="tabpanel" class="tab-pane fade" id="ksx1001CharMap">
+            <div role="tabpanel" class="tab-pane fade" id="specialChar">
 				<form id="combineForm" class="form-horizontal">
 					<div class="form-group">
-						<div id="ksx1001Output" class="text-center">
+						<div id="specialCharOutput" class="text-center">
 
 						</div>
 					</div>
@@ -738,9 +765,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 	<script src="/tools/charMap/js/combiningChar.js"></script>
 	<script src="/tools/charMap/js/combiningText.js"></script>
 	<script src="/tools/charMap/js/fontList.js"></script>
-	<script src="/tools/charMap/js/ksx1001spChar.js"></script>
+	<script src="/tools/charMap/js/specialChar.js"></script>
 	<script src="/tools/charMap/js/emoji.js"></script>
-	<script src="/tools/charMap/js/emoticon.js"></script>
+	<script src="/tools/charMap/js/emoticon_new.js"></script>
 	<script src="/tools/charMap/js/asciiArt.js"></script>
 	<script src="/tools/charMap/js/korean.js"></script>
     
@@ -755,6 +782,14 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		function init(){
 			// 해쉬 태그 이동
 			var hashVal = window.location.hash;
+			if(hashVal == ""){
+				var myList = JSON.parse(localStorage.getItem("charMap-myChar")||"[]");
+				if(myList.length > 0){
+					hashVal = "#myChar";
+				}else{
+					hashVal = "#unicode";
+				}
+			}
 			initData(hashVal);
 			if(hashVal.indexOf("#unicode") > -1){
 				hashVal = "#unicode";
@@ -763,9 +798,6 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		}
 		
 		function initData(tabId){
-			if(tabId == ""){
-				tabId = "#unicode";
-			}
 			if(tabId.indexOf("#emoji") > -1){
 				// 이모지 출력
 				var emojiOutput = "";
@@ -785,8 +817,10 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				// 이모티콘 출력
 				var emoticonOutput = "";
 				$("#emoticonOutput").html("");
-				for(var i in emoticon){
-					$("#emoticonOutput").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(emoticon[i]));
+				for(var key in emoticon){
+					for(var i in emoticon[key]){
+						$("#emoticonOutput").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(emoticon[key][i]));
+					}
 				}
 				// 최근 사용한 이모티콘 출력
 				var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
@@ -824,18 +858,21 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				}
 				$("#recentlyUnicode").html(output);
 				tabId = "#unicode";
-			}else if(tabId.indexOf("#ksx1001CharMap") > -1){
-				// KS X 1001 출력
-				var ksx1001CharOutput = "";
-				for(var key in ksx1001spChar){
-					ksx1001CharOutput += "<h3><strong>"+key+"</strong></h3>";
-					var charList = ksx1001spChar[key];
+			}else if(tabId.indexOf("#specialChar") > -1){
+				var specialCharOutput = "";
+				for(var key in specialChar){
+					specialCharOutput += "<h3><strong>"+key+"</strong></h3>";
+					var charList = specialChar[key];
 					for(var idx in charList){
 						var char = charList[idx];
-						ksx1001CharOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+char+"'/>"
+						if(key == "공백"){
+							specialCharOutput += "<button type='button' class='btn btn-character-sm btn-default' value='"+char+"'><span style='background-color:#cbd5e0'>"+char+"</span></button>"
+						}else{
+							specialCharOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+char+"'/>"
+						}
 					}
 				}
-				$("#ksx1001Output").html(ksx1001CharOutput);
+				$("#specialCharOutput").html(specialCharOutput);
 			}else if(tabId.indexOf("#combCharGen") > -1){
 				// 결합문자 출력
 				$("#orgCharacter").val("A");
@@ -853,6 +890,12 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				for(var i in korean){
 					var aaTag = $("<pre class='pre-asciiart'>").text(korean[i]);
 					$("#korOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(aaTag));
+				}
+			}else if(tabId.indexOf("#myChar") > -1){
+				var myList = JSON.parse(localStorage.getItem("charMap-myChar")||"[]");
+				for(var i in myList){
+					var myPre = $("<pre class='pre-asciiart'>").text(myList[i]);
+					$("#myCharOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(myPre));
 				}
 			}
 			$('a[href="'+tabId+'"]').data("initiate", true);
@@ -1022,7 +1065,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		  
 		// 특수문자 좌클릭 복사
-		new ClipboardJS('#emoji .btn, #emoticon .btn, #recentlyUnicode .btn, #unicodeOutput .btn, #ksx1001Output .btn, #combCharOutput .btn, #charOutput .btn', {
+		new ClipboardJS('#emoji .btn, #emoticon .btn, #recentlyUnicode .btn, #unicodeOutput .btn, #specialCharOutput .btn, #combCharOutput .btn, #charOutput .btn', {
 			text: function(trigger) {
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
@@ -1074,7 +1117,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		  
 		// 아스키아트 클릭 복사
-		new ClipboardJS('#asciiArt .btn', {
+		new ClipboardJS('#myChar .btn-asciiart, #asciiArt .btn', {
 			text: function(trigger) {
 		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
@@ -1107,9 +1150,29 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		  
 		// 특수문자 우클릭
-		$("#emoji, #recentlyUnicode, #unicodeOutput, #ksx1001Output, #combCharOutput").on("contextmenu",".btn",function(event){
+		$("#emoji, #recentlyUnicode, #unicodeOutput, #specialCharOutput, #combCharOutput").on("contextmenu",".btn",function(event){
 			var text = $(this).val();
 			showModal(text);
+			return false;
+		});
+		  
+		// 사용자 문자 우클릭(삭제)
+		$("#myChar").on("contextmenu",".btn-asciiart",function(event){
+			if(confirm("삭제하시겠습니까?")){
+				var text = $(this).text();
+				var myList = JSON.parse(localStorage.getItem("charMap-myChar")||"[]");
+				var idx = myList.indexOf(text);
+				if(idx > -1){
+					myList.splice(idx, 1);
+				}
+				localStorage.setItem("charMap-myChar", JSON.stringify(myList));
+				
+				$("#myCharOutput").html("");
+				for(var i in myList){
+					var myPre = $("<pre class='pre-asciiart'>").text(myList[i]);
+					$("#myCharOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(myPre));
+				}
+			}
 			return false;
 		});
 		  
@@ -1184,6 +1247,25 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
 				return trigger.innerText;
+			}
+		});
+		  
+		// 사용자 문자 등록
+		$("#myCharAddBtn").on("click", function(){
+			var appendChar = $("#myCharacter").val();
+			if(appendChar == ""){
+				
+			}else{
+				var myList = JSON.parse(localStorage.getItem("charMap-myChar")||"[]");
+				myList.push(appendChar);
+				myList = Array.from(new Set(myList.reverse())).reverse();
+				localStorage.setItem("charMap-myChar", JSON.stringify(myList));
+				$("#myCharOutput").html("");
+				for(var i in myList){
+					var myPre = $("<pre class='pre-asciiart'>").text(myList[i]);
+					$("#myCharOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(myPre));
+				}
+				$("#myCharacter").val("");
 			}
 		});
 		  
