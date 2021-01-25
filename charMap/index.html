@@ -1108,7 +1108,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					}
 					$("#recentlyUnicode").html(output);
 				}
-				$("#multiCopy input").val($("#multiCopy input").val()+trigger.getAttribute('value')+" ");
+				$("#multiCopy input").val($("#multiCopy input").val()+trigger.getAttribute('value'));
 		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
