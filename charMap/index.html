@@ -132,7 +132,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					
 				  <div class="form-group">
 					<div class="col-xs-10 col-xs-offset-2 col-sm-offset-1">
-				      <button type="button" id="myCharAddBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">추가</button>
+				      <button type="button" id="myCharAddBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">추가</button> <span> ※ 추가된 항목은 마우스 우클릭이나 롱터치로 삭제하실 수 있습니다.</span>
 					</div>
 				  </div>
 				</form>
@@ -971,7 +971,11 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				var args = [];
 				for(var j=0; j<orgCharacter.length; j++){
 					var codePoint = orgCharacter.codePointAt(j); // 0~1114111
-					args.push(codePoint);
+					if(56374 == codePoint){
+						// 이모지 뒤에 이 문자가 있어서 무시
+					}else{
+						args.push(codePoint);
+					}
 				}
 				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningText[i]));
 				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
@@ -982,7 +986,11 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				var args = [];
 				for(var j=0; j<orgCharacter.length; j++){
 					var codePoint = orgCharacter.codePointAt(j); // 0~1114111
-					args.push(codePoint);
+					if(56374 == codePoint){
+						// 이모지 뒤에 이 문자가 있어서 무시
+					}else{
+						args.push(codePoint);
+					}
 				}
 				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningChar[i]));
 				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
@@ -997,7 +1005,11 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				var args = [];
 				for(var j=0; j<orgCharacter.length; j++){
 					var codePoint = orgCharacter.codePointAt(j); // 0~1114111
-					args.push(codePoint);
+					if(56374 == codePoint){
+						// 이모지 뒤에 이 문자가 있어서 무시
+					}else{
+						args.push(codePoint);
+					}
 				}
 				var arr = textArtList[i].slice(0, textArtList[i].indexOf("?"))
 					.concat(args).
