@@ -962,7 +962,8 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		// 결합문자 생성 버튼
 		$('#conbineBtn').on('click', function(){
-			var orgCharacter = $("#orgCharacter").val();
+			var orgCharacter = emojiUnicode.raw($("#orgCharacter").val()).split(" ");
+			console.log(orgCharacter);
 			$("#combCharOutput").children().remove();
 			
 			var $btn = $(this).button('loading');
@@ -970,12 +971,8 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				var combCharOutput = "";
 				var args = [];
 				for(var j=0; j<orgCharacter.length; j++){
-					var codePoint = orgCharacter.codePointAt(j); // 0~1114111
-					if(56374 == codePoint){
-						// 이모지 뒤에 이 문자가 있어서 무시
-					}else{
-						args.push(codePoint);
-					}
+					var codePoint = parseInt(orgCharacter[j]); // 0~1114111
+					args.push(codePoint);
 				}
 				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningText[i]));
 				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
@@ -985,12 +982,8 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				var combCharOutput = "";
 				var args = [];
 				for(var j=0; j<orgCharacter.length; j++){
-					var codePoint = orgCharacter.codePointAt(j); // 0~1114111
-					if(56374 == codePoint){
-						// 이모지 뒤에 이 문자가 있어서 무시
-					}else{
-						args.push(codePoint);
-					}
+					var codePoint = parseInt(orgCharacter[j]); // 0~1114111
+					args.push(codePoint);
 				}
 				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningChar[i]));
 				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
@@ -1004,12 +997,8 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				var combCharOutput = "";
 				var args = [];
 				for(var j=0; j<orgCharacter.length; j++){
-					var codePoint = orgCharacter.codePointAt(j); // 0~1114111
-					if(56374 == codePoint){
-						// 이모지 뒤에 이 문자가 있어서 무시
-					}else{
-						args.push(codePoint);
-					}
+					var codePoint = parseInt(orgCharacter[j]); // 0~1114111
+					args.push(codePoint);
 				}
 				var arr = textArtList[i].slice(0, textArtList[i].indexOf("?"))
 					.concat(args).
