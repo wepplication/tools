@@ -760,6 +760,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5be515b83fb9a3b1"></script>
 	  
 	<script src="/tools/js/clipboard.min.js"></script>
+	<script src="/tools/js/hammer.min.js"></script>
 	<script src="/tools/js/polyfill/fromCodePoint.js"></script>
 	<script src="/tools/charMap/js/emojiUnicode.js"></script>
 	<script src="/tools/charMap/js/combiningChar.js"></script>
@@ -795,6 +796,27 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				hashVal = "#unicode";
 			}
 			$('a[href="'+hashVal+'"]').tab("show");
+			
+			
+			var mc = new Hammer(document.querySelector(".tab-content"));
+			mc.on("swipeleft", function(ev) {
+				var hashVal = $(".nav-tabs>li.active").next().children().attr("href");
+				if(hashVal){
+					
+				}else{
+					hashVal = $(".nav-tabs>li>a").first().attr("href");
+				}
+				$('a[href="'+hashVal+'"]').tab("show");
+			});
+			mc.on("swiperight", function(ev) {
+				var hashVal = $(".nav-tabs>li.active").prev().children().attr("href");
+				if(hashVal){
+					
+				}else{
+					hashVal = $(".nav-tabs>li>a").last().attr("href");
+				}
+				$('a[href="'+hashVal+'"]').tab("show");
+			});
 		}
 		
 		function initData(tabId){
@@ -896,6 +918,19 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				for(var i in myList){
 					var myPre = $("<pre class='pre-asciiart'>").text(myList[i]);
 					$("#myCharOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(myPre));
+					var mc = new Hammer(myPre.get(0));
+					mc.on("press", function(ev) {
+						if(confirm("삭제하시겠습니까?")){
+							var text = $(ev.target).text();
+							var myList = JSON.parse(localStorage.getItem("charMap-myChar")||"[]");
+							var idx = myList.indexOf(text);
+							if(idx > -1){
+								myList.splice(idx, 1);
+							}
+							localStorage.setItem("charMap-myChar", JSON.stringify(myList));
+							$(ev.target).remove();
+						}
+					});
 				}
 			}
 			$('a[href="'+tabId+'"]').data("initiate", true);
@@ -1167,12 +1202,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					myList.splice(idx, 1);
 				}
 				localStorage.setItem("charMap-myChar", JSON.stringify(myList));
-				
-				$("#myCharOutput").html("");
-				for(var i in myList){
-					var myPre = $("<pre class='pre-asciiart'>").text(myList[i]);
-					$("#myCharOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(myPre));
-				}
+				$(this).remove();
 			}
 			return false;
 		});
@@ -1265,6 +1295,19 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				for(var i in myList){
 					var myPre = $("<pre class='pre-asciiart'>").text(myList[i]);
 					$("#myCharOutput").append($("<button type='button' class='btn btn-asciiart btn-default' />").append(myPre));
+					var mc = new Hammer(myPre.get(0));
+					mc.on("press", function(ev) {
+						if(confirm("삭제하시겠습니까?")){
+							var text = $(ev.target).text();
+							var myList = JSON.parse(localStorage.getItem("charMap-myChar")||"[]");
+							var idx = myList.indexOf(text);
+							if(idx > -1){
+								myList.splice(idx, 1);
+							}
+							localStorage.setItem("charMap-myChar", JSON.stringify(myList));
+							$(ev.target).remove();
+						}
+					});
 				}
 				$("#myCharacter").val("");
 			}
