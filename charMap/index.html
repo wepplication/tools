@@ -800,6 +800,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 			
 			var mc = new Hammer(document.querySelector(".tab-content"));
 			mc.on("swipeleft", function(ev) {
+				if(ev.target.type == "text" || ev.target.nodeName == "TEXTAREA"){
+					return;
+				}
 				var hashVal = $(".nav-tabs>li.active").next().children().attr("href");
 				if(hashVal){
 					
@@ -809,6 +812,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				$('a[href="'+hashVal+'"]').tab("show");
 			});
 			mc.on("swiperight", function(ev) {
+				if(ev.target.type == "text" || ev.target.nodeName == "TEXTAREA"){
+					return;
+				}
 				var hashVal = $(".nav-tabs>li.active").prev().children().attr("href");
 				if(hashVal){
 					
