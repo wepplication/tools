@@ -67,7 +67,19 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="urlTab">
+			<br>
             <form id="urlForm" class="form-horizontal">
+              <div class="form-group">
+                <label for="type" class="col-sm-1 control-label">Type</label>
+                <div class="col-sm-10 form-inline">
+				  <select id="type" class="form-control">
+					<option value="ascii">아스키</option>
+					<option value="block">블럭</option>
+					<option value="braille">점자</option>
+				  </select>
+                </div><!-- /col-sm-10 -->
+              </div><!-- /form-group -->
+				
               <div class="form-group">
                 <label for="size" class="col-sm-1 control-label">Size</label>
                 <div class="col-sm-10 form-inline">
@@ -75,7 +87,7 @@
                 </div><!-- /col-sm-10 -->
               </div><!-- /form-group -->
               
-              <div class="form-group">
+              <div id="colorForm" class="form-group">
                 <label for="color" class="col-sm-1 control-label">Color</label>
                 <div class="col-sm-10">
                   <div class="btn-group" id="color" data-toggle="buttons">
@@ -87,6 +99,13 @@
                     </label>
                   </div>
                 </div>
+              </div>
+              
+              <div id="thresholdForm" class="form-group" style="display:none;">
+                <label for="threshold" class="col-sm-1 control-label">Threshold</label>
+                <div class="col-sm-10 form-inline">
+					<input type="range" id="threshold" min="0" max="255" value="127">
+                </div><!-- /col-sm-10 -->
               </div>
               
               <div class="form-group">
@@ -103,18 +122,30 @@
               
               <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-      					  <div id="urlContents">
-              			<img width="150" id="jscii-element-image" src="" crossOrigin="Anonymous">
-              			<pre id="ascii-container-image" style="line-height:1;"></pre>
-      					  </div>
-      					  <button class="btn btn-default" type="button" id="copyUrlAscii" style="display:none;">복사</button>
-      					</div>
-    					</div>
+			      <div id="urlContents">
+              	    <img width="150" id="jscii-element-image" src="" crossOrigin="Anonymous">
+              		<pre id="ascii-container-image" style="line-height:1;"></pre>
+      			  </div>
+      			  <button class="btn btn-default" type="button" id="copyUrlAscii" style="display:none;">복사</button>
+      			</div>
+    		  </div>
             </form>
           </div>
           
           <div role="tabpanel" class="tab-pane fade" id="atchTab">
+			<br>
             <form id="fileForm" class="form-horizontal">
+              <div class="form-group">
+                <label for="type" class="col-sm-1 control-label">Type</label>
+                <div class="col-sm-10 form-inline">
+				  <select id="type" class="form-control">
+					<option value="ascii">아스키</option>
+					<option value="block">블럭</option>
+					<option value="braille">점자</option>
+				  </select>
+                </div><!-- /col-sm-10 -->
+              </div><!-- /form-group -->
+				
               <div class="form-group">
                 <label for="size" class="col-sm-1 control-label">Size</label>
                 <div class="col-sm-10 form-inline">
@@ -122,7 +153,7 @@
                 </div><!-- /col-sm-10 -->
               </div><!-- /form-group -->
               
-              <div class="form-group">
+              <div id="colorForm" class="form-group">
                 <label for="color" class="col-sm-1 control-label">Color</label>
                 <div class="col-sm-10">
                   <div class="btn-group" id="color" data-toggle="buttons">
@@ -134,6 +165,13 @@
                     </label>
                   </div>
                 </div>
+              </div>
+              
+              <div id="thresholdForm" class="form-group" style="display:none;">
+                <label for="threshold" class="col-sm-1 control-label">Threshold</label>
+                <div class="col-sm-10 form-inline">
+					<input type="range" id="threshold" min="0" max="255" value="127">
+                </div><!-- /col-sm-10 -->
               </div>
               
               <div class="row">
@@ -150,25 +188,27 @@
               
               <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-      					  <div id="fileContents">
-              			<img width="150" id="jscii-element-file" src="" crossOrigin="Anonymous">
-              			<pre id="ascii-container-file" style="line-height:1;"></pre>
-      					  </div>
-      					  <button class="btn btn-default" type="button" id="copyFileAscii" style="display:none;">복사</button>
-      					</div>
-    					</div>
+      			  <div id="fileContents">
+              		<img width="150" id="jscii-element-file" src="" crossOrigin="Anonymous">
+              		<pre id="ascii-container-file" style="line-height:1;"></pre>
+      			  </div>
+      			  <button class="btn btn-default" type="button" id="copyFileAscii" style="display:none;">복사</button>
+      			</div>
+    		  </div>
             </form>
           </div>
           
           <div role="tabpanel" class="tab-pane fade" id="textTab">
+			<br>
             <form id="textForm" class="form-horizontal">
-              <div class="row">
+              <div class="form-group">
                 <label for="" class="col-sm-1 control-label">Font</label>
                 <div class="col-sm-10">
                   <select class="btn btn-default" id="fontSelector" name="fontSelector"></select>
                 </div>
               </div>
-              <div class="row">
+				
+              <div class="form-group">
                 <label for="" class="col-sm-1 control-label">Text</label>
                 <div class="col-sm-10">
                   <div class="input-group margin-bottom-sm">
@@ -180,12 +220,12 @@
                 </div>
               </div>
               
-              <div class="row">
+              <div class="form-group">
                 <div class="col-md-10 col-md-offset-1">
-      					  <pre id="textContents"></pre>
-      					  <button class="btn btn-default" type="button" id="copyTextAscii" style="display:none;">복사</button>
-      					</div>
-    					</div>
+      			  <pre id="textContents"></pre>
+      			  <button class="btn btn-default" type="button" id="copyTextAscii" style="display:none;">복사</button>
+      			</div>
+    		  </div>
             </form>
           </div>
         </div>
@@ -252,185 +292,308 @@
     <script src="/tools/js/asciimo/lib/asciimo.js"></script>
     <script src="/tools/js/asciimo/lib/fonts.js"></script>
     <script>
-      $(document).ready(function(){
-        
-      	var chars = ['@','#','$','=','*','!',';',':','~','-',',','.','&nbsp;', '&nbsp;'];
-      	var charLen = chars.length-1;
-      	function getChar(val) { return chars[parseInt(val*charLen, 10)]; }
-    		var getRGB = function(d, i) { return [d[i=i*4], d[i+1], d[i+2]]; };
-    		
-        // 모바일에서 기본 사이즈 변경
-        if(findBootstrapEnvironment()=="xs"){
-          $("#urlForm #size").val("50");
-          $("#fileForm #size").val("50");
-        }
-        
-        
-        var imgWidth, imgHeight, objUrl, BLOB, zip;
-        // Add file 버튼
-        $('input#fileupload').on("change", function(){
-          $("#uploadBtn").attr("disabled", "disabled");
-          $("#uploadBtn span").text('loading...');
-          
-          var file     = this.files[0];
-          var reader   = new FileReader();
-          reader.onload = function () {
-            $("#jscii-element-file").attr("src", reader.result);
-            //file change 이벤트라서 같은 파일 올리면 안올라가는 현상으로 초기화 해줌
-            var input = $("#fileupload");
-            input.replaceWith(input.val('').clone(true));
-            $("#uploadBtn span").text('Add file');
-            $("#uploadBtn").removeAttr("disabled");
-          };
-          
-          if (file) {
-            reader.readAsDataURL(file);
-          }
-        });
-        
-		$('#jscii-element-file').load(function(){
-          var color = $("#fileForm #color input:radio:checked").val();
-          var size = $("#fileForm #size").val();
-      		
-      		var canvas = document.createElement('canvas');
-      		var ratio = this.height/this.width;
-      		var width = size;
-      		var height = parseInt(width*ratio, 10);
-      		canvas.width = width;
-      		canvas.height = height;
-      		var ctx = canvas.getContext('2d');
-      		ctx.drawImage(this, 0, 0, width, height);
-      		var imageData = ctx.getImageData(0, 0, width, height).data;
-      		var len = width*height;
-      		var str = "";
-      		
-      		for(var i=0; i<len; i++) {
-      			if(i%width === 0) str += '\n';
-      			var rgb = getRGB(imageData, i);
-      			var val = Math.max(rgb[0], rgb[1], rgb[2])/255;
-      			if(this.color) str += '<font style="color: rgb('+rgb.join(',')+')">'+getChar(val)+'</font>';
-      			else str += getChar(val);
-      		}
-      		
-          document.getElementById('ascii-container-file').innerHTML = str;
-          $("#copyFileAscii").show();
-				});
+		// Braille symbol is 2x4 dots
+		const asciiXDots = 2, asciiYDots = 4;
+		let threshold = 127, asciiHeight;
+		
+		$(document).ready(function(){
+			var chars = ['@','#','$','=','*','!',';',':','~','-',',','.','&nbsp;', '&nbsp;'];
+			var charLen = chars.length-1;
+			var blockChars = ['█','▓','▒','░','─'];
+			var blockCharLen = blockChars.length-1;
+			
+			function getChar(val) {
+				return chars[parseInt(val*charLen, 10)];
+			}
+			
+			function getBlockChar(val) {
+				return blockChars[parseInt(val*blockCharLen, 10)];
+			}
+			
+			var getRGB = function(d, i) {
+				return [d[i=i*4], d[i+1], d[i+2]]; 
+			};
+    	
+			// 모바일에서 기본 사이즈 변경
+			if(findBootstrapEnvironment()=="xs"){
+				$("#urlForm #size").val("50");
+				$("#fileForm #size").val("50");
+			}
+			
+			var imgWidth, imgHeight, objUrl, BLOB, zip;
+			// Add file 버튼
+			$('input#fileupload').on("change", function(){
+				$("#uploadBtn").attr("disabled", "disabled");
+				$("#uploadBtn span").text('loading...');
 				
-        
-        //변환 버튼
-        $('#convertBtn').on('click', function(){
-          // $("#convertBtn").text('loading...');
-          $("#ascii-url-image").html("");
-          
-          var url = $("#urlForm #url").val();
-          
-          if(isURL(url)){
-          }else{
-            alert("URL을 입력해 주세요.");
-            return;
-          }
-          $("#jscii-element-image").attr("src", url);
-          
-          $(this).button('loading');
-        });
-        
-          
-				$('#jscii-element-image').load(function(){
-          var color = $("#urlForm #color input:radio:checked").val();
-          var size = $("#urlForm #size").val();
-      		
-      		var canvas = document.createElement('canvas');
-      		var ratio = this.height/this.width;
-      		var width = size;
-      		var height = parseInt(width*ratio, 10);
-      		canvas.width = width;
-      		canvas.height = height;
-      		var ctx = canvas.getContext('2d');
-      		ctx.drawImage(this, 0, 0, width, height);
-      		var imageData = ctx.getImageData(0, 0, width, height).data;
-      		var len = width*height;
-      		var str = "";
-      		
-      		for(var i=0; i<len; i++) {
-      			if(i%width === 0) str += '\n';
-      			var rgb = getRGB(imageData, i);
-      			var val = Math.max(rgb[0], rgb[1], rgb[2])/255;
-      			if(this.color) str += '<font style="color: rgb('+rgb.join(',')+')">'+getChar(val)+'</font>';
-      			else str += getChar(val);
-      		}
-      		
-          document.getElementById('ascii-container-image').innerHTML = str;
-          $("#copyUrlAscii").show();
-          $('#convertBtn').button('reset');
-				});
+				var file     = this.files[0];
+				var reader   = new FileReader();
+				reader.onload = function () {
+					$("#jscii-element-file").attr("src", reader.result);
+					//file change 이벤트라서 같은 파일 올리면 안올라가는 현상으로 초기화 해줌
+					var input = $("#fileupload");
+					input.replaceWith(input.val('').clone(true));
+					$("#uploadBtn span").text('Add file');
+					$("#uploadBtn").removeAttr("disabled");
+				};
+				if (file) {
+					reader.readAsDataURL(file);
+				}
+			});
+			
+			$('#jscii-element-file').load(function(){
+				var color = $("#fileForm #color input:radio:checked").val();
+				var size = $("#fileForm #size").val();
+				var canvas = document.createElement('canvas');
+				var str = "";
+				var asciiWidth = size;
+				var type = $("#fileForm #type").val();
+				threshold = $("#fileForm #threshold").val();
 				
-        // 텍스트 -> 아스키
-        // font 리스트 추가
-        for(var i = 0; i<Figlet.fontList.length; i++){
-          var fontTitle = Figlet.fontList[i].replace(/_/gi,'').replace("C64-fonts/", "").replace("bdffonts/", ""); // remove the file extentions for the title
-          $('#fontSelector').append('<option value = "'+Figlet.fontList[i]+'">'+fontTitle+'</option>');
-        }
-        $('#fontSelector').val("Doom");
-      
-        //생성 버튼
-        $('#createBtn').on('click', function(){
-          $("#ascii-url-image").html("");
-          
-          var text = $("#textForm #userInput").val();
-          var font = $('#fontSelector').val();
-          $('#textContents').html('');
-          Figlet.write(text, font, function(str) {
-            $('#textContents').html(str);
-            $("#copyTextAscii").show();
-          });
-        });
-        
-        $("#copyUrlAscii").on("click", function(){
-          saveClipboard("ascii-container-image");
-        });
-        $("#copyFileAscii").on("click", function(){
-          saveClipboard("ascii-container-file");
-        });
-        $("#copyTextAscii").on("click", function(){
-          saveClipboard("textContents");
-        });
-        
-      });
-      
-		  function saveClipboard(elemId) {
-        var elm = document.getElementById(elemId);
-        
-        if (document.selection) {
-            var range = document.body.createTextRange();
-                range.moveToElementText(elm);
-            range.select();
-        } else if (window.getSelection) {
-            elm.contentEditable = false;
-            elm.focus();
-            var mySelection = window.getSelection();
-            if(mySelection.rangeCount > 0) {mySelection.removeAllRanges();}
-            var range = document.createRange();
-            range.selectNode(elm.parentNode);
-            mySelection.addRange(range);
-            elm.contentEditable = true;
-        }
+				if(type == "braille"){
+					let ascii = [];
+					asciiHeight = Math.ceil(asciiWidth * asciiXDots * (this.height / this.width) / asciiYDots);
+					let canvas = document.createElement('canvas');
+					let context = canvas.getContext('2d');
+					canvas.width = asciiWidth * asciiXDots;
+					canvas.height = asciiHeight * asciiYDots;
+					context.drawImage(this, 0, 0, canvas.width, canvas.height);
+					for (let y = 0; y < canvas.height; y += asciiYDots) {
+						let line = '';
+						for (let x = 0; x < canvas.width; x += asciiXDots) {
+							let char = ImageData2Braille(context.getImageData(x, y, asciiXDots, asciiYDots));
+							line += char;
+						}
+						ascii.push(line);
+					}
+					str = ascii.join('\n');
+				}else{
+					var ratio = this.height/this.width;
+					var width = size;
+					var height = parseInt(width*ratio, 10);
+					canvas.width = width;
+					canvas.height = height;
+					var ctx = canvas.getContext('2d');
+					ctx.drawImage(this, 0, 0, width, height);
+					var imageData = ctx.getImageData(0, 0, width, height).data;
+					var len = width*height;
 
-        try {
-            document.execCommand('copy');
-        } catch (err) {
-            alert('Unable to copy text, you will need to press Ctrl+C on your keyboard to copy.');
-        }
-      };
-        
-      function sizeCheck(object){
-        if($(object).val() < 10){
-          $(object).val(10);
-        }
-        if($(object).val() > 400){
-          $(object).val(400);
-        }
-      }
-      
+					for(var i=0; i<len; i++) {
+						if(i%width === 0) {
+							str += '\n';
+						}
+						var rgb = getRGB(imageData, i);
+						var val = Math.max(rgb[0], rgb[1], rgb[2])/255;
+						if(type == "ascii"){
+							if(color == "true") {
+								str += '<font style="color: rgb('+rgb.join(',')+')">'+getChar(val)+'</font>';
+							}else{
+								str += getChar(val);
+							}
+						}else if(type == "block"){
+							if(color == "true") {
+								str += '<font style="color: rgb('+rgb.join(',')+')">'+getBlockChar(val)+'</font>';
+							}else{
+								str += getBlockChar(val);
+							}
+						}
+					}
+				}
+				
+				document.getElementById('ascii-container-file').innerHTML = str;
+				$("#copyFileAscii").show();
+			});
+			
+			//변환 버튼
+			$('#convertBtn').on('click', function(){
+				// $("#convertBtn").text('loading...');
+				$("#ascii-url-image").html("");
+				var url = $("#urlForm #url").val();
+				
+				if(isURL(url)){
+					
+				}else{
+					alert("URL을 입력해 주세요.");
+					return;
+				}
+				$("#jscii-element-image").attr("src", url);
+				$(this).button('loading');
+			});
+			
+			$('#jscii-element-image').load(function(){
+				var color = $("#urlForm #color input:radio:checked").val();
+				var size = $("#urlForm #size").val();
+				var canvas = document.createElement('canvas');
+				var str = "";
+				var asciiWidth = size;
+				var type = $("#urlForm #type").val();
+				threshold = $("#urlForm #threshold").val();
+				
+				if(type == "braille"){
+					let ascii = [];
+					asciiHeight = Math.ceil(asciiWidth * asciiXDots * (this.height / this.width) / asciiYDots);
+					let canvas = document.createElement('canvas');
+					let context = canvas.getContext('2d');
+					canvas.width = asciiWidth * asciiXDots;
+					canvas.height = asciiHeight * asciiYDots;
+					context.drawImage(this, 0, 0, canvas.width, canvas.height);
+					for (let y = 0; y < canvas.height; y += asciiYDots) {
+						let line = '';
+						for (let x = 0; x < canvas.width; x += asciiXDots) {
+							let char = ImageData2Braille(context.getImageData(x, y, asciiXDots, asciiYDots));
+							line += char;
+						}
+						ascii.push(line);
+					}
+					str = ascii.join('\n');
+				}else{
+					var ratio = this.height/this.width;
+					var width = size;
+					var height = parseInt(width*ratio, 10);
+					canvas.width = width;
+					canvas.height = height;
+					var ctx = canvas.getContext('2d');
+					ctx.drawImage(this, 0, 0, width, height);
+					var imageData = ctx.getImageData(0, 0, width, height).data;
+					var len = width*height;
+
+					for(var i=0; i<len; i++) {
+						if(i%width === 0) {
+							str += '\n';
+						}
+						var rgb = getRGB(imageData, i);
+						var val = Math.max(rgb[0], rgb[1], rgb[2])/255;
+						if(type == "ascii"){
+							if(color == "true") {
+								str += '<font style="color: rgb('+rgb.join(',')+')">'+getChar(val)+'</font>';
+							}else{
+								str += getChar(val);
+							}
+						}else if(type == "block"){
+							if(color == "true") {
+								str += '<font style="color: rgb('+rgb.join(',')+')">'+getBlockChar(val)+'</font>';
+							}else{
+								str += getBlockChar(val);
+							}
+						}
+					}
+				}
+				
+				document.getElementById('ascii-container-image').innerHTML = str;
+				$("#copyUrlAscii").show();
+				$('#convertBtn').button('reset');
+			});
+			
+			// 텍스트 -> 아스키
+			// font 리스트 추가
+			for(var i = 0; i<Figlet.fontList.length; i++){
+				var fontTitle = Figlet.fontList[i].replace(/_/gi,'').replace("C64-fonts/", "").replace("bdffonts/", ""); // remove the file extentions for the title
+				$('#fontSelector').append('<option value = "'+Figlet.fontList[i]+'">'+fontTitle+'</option>');
+			}
+			$('#fontSelector').val("Doom");
+			
+			//생성 버튼
+			$('#createBtn').on('click', function(){
+				$("#ascii-url-image").html("");
+				var text = $("#textForm #userInput").val();
+				var font = $('#fontSelector').val();
+				$('#textContents').html('');
+				Figlet.write(text, font, function(str) {
+					$('#textContents').html(str);
+					$("#copyTextAscii").show();
+				});
+			});
+			
+			$("#copyUrlAscii").on("click", function(){
+				saveClipboard("ascii-container-image");
+			});
+			
+			$("#copyFileAscii").on("click", function(){
+				saveClipboard("ascii-container-file");
+			});
+			
+			$("#copyTextAscii").on("click", function(){
+				saveClipboard("textContents");
+			});
+			
+			$("#fileForm #type").on("change", function(){
+				var type = $(this).val();
+				if(type == "braille"){
+					$("#fileForm #thresholdForm").show();
+					$("#fileForm #colorForm").hide();
+				}else{
+					$("#fileForm #thresholdForm").hide();
+					$("#fileForm #colorForm").show();
+				}
+			});
+			
+			$("#urlForm #type").on("change", function(){
+				var type = $(this).val();
+				if(type == "braille"){
+					$("#urlForm #thresholdForm").show();
+					$("#urlForm #colorForm").hide();
+				}else{
+					$("#urlForm #thresholdForm").hide();
+					$("#urlForm #colorForm").show();
+				}
+			});
+		});
+		
+		function saveClipboard(elemId) {
+			var elm = document.getElementById(elemId);
+			
+			if (document.selection) {
+				var range = document.body.createTextRange();
+				range.moveToElementText(elm);
+				range.select();
+			} else if (window.getSelection) {
+				elm.contentEditable = false;
+				elm.focus();
+				var mySelection = window.getSelection();
+				if(mySelection.rangeCount > 0) {
+					mySelection.removeAllRanges();
+				}
+				var range = document.createRange();
+				range.selectNode(elm.parentNode);
+				mySelection.addRange(range);
+				elm.contentEditable = true;
+			}
+			
+			try {
+				document.execCommand('copy');
+			} catch (err) {
+				alert('Unable to copy text, you will need to press Ctrl+C on your keyboard to copy.');
+			}
+		};
+		
+		function sizeCheck(object){
+			if($(object).val() < 10){
+				$(object).val(10);
+			}
+			if($(object).val() > 400){
+				$(object).val(400);
+			}
+		}
+		
+		function ImageData2Braille(data) {
+			if (data.width != asciiXDots || data.height != asciiYDots){
+				throw new Error('Braille image data must be ' + asciiXDots + 'px wide and ' + asciiYDots + 'px high.');
+			}
+			let dots = [];
+			for (let i = 0; i < asciiXDots * asciiYDots; i++) {
+				dots[i] = data.data.subarray(i * 4, (i + 1) * 4);
+			}
+			// Reorder dots to match Braille dot order
+			dots = [dots[0], dots[2], dots[4], dots[1], dots[3], dots[5], dots[6], dots[7]];
+			dots = dots
+				.map(([r, g, b, a]) => (r + g + b) / 3)
+				.map(grey => +(grey < threshold));
+			// Braille Unicode range starts at U2800 (= 10240 decimal)
+			// Each of the eight dots is mapped to a bit in a byte which
+			// determines its position in the range.
+			// https://en.wikipedia.org/wiki/Braille_Patterns
+			return String.fromCharCode(10240 + parseInt(dots.reverse().join(''), 2));
+		}
     </script>
   </body>
 </html>
