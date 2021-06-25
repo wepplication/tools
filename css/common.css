@@ -217,6 +217,5 @@
   }
 }
 
-#disqus_thread>iframe:not([src]) {
-	display: none;
-}
+iframe[src*="ads-iframe"] { display: none; }
+iframe:not([src]) { display: none; }
