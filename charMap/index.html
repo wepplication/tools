@@ -1166,7 +1166,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		  
 		// 아스키아트 클릭 복사
-		new ClipboardJS('#myChar .btn-asciiart, #asciiArt .btn', {
+		new ClipboardJS('#myChar .pre-asciiart, #asciiArt .pre-asciiart', {
 			text: function(trigger) {
 		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
