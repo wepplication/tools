@@ -754,6 +754,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
       wcs_add["wa"] = "2b27e8a158b290";
       wcs_do();
     </script>
+	<script src="/tools/js/polyfill/set.js"></script>
 	<script src="/tools/js/polyfill/Array.from.js"></script>
 	<script src="/tools/js/polyfill/codePointAt.js"></script>
     
@@ -1120,7 +1121,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				if(parentId == "emojiOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
 					recentlyList.push(trigger.getAttribute('value'));
-					recentlyList = Array.from(new Set(recentlyList.reverse())).reverse();
+					var arr = [];
+					new Set(recentlyList.reverse()).forEach(function(v){arr.push(v)});
+					recentlyList = arr.reverse();
 					if(recentlyList.length > 16){
 						recentlyList.shift();
 					}
@@ -1133,7 +1136,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				}else if(parentId == "emoticonOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
 					recentlyList.push(trigger.getAttribute('value'));
-					recentlyList = Array.from(new Set(recentlyList.reverse())).reverse();
+					var arr = [];
+					new Set(recentlyList.reverse()).forEach(function(v){arr.push(v)});
+					recentlyList = arr.reverse();
 					if(recentlyList.length > 10){
 						recentlyList.shift();
 					}
@@ -1146,7 +1151,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				}else if(parentId == "unicodeOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
 					recentlyList.push(trigger.getAttribute('value'));
-					recentlyList = Array.from(new Set(recentlyList.reverse())).reverse();
+					var arr = [];
+					new Set(recentlyList.reverse()).forEach(function(v){arr.push(v)});
+					recentlyList = arr.reverse();
 					if(recentlyList.length > 16){
 						recentlyList.shift();
 					}
@@ -1302,7 +1309,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 			}else{
 				var myList = JSON.parse(localStorage.getItem("charMap-myChar")||"[]");
 				myList.push(appendChar);
-				myList = Array.from(new Set(myList.reverse())).reverse();
+				var arr = [];
+				new Set(myList.reverse()).forEach(function(v){arr.push(v)});
+				myList = arr.reverse();
 				localStorage.setItem("charMap-myChar", JSON.stringify(myList));
 				$("#myCharOutput").html("");
 				for(var i in myList){
