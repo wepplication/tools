@@ -1012,7 +1012,6 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 결합문자 생성 버튼
 		$('#conbineBtn').on('click', function(){
 			var orgCharacter = emojiUnicode.raw($("#orgCharacter").val()).split(" ");
-			console.log(orgCharacter);
 			$("#combCharOutput").children().remove();
 			
 			var $btn = $(this).button('loading');
@@ -1173,12 +1172,12 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		});
 		  
 		// 아스키아트 클릭 복사
-		new ClipboardJS('#myChar .pre-asciiart, #asciiArt .pre-asciiart', {
+		new ClipboardJS('#myChar .btn, #asciiArt .btn', {
 			text: function(trigger) {
 		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
-				return trigger.innerText;
+				return trigger.firstChild.innerText;
 			}
 		});
 		  
