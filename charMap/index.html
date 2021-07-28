@@ -806,7 +806,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 			$('a[href="'+hashVal+'"]').tab("show");
 			
 			
-			var mc = new Hammer(document.querySelector(".tab-content"));
+			var mc = new Hammer(document.querySelector(".tab-content"), {
+				inputClass: Hammer.TouchInput
+			});
 			mc.on("swipeleft", function(ev) {
 				if(ev.target.type == "text" || ev.target.nodeName == "TEXTAREA"){
 					return;
