@@ -807,7 +807,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 			
 			
 			var mc = new Hammer(document.querySelector(".tab-content"), {
-				inputClass: Hammer.TouchInput
+				inputClass: Hammer.TouchInput // 모바일만 swip 동작하게 하기
 			});
 			mc.on("swipeleft", function(ev) {
 				if(ev.target.type == "text" || ev.target.nodeName == "TEXTAREA"){
