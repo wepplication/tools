@@ -406,7 +406,7 @@
     <script src="/tools/js/JsBarcode.all.min.js"></script>
     <script src="/tools/js/rangeslider/js/rangeslider.min.js"></script>
     <script src="/tools/js/jqColorPicker.min.js"></script>
-    <script src="/tools/js/jquery.qrcode.min.js"></script>
+    <script src="/tools/js/qrcode/qrcode.min.js"></script>
   	<script src="/tools/js/FileSaver.js"></script>
     <script>
      /*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
@@ -641,13 +641,14 @@
       
       var newQrCode = function(){
         $('#qrcode').children().remove();
-        $('#qrcode').qrcode({
-          width: $("#qr-size").val(),
-          height: parseInt($("#qr-size").val()),
-          text: $("#qr-text").val(),
-          background      : $("#qr-background-color").val(),
-          foreground      : $("#qr-code-color").val()
-        });
+		$('#qrcode').append($("<canvas>"));
+		QRCode.toCanvas(document.querySelector('#qrcode>canvas'), $("#qr-text").val(), {
+		  width: $("#qr-size").val(),
+		  color: {
+		    dark: $("#qr-code-color").val(),
+		    light: $("#qr-background-color").val()
+		  }
+		});
         
         // 모바일에서 다운 가능하게 img 태그로 변경
         var src = document.querySelector('#qrcode canvas').toDataURL();
