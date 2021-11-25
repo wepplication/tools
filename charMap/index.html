@@ -838,26 +838,22 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		function initData(tabId){
 			if(tabId.indexOf("#emoji") > -1){
 				// 이모지 출력
-				var emojiOutput = "";
 				for(var i in emoji){
-					emojiOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+emoji[i]+"'/>"
+					$("#emojiOutput").append($("<button type='button' class='btn btn-character-sm btn-default' />").text(emoji[i]));
 				}
-				$("#emojiOutput").html(emojiOutput);
 				// 최근 사용한 이모지 출력
 				var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
-				var output = "";
 				$("#recentlyEmoji").html("");
 				for(var i in recentlyList){
-					output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+					$("#recentlyEmoji").append($("<button type='button' class='btn btn-character-sm btn-default' />").text(recentlyList[i]));
 				}
-				$("#recentlyEmoji").html(output);
 			}else if(tabId.indexOf("#emoticon") > -1){
 				// 이모티콘 출력
 				var emoticonOutput = "";
 				$("#emoticonOutput").html("");
 				for(var key in emoticon){
 					for(var i in emoticon[key]){
-						$("#emoticonOutput").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(emoticon[key][i]));
+						$("#emoticonOutput").append($("<button type='button' class='btn btn-emoticon btn-default' />").text(emoticon[key][i]));
 					}
 				}
 				// 최근 사용한 이모티콘 출력
@@ -865,7 +861,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				var output = "";
 				$("#recentlyEmoticon").html("");
 				for(var i in recentlyList){
-					$("#recentlyEmoticon").append($("<input type='button' class='btn btn-emoticon btn-default' />").val(recentlyList[i]));
+					$("#recentlyEmoticon").append($("<button type='button' class='btn btn-emoticon btn-default' />").text(recentlyList[i]));
 				}
 			}else if(tabId.indexOf("#asciiArt") > -1){
 				// 아스키아트 출력
@@ -890,11 +886,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				}
 				// 최근 사용한 유니코드 출력
 				recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
-				output = "";
 				for(var i in recentlyList){
-					output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+recentlyList[i].codePointAt(0)+"'/>"
+					$("#recentlyUnicode").append($("<button type='button' class='btn btn-emoticon btn-default' />").html('&#'+recentlyList[i].codePointAt(0)));
 				}
-				$("#recentlyUnicode").html(output);
 				tabId = "#unicode";
 			}else if(tabId.indexOf("#specialChar") > -1){
 				var specialCharOutput = "";
@@ -906,7 +900,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 						if(key == "공백"){
 							specialCharOutput += "<button type='button' class='btn btn-character-sm btn-default' value='"+char+"'><span style='background-color:#cbd5e0'>"+char+"</span></button>"
 						}else{
-							specialCharOutput += "<input type='button' class='btn btn-character-sm btn-default' value='"+char+"'/>"
+							specialCharOutput += "<button type='button' class='btn btn-character-sm btn-default' value='"+char+"'>"+char+"</button>"
 						}
 					}
 				}
@@ -1025,7 +1019,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					args.push(codePoint);
 				}
 				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningText[i]));
-				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
+				$("#combCharOutput").append($("<button>").addClass("btn btn-character-sm btn-default").attr("type", "button").text(combCharOutput));
 			}
 			
 			for(var i=0; i<combiningChar.length; i++){
@@ -1036,7 +1030,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					args.push(codePoint);
 				}
 				combCharOutput += String.fromCodePoint.apply(null, args.concat(combiningChar[i]));
-				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("value", combCharOutput));
+				$("#combCharOutput").append($("<button>").addClass("btn btn-character-sm btn-default").attr("type", "button").text(combCharOutput));
 			}
 			
 			var textArtList = [
@@ -1055,7 +1049,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					concat(textArtList[i].slice(textArtList[i].indexOf("?")+1));
 				combCharOutput += String.fromCodePoint.apply(null, arr);
 				
-				$("#combCharOutput").append($("<input>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("style", "width: 65px !important").attr("value", combCharOutput));
+				$("#combCharOutput").append($("<button>").addClass("btn btn-character-sm btn-default").attr("type", "button").attr("style", "width: 65px !important").text(combCharOutput));
 			}
 			$btn.button('reset');
 		}); // !결합문자 생성 버튼
@@ -1118,10 +1112,11 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 특수문자 좌클릭 복사
 		new ClipboardJS('#emoji .btn, #emoticon .btn, #recentlyUnicode .btn, #unicodeOutput .btn, #specialCharOutput .btn, #combCharOutput .btn, #charOutput .btn', {
 			text: function(trigger) {
+				console.log(trigger);
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
-					recentlyList.push(trigger.getAttribute('value'));
+					recentlyList.push(trigger.innerText);
 					var arr = [];
 					new Set(recentlyList.reverse()).forEach(function(v){arr.push(v)});
 					recentlyList = arr.reverse();
@@ -1129,14 +1124,13 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 						recentlyList.shift();
 					}
 					localStorage.setItem("charMap-recentlyEmoji", JSON.stringify(recentlyList));
-					var output = "";
+					$("#recentlyEmoji").html("");
 					for(var i in recentlyList){
-						output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+						$("#recentlyEmoji").append($("<button type='button' class='btn btn-character-sm btn-default' />").text(recentlyList[i]));
 					}
-					$("#recentlyEmoji").html(output);
 				}else if(parentId == "emoticonOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoticon")||"[]");
-					recentlyList.push(trigger.getAttribute('value'));
+					recentlyList.push(trigger.innerText);
 					var arr = [];
 					new Set(recentlyList.reverse()).forEach(function(v){arr.push(v)});
 					recentlyList = arr.reverse();
@@ -1144,14 +1138,13 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 						recentlyList.shift();
 					}
 					localStorage.setItem("charMap-recentlyEmoticon", JSON.stringify(recentlyList));
-					var output = "";
+					$("#recentlyEmoticon").html("");
 					for(var i in recentlyList){
-						output += "<input type='button' class='btn btn-emoticon btn-default' value='"+recentlyList[i]+"'/>"
+						$("#recentlyEmoticon").append($("<button type='button' class='btn btn-emoticon btn-default' />").text(recentlyList[i]));
 					}
-					$("#recentlyEmoticon").html(output);
 				}else if(parentId == "unicodeOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyUnicode")||"[]");
-					recentlyList.push(trigger.getAttribute('value'));
+					recentlyList.push(trigger.innerText);
 					var arr = [];
 					new Set(recentlyList.reverse()).forEach(function(v){arr.push(v)});
 					recentlyList = arr.reverse();
@@ -1159,17 +1152,16 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 						recentlyList.shift();
 					}
 					localStorage.setItem("charMap-recentlyUnicode", JSON.stringify(recentlyList));
-					var output = "";
+					$("#recentlyUnicode").html("");
 					for(var i in recentlyList){
-						output += "<input type='button' class='btn btn-character-sm btn-default' value='"+recentlyList[i]+"'/>"
+						$("#recentlyUnicode").append($("<button type='button' class='btn btn-character-sm btn-default' />").text(recentlyList[i]));
 					}
-					$("#recentlyUnicode").html(output);
 				}
-				$("#multiCopy input").val($("#multiCopy input").val()+trigger.getAttribute('value'));
+				$("#multiCopy input").val($("#multiCopy input").val()+trigger.innerText);
 		  		$(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
 				$(trigger).tooltip('show');
 				setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
-				return trigger.getAttribute('value');
+				return trigger.innerText;
 			}
 		});
 		  
@@ -1208,7 +1200,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		  
 		// 특수문자 우클릭
 		$("#emoji, #recentlyUnicode, #unicodeOutput, #specialCharOutput, #combCharOutput").on("contextmenu",".btn",function(event){
-			var text = $(this).val();
+			var text = $(this).text();
 			showModal(text);
 			return false;
 		});
@@ -1251,7 +1243,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 					}
 				});
 				output += "<li class='list-group-item' data-code='"+unicodeBlock+"'>"
-				output += "<input type='button' class='btn btn-character-sm btn-default' value='"+String.fromCodePoint(parseInt("0x"+unicodeList[i]))+"'/>"
+				output += "<button type='button' class='btn btn-character-sm btn-default' >"+String.fromCodePoint(parseInt("0x"+unicodeList[i]))+"</button>"
 				output += unicodeBlockTag;
 				output += "</li>";
 			}
@@ -1263,7 +1255,7 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		}
 		  
 		  $("#charOutput").on("click", "li", function(e){
-			if(e.target.tagName == "INPUT"){
+			if(e.target.tagName == "BUTTON"){
 				return;
 			}
 			var code = $(this).data("code");
@@ -1350,12 +1342,9 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 				document.getElementById("unicodeOutput").innerHTML = "";
 				var from = parseInt("0x"+codeRange.split("-")[0]);
 				var to = parseInt("0x"+codeRange.split("-")[1]);
-				var output = "";
 				for(var i=from; i <= to; i++){
-					output += "<input type='button' class='btn btn-character-sm btn-default' value='&#"+i+";'/>";
+					$("#unicodeOutput").append($("<button type='button' class='btn btn-character-sm btn-default' />").html('&#'+i+';'));
 				}
-			
-				$("#unicodeOutput").append(output);
 
 				$(".loader").hide();
 				$("#unicodeOutput").show();
