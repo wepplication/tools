@@ -244,6 +244,17 @@
                 <div class="col-md-1 col-xs-0"></div>
               </div>
               <div id="font-options">
+                <!-- Text Position -->
+                <div class="row checkbox-options">
+                  <div class="col-md-2 col-md-offset-1 col-xs-12 col-xs-offset-0 description-text"><p>Text Position</p></div>
+                  <div class="col-md-7 center-text">
+                    <div class="btn-group btn-group-md" role="toolbar">
+                      <button type="button" class="btn btn-default text-position" value="top">Top</button>
+                      <button type="button" class="btn btn-default btn-primary text-position" value="bottom">Bottom</button>
+                    </div>
+                  </div>
+                  <div class="col-md-1"></div>
+                </div>
                 <!-- Text align -->
                 <div class="row checkbox-options">
                   <div class="col-md-2 col-md-offset-1 col-xs-12 col-xs-offset-0 description-text"><p>Text Align</p></div>
@@ -506,6 +517,13 @@
             newBarcode();
         });
     
+        $(".text-position").click(function(){
+          $(".text-position").removeClass("btn-primary");
+          $(this).addClass("btn-primary");
+    
+          newBarcode();
+        });
+    
         $(".text-align").click(function(){
           $(".text-align").removeClass("btn-primary");
           $(this).addClass("btn-primary");
@@ -616,6 +634,7 @@
               "displayValue": $(".display-text.btn-primary").val() == "true",
               "font": $("#font").val(),
               "fontOptions": $(".font-option.btn-primary").map(function(){return this.value;}).get().join(" "),
+              "textPosition": $(".text-position.btn-primary").val(),
               "textAlign": $(".text-align.btn-primary").val(),
               "valid":
                 function(valid){

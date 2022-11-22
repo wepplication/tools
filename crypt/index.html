@@ -176,13 +176,13 @@
               <div class="form-group">
                 <label for="pbkdf2Iterations" class="col-sm-1 control-label">iterations</label>
                 <div class="col-sm-10">
-                  <input type="number" id="pbkdf2Iterations" name="pbkdf2Iterations" class="form-control" placeholder="100000"/>
+                  <input type="number" id="pbkdf2Iterations" name="pbkdf2Iterations" class="form-control" min="1" placeholder="100000"/>
                 </div>
               </div><!-- /.row -->
               <div class="form-group">
                 <label for="pbkdf2Keylen" class="col-sm-1 control-label">Derived key length</label>
                 <div class="col-sm-10">
-                  <input type="number" id="pbkdf2Keylen" name="pbkdf2Keylen" class="form-control" placeholder="16"/>
+                  <input type="number" id="pbkdf2Keylen" name="pbkdf2Keylen" class="form-control" min="1" placeholder="16"/>
                 </div>
               </div><!-- /.row -->
               <div class="form-group">
@@ -270,7 +270,7 @@
               <div class="form-group">
                 <label for="randomSize" class="col-sm-1 control-label">Size</label>
                 <div class="col-sm-10">
-                  <input type="number" id="randomSize" name="randomSize" class="form-control" placeholder="16"/>
+                  <input type="number" id="randomSize" name="randomSize" class="form-control" min="1" placeholder="16"/>
                 </div>
               </div><!-- /.row -->
               <div class="form-group">
@@ -373,6 +373,28 @@
           var iterations = parseInt($("#pbkdf2Iterations").val());
           var keylen = parseInt($("#pbkdf2Keylen").val());
           var digest = $("#pbkdf2Algorithm").val();
+		  if(iterations){
+			  if(iterations < 0){
+				alert("음수 값을 입력하실 수 없습니다.");
+				$btn.button('reset');
+				return;
+			  }
+		  }else{
+			alert("iterations를 입력해 주세요");
+            $btn.button('reset');
+			return;
+		  }
+		  if(keylen){
+			  if(keylen < 0){
+				alert("음수 값을 입력하실 수 없습니다.");
+				$btn.button('reset');
+				return;
+			  }
+		  }else{
+			alert("Derived key length를 입력해 주세요");
+            $btn.button('reset');
+			return;
+		  }
           crypto.pbkdf2(password, salt, iterations, keylen, digest, (err, derivedKey) => {
             if (err) console.log(err);
             $("#pbkdf2Result").val(derivedKey.toString('hex'));  // '3745e48...08d59ae'
@@ -417,6 +439,11 @@
           var password = $("#aesSecretKey").val();
           var cipherText = $("#aesCipherText").val();
           var encoding = $("#aesEncoding").val();
+		  if(cipherText == ""){
+		    alert("Cipher Text를 입력해줏요");
+          	$btn.button('reset');
+			return;
+		  }
           try{
             var decipher = crypto.createDecipher('aes-'+keySize+'-'+mode, password);
             var result = decipher.update(cipherText, encoding, 'utf8');
@@ -434,6 +461,12 @@
           
           var size = parseInt($("#randomSize").val());
           var encoding = $("#randomEncoding").val();
+			
+		  if(size < 0){
+			alert("음수값을 입력하실 수 없습니다.");
+            $btn.button('reset');
+			return;
+		  }
           
           crypto.randomBytes(size, function(err, buf){
             $("#randomOutput").val(buf.toString(encoding));
