@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="robots" content="index,nofollow">
     <title>HTML 웹에디터</title>
-    <meta name="description" content="웹에디터를 이용하여 사진 이미지 합치기 및 HTML 코드 생성하는 사이트">
+    <meta name="description" content="웹에디터를 이용하여 프린트 출력 및 HTML 코드 생성하는 사이트">
     
     <link rel="canonical" href="https://wepplication.github.io/tools/webEditor/">
     
     <!-- 소셜 미디어로 공유 활용 정보 -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="HTML 웹에디터">
-    <meta property="og:description" content="웹에디터를 이용하여 사진 이미지 합치기 및 HTML 코드 생성하는 사이트">
+    <meta property="og:description" content="웹에디터를 이용하여 프린트 출력 및 HTML 코드 생성하는 사이트">
     <meta property="og:url" content="https://wepplication.github.io/tools/webEditor/">
     <meta property="og:image" content="https://wepplication.github.io/tools/image/screenshot/webEditor.png">
     
@@ -54,8 +54,8 @@
           <div class="col-md-10 col-md-offset-1">
             <div id="title">
               <h1><b>HTML 웹에디터</b></h1>
-              글자를 포함한 사진 이미지 합치기 / 에디터를 이용한 HTML 코드 생성<br>
-              - 게시판 게시글 작성하듯이 문서를 만들어 이미지로 변환 및 소스코드를 생성해 드립니다.
+              문서 작성 후 프린트 출력 / 에디터를 이용한 HTML 코드 생성<br>
+              - 게시판 게시글 작성하듯이 문서를 만들어 출력물 인쇄 및 소스코드를 생성해 드립니다.
             </div>
             <hr/>
           </div>
@@ -70,21 +70,19 @@
         <br/>
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-              <button type="button" id="imgBtn" data-loading-text="처리중..." class="btn btn-default" autocomplete="off">이미지</button>
-              <button type="button" id="htmlBtn" data-loading-text="처리중..." class="btn btn-default" autocomplete="off">HTML</button>
+            <button type="button" id="htmlBtn" data-loading-text="처리중..." class="btn btn-primary" autocomplete="off">HTML</button>
           </div>
         </div>
         <br/>
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-            <div id="result"></div>
+            <textarea id="result" class="form-control vresize" rows="5"></textarea>
           </div>
         </div>
         
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-      		  <button class="btn btn-primary" type="button" id="saveImage" style="display:none;">저장</button>
-      		  <button class="btn btn-default" type="button" id="copyHtml" style="display:none;">복사</button>
+      		<button class="btn btn-default" type="button" id="copyHtml" style="display:none;">복사</button>
             <hr/>
           </div>
         </div>
@@ -140,8 +138,7 @@
     <script src="/tools/js/common.js"></script>
     
     <script src="//cdn.ckeditor.com/4.5.10/full/ckeditor.js"></script>
-    <script src="/tools/js/html2canvas.js"></script>
-  	<script src="/tools/js/FileSaver.js"></script>
+	<script src="/tools/js/clipboard.min.js"></script>
     <script>
       $(document).ready(function(){
         CKEDITOR.config.font_names="나눔고딕;맑은 고딕;굴림;굴림체;돋움;돋움체;바탕;바탕체;돋음;돋움체;궁서;궁서체;"+CKEDITOR.config.font_names;
@@ -150,65 +147,22 @@
 	        extraPlugins : "image"
         });
         
-        $("#imgBtn").on("click", function(){
-          $("#result").html("");
-          $("#saveImage").hide();
-          $("#copyHtml").hide();
-          var $btn = $(this).button('loading');
-          html2canvas(document.getElementsByTagName("iframe")[0].contentWindow.document.body).then(function(canvas) {
-              $("#result").html("");
-              var src = canvas.toDataURL();
-              $("#result").append($("<img>", {"id": "editorImg", "src": src}).addClass("img-responsive"));
-              $("#saveImage").show();
-              $btn.button('reset');
-          });
-        });
-        
         $("#htmlBtn").on("click", function(){
           $("#result").html("");
-          $("#saveImage").hide();
           $("#copyHtml").hide();
           var body = CKEDITOR.instances.editor1.getData();
           $("#result").text(body);
           $("#copyHtml").show();
         });
         
-        $("#saveImage").on("click", function(){
-          var image = $("#editorImg").get(0);
-      		var canvas = document.createElement('canvas');
-      		canvas.width = image.width;
-      		canvas.height = image.height;
-      		var ctx = canvas.getContext('2d');
-      		ctx.drawImage(image, 0, 0, image.width, image.height);
-      		canvas.toBlob(function(blob) {
-            saveAs(blob, "editorImg.png");
-          });
-        });
-        
-        $("#copyHtml").on("click", function(){
-        var elm = document.getElementById("result");
-        
-        if (document.selection) {
-            var range = document.body.createTextRange();
-                range.moveToElementText(elm);
-            range.select();
-        } else if (window.getSelection) {
-            elm.contentEditable = false;
-            elm.focus();
-            var mySelection = window.getSelection();
-            if(mySelection.rangeCount > 0) {mySelection.removeAllRanges();}
-            var range = document.createRange();
-            range.selectNode(elm.parentNode);
-            mySelection.addRange(range);
-            elm.contentEditable = true;
-        }
-
-        try {
-            document.execCommand('copy');
-        } catch (err) {
-            alert('Unable to copy text, you will need to press Ctrl+C on your keyboard to copy.');
-        }
-        });
+		new ClipboardJS('#copyHtml', {
+		  text: function(trigger) {
+		    $(trigger).tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual'});
+		    $(trigger).tooltip('show');
+		    setTimeout(function(){$(trigger).tooltip('hide');}, 1000);
+		    return $("#result").text();
+		  }
+		});
         
       });
     </script>
