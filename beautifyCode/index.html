@@ -80,6 +80,11 @@
               <pre id="beautifyText"class="prettyprint"></pre>
             </div>
           </div>
+          <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+              <button type="button" id="copyBtn" data-loading-text="처리중..." class="btn btn-default" autocomplete="off">복사</button>
+            </div>
+          </div>
         </form>
         
         <div class="row">
@@ -159,6 +164,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.3/beautify-css.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.3/beautify-html.min.js"></script>
     <script src="/tools/js/sql-formatter.js"></script>
+	<script src="/tools/js/clipboard.min.js"></script>
     
     <script>
       $(document).ready(function(){
@@ -192,6 +198,20 @@
             $("#orgText").val("");
             $("#beautifyText").text("");
         });
+		  
+		// 정렬 코드 복사
+		new ClipboardJS('#copyBtn', {
+			text: function(trigger) {
+				var beautyfyText = $("#beautifyText").text();
+				if(beautyfyText == ""){
+				}else{
+					$("#beautifyText").tooltip({title: '클립보드에 복사했습니다.', trigger: 'manual', placement: 'bottom'});
+					$("#beautifyText").tooltip('show');
+					setTimeout(function(){$("#beautifyText").tooltip('hide');}, 1000);
+				}
+				return $("#beautifyText").text();
+			}
+		});
         
       });
       

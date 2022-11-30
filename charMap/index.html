@@ -1103,7 +1103,6 @@ oo $ $ "$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$
 		// 특수문자 좌클릭 복사
 		new ClipboardJS('#emoji .btn, #emoticon .btn, #recentlyUnicode .btn, #unicodeOutput .btn, #specialCharOutput .btn, #combCharOutput .btn, #charOutput .btn', {
 			text: function(trigger) {
-				console.log(trigger);
 				var parentId = $(trigger).parent()[0].id;
 				if(parentId == "emojiOutput"){
 					var recentlyList = JSON.parse(localStorage.getItem("charMap-recentlyEmoji")||"[]");
