@@ -1,6 +1,6 @@
 /*! picadiff - v0.7.1 - 2014-03-06
 * https://github.com/picapica-net/jQuery.picadiff
-* Copyright (c) 2014 Jan Gra횩egger; Licensed MIT */
+* Copyright (c) 2014 Jan Graßegger; Licensed MIT */
 /* global DIFF_INSERT */
 /* global DIFF_DELETE */
 /* global DIFF_EQUAL */
@@ -142,7 +142,7 @@ DiffHandler.prototype.diff_html = function(diffs){
 			break;
 
 		case DIFF_DELETE:
-			if(!editopen) {혻html_string += '<span class="edit">'; }
+			if(!editopen) {html_string += '<span class="edit">'; }
 
 			html_string += '<span class="deletion">' + text + '</span>';
 
@@ -179,7 +179,7 @@ DiffHandler.prototype.equal_line = function(diffs, intervalLength){
 		var data = diffs[x][1];
 		for (var i = 0; i < data.length; i++){
 			index++;
-			if(op === 'DIFF_EQUAL') {혻currentvalue++; }
+			if(op === 'DIFF_EQUAL') {currentvalue++; }
 
 			if(index%intervalLength === 0){
 				dataline[index/intervalLength-1]=(currentvalue===0)?0:currentvalue;
@@ -309,7 +309,7 @@ jQuery.extend(diff_match_patch.prototype, {
 
     var normalized_word = word.toLowerCase();
     normalized_word = normalized_word.replace(openingSquareBracket, '').replace(alphanumericRegExp, '');
-    return normalized_word;
+    return word;
   },
 
   /**
@@ -321,7 +321,7 @@ jQuery.extend(diff_match_patch.prototype, {
 
     for(var i in textarr){
       var word = textarr[i];
-      var normalized_word = word; //this.normalize_word(word);
+      var normalized_word = this.normalize_word(word);
       var character;
       if(this.word_dict.hasOwnProperty(normalized_word)){
         character = this.word_dict[normalized_word];
@@ -370,7 +370,6 @@ jQuery.extend(diff_match_patch.prototype, {
     this.char_dict= {};
     var textchars1 = this.words_to_characters(textarr1);
     var textchars2 = this.words_to_characters(textarr2);
-
 
     var diffs = this.diff_main(textchars1, textchars2, lebool);
     var result = [];
